@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using VRCTools;
 using VRC;
 using VRCModLoader;
-using VRCModNetwork;
 
 namespace Mod.Teleport
 {
