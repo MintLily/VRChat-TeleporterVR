@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using VRCTools;
 using VRC;
 using VRCModLoader;
+using VRCheat.Utils;
 
 namespace Mod.Teleport
 {
@@ -20,6 +21,7 @@ namespace Mod.Teleport
             inputcheck = str;
             namecheck = PlayerUtils.GetAPIUser(tptgt).displayName;
             VRCPlayer.Instance.transform.position = tptgt.transform.position;
+            MiscUtils.GetVRCUiManager().QueueHudMessage("Teleported to:" + PlayerUtils.GetAPIUser(tptgt).displayName + "!");
             VRCUiManagerUtils.GetVRCUiManager().CloseUi(false);
         }
 
