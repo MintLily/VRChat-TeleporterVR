@@ -39,7 +39,7 @@ namespace Mod.Teleport
             //VRCMenuUtilsAPI.AddQuickMenuButton("internal name", "button name", "tooltip bar", method);
             var OpenQM = new VRCEUiQuickButton("OpenQM", new Vector2(-1050f, 1890f), "Teleporter\nVR" + ReloadedText, "Opens the TPVR submenu", QuickMenu.transform.Find("ShortcutMenu"));
             OpenQM.OnClick += ShowTPVRRQM;
-            var TP2P = new VRCEUiQuickButton("TPtoP", new Vector2(-600f, 200f), "Teleport", "Teleports to selected player", QuickMenu.transform.Find("UserInteractMenu"));
+            var TP2P = new VRCEUiQuickButton("TPtoP", new Vector2(-630f, 210f), "Teleport", "Teleports to selected player", QuickMenu.transform.Find("UserInteractMenu"));
             TP2P.OnClick += TP2PAction;
             VRCEUiQuickMenu TPVRRQM = new VRCEUiQuickMenu("TPVRR", false);
             var TEST = new VRCEUiQuickButton("TEST", new Vector2(-630, 1050f), "Teleporter\nVR\nVersion3.0", "VR Compliant, Teleport Requests soon(tm)", TPVRRQM.Control.transform);
@@ -138,7 +138,7 @@ namespace Mod.Teleport
 
         public void TestA()
         {
-            VRCModLogger.Log("TEST1");
+            VRCModLogger.Log("[TeleporterVR] Kudos to the amazing modders on the VRCTools discord!\nEspecially Yoshifan, Slaynash and AtiLion for all the stuff required for the UI\n(Input popup, VRCTools/VRCModloader and VRCMenuUtils respecitvely)");
         }
 
         public void ShowTPVRRQM()
