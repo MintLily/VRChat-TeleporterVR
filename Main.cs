@@ -79,22 +79,26 @@ namespace TeleporterVR
 
         public override void OnPreferencesSaved()
         {
-            if (Menu.userSel_TPto != null && !visible.Value)
-                Menu.userSel_TPto.DestroyMe();
-            else if (visible.Value)
-                MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
-
-            if (VRUtils.inVR)
+            if (WorldActions.WorldAllowed)
             {
-                if (Menu.VRTeleport != null && !VRTeleportVisible.Value)
-                    Menu.VRTeleport.DestroyMe();
-                else if (VRTeleportVisible.Value)
-                    MelonCoroutines.Start(Menu.LoadVRTPButton(false));
+                if (Menu.userSel_TPto != null && !visible.Value)
+                    Menu.userSel_TPto.DestroyMe();
+                else if (visible.Value)
+                    MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
+
+                if (VRUtils.inVR)
+                {
+                    if (Menu.VRTeleport != null && !VRTeleportVisible.Value)
+                        Menu.VRTeleport.DestroyMe();
+                    else if (VRTeleportVisible.Value)
+                        MelonCoroutines.Start(Menu.LoadVRTPButton(false));
+                }
+
+                Menu.UpdateButtonText();
             }
+            else MelonLogger.Warning("Cannot create buttons in a Disallowed world.");
 
             preferRightHand.Value = VRUtils.perferRightHand;
-
-            Menu.UpdateButtonText();
         }
 
         public override void OnApplicationQuit() { preferRightHand.Value = VRUtils.perferRightHand; }

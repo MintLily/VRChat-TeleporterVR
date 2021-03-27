@@ -37,6 +37,8 @@ namespace TeleporterVR.Utils
                         WorldAllowed = true;
                         if (Main.isDebug)
                             MelonLogger.Msg("EmmVRC Allowed");
+                        if (Main.visible.Value && Menu.userSel_TPto == null)
+                            MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                         if (Main.visible.Value && Menu.userSel_TPto != null)
                             Menu.userSel_TPto.Disabled(false);
@@ -48,6 +50,8 @@ namespace TeleporterVR.Utils
                         WorldAllowed = false;
                         if (Main.isDebug)
                             MelonLogger.Msg("EmmVRC Disallowed");
+                        if (Main.VRTeleportVisible.Value && Menu.VRTeleport == null)
+                            MelonCoroutines.Start(Menu.LoadVRTPButton(false));
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                         if (Main.visible.Value && Menu.userSel_TPto != null)
                             Menu.userSel_TPto.Disabled(true);
@@ -72,6 +76,8 @@ namespace TeleporterVR.Utils
                             if (Main.isDebug)
                                 MelonLogger.Msg("Found Game Tag(s)");
                             WorldAllowed = false;
+                            if (Main.visible.Value && Menu.userSel_TPto == null)
+                                MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
                             MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                             if (Main.visible.Value && Menu.userSel_TPto != null)
                                 Menu.userSel_TPto.Disabled(true);
@@ -81,6 +87,8 @@ namespace TeleporterVR.Utils
                         }
 
                     WorldAllowed = true;
+                    if (Main.VRTeleportVisible.Value && Menu.VRTeleport == null)
+                        MelonCoroutines.Start(Menu.LoadVRTPButton(false));
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                     if (Main.visible.Value && Menu.userSel_TPto != null)
                         Menu.userSel_TPto.Disabled(false);
