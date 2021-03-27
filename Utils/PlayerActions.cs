@@ -7,6 +7,7 @@ using VRC.Core;
 using VRC;
 using UnityEngine;
 using UnityEngine.UI;
+using RubyButtonAPIVRT;
 
 namespace TeleporterVR.Utils
 {
@@ -32,39 +33,14 @@ namespace TeleporterVR.Utils
             return GetPlayerManager().field_Private_List_1_Player_0;
         }
 
-        public static QuickMenu GetQuickMenu() { return QuickMenu.prop_QuickMenu_0; }
-
-        public static Player GetSelectedPlayer(this QuickMenu instance)
-        {
-            APIUser field_Private_APIUser_ = instance.field_Private_APIUser_0;
-            return GetPlayerManager().GetPlayer(field_Private_APIUser_.id);
-        }
-
-        public static Il2CppSystem.Collections.Generic.List<Player> GetAllPlayers(this PlayerManager instance) { return instance.field_Private_List_1_Player_0; }
-
-        public static APIUser GetAPIUser(this Player player) { return player.field_Private_APIUser_0; }
-
-        public static Player GetPlayer(this PlayerManager instance, string UserID)
-        {
-            Il2CppSystem.Collections.Generic.List<Player> allPlayers = instance.GetAllPlayers();
-            Player result = null;
-            for (int i = 0; i < allPlayers.Count; i++)
-            {
-                Player player = allPlayers[i];
-                if (player.GetAPIUser().id == UserID)
-                {
-                    result = player;
-                }
-            }
-            return result;
-        }
-
         public static PlayerManager GetPlayerManager() { return PlayerManager.field_Private_Static_PlayerManager_0; }
 
-        public static void Teleport(Player player)
+        public static void Teleport(VRCPlayer player)
         {
             GetLocalVRCPlayer().transform.position = player.transform.position;
             GetLocalVRCPlayer().transform.rotation = player.transform.rotation;
         }
+
+        public static VRCPlayer GetSelectedPlayer() { return QMStuff.GetQuickMenuInstance().field_Private_Player_0.field_Internal_VRCPlayer_0; }
     }
 }
