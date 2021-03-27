@@ -233,11 +233,19 @@ namespace TeleporterVR
             SavePos2.setButtonText(Language.SavePos + "\n2");
             SavePos3.setButtonText(Language.SavePos + "\n3");
             SavePos4.setButtonText(Language.SavePos + "\n4");
+            SavePos1.setToolTip(Language.SavePos_ToolTip);
+            SavePos2.setToolTip(Language.SavePos_ToolTip);
+            SavePos3.setToolTip(Language.SavePos_ToolTip);
+            SavePos4.setToolTip(Language.SavePos_ToolTip);
 
             LoadPos1.setButtonText(Language.LoadPos + "\n1");
             LoadPos2.setButtonText(Language.LoadPos + "\n2");
             LoadPos3.setButtonText(Language.LoadPos + "\n3");
             LoadPos4.setButtonText(Language.LoadPos + "\n4");
+            LoadPos1.setToolTip(Language.LoadPos_Tooltip);
+            LoadPos2.setToolTip(Language.LoadPos_Tooltip);
+            LoadPos3.setToolTip(Language.LoadPos_Tooltip);
+            LoadPos4.setToolTip(Language.LoadPos_Tooltip);
 
             userSel_TPto.setButtonText(Language.theWord_Teleport);
 
