@@ -32,10 +32,11 @@ namespace TeleporterVR
 
         public override void OnApplicationStart()
         {
-            if (MelonDebug.IsEnabled())
+            if (MelonDebug.IsEnabled() || Environment.CommandLine.Contains("--vrt.debug"))
             {
                 isDebug = true;
                 MelonLogger.Msg("Debug mode is active");
+                VRUtils.inVR = true;
             }
             
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
@@ -75,30 +76,33 @@ namespace TeleporterVR
             MelonCoroutines.Start(UiUtils.AllowToolTipTextColor());
         }
 
-        //public override void OnUpdate() {  }
+        public override void OnUpdate() { VRUtils.OnUpdate(); }
 
         public override void OnPreferencesSaved()
         {
-            if (WorldActions.WorldAllowed)
-            {
-                if (Menu.userSel_TPto != null && !visible.Value)
-                    Menu.userSel_TPto.DestroyMe();
-                else if (visible.Value)
-                    MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
+            if (Menu.userSel_TPto != null && !visible.Value) Menu.userSel_TPto.DestroyMe();
+            else if (Menu.userSel_TPto == null && visible.Value) MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
 
-                if (VRUtils.inVR)
-                {
-                    if (Menu.VRTeleport != null && !VRTeleportVisible.Value)
-                        Menu.VRTeleport.DestroyMe();
-                    else if (VRTeleportVisible.Value)
-                        MelonCoroutines.Start(Menu.LoadVRTPButton(false));
-                }
+            if (VRUtils.inVR)
+                if (Menu.VRTeleport != null && !VRTeleportVisible.Value) Menu.VRTeleport.DestroyMe();
+                else if (Menu.VRTeleport == null && VRTeleportVisible.Value) MelonCoroutines.Start(Menu.LoadVRTPButton(false));
 
-                Menu.UpdateButtonText();
-            }
-            else MelonLogger.Warning("Cannot create buttons in a Disallowed world.");
+            Menu.UpdateButtonText();
 
             preferRightHand.Value = VRUtils.perferRightHand;
+        }
+
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        {
+            switch (buildIndex)
+            {
+                case 0:
+                case 1:
+                    break;
+                default:
+                    MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                    break;
+            }
         }
 
         public override void OnApplicationQuit() { preferRightHand.Value = VRUtils.perferRightHand; }

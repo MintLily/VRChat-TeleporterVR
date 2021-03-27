@@ -151,32 +151,43 @@ namespace TeleporterVR
         public static IEnumerator LoadUserSelectTPButton(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(2f);
+            if (userSel_TPto != null)
+                yield break;
+
             userSel_TPto = new QMSingleButton("UserInteractMenu", Main.userSel_x.Value, Main.userSel_y.Value, Language.theWord_Teleport, () =>
             {
                 if (WorldActions.WorldAllowed)
                     PlayerActions.Teleport(PlayerActions.GetSelectedPlayer());
             }, "Teleport to Selected Player");
             userSel_TPto.getGameObject().name = BuildInfo.Name + "_TPToPlayerButton";
+
+            yield return new WaitForSeconds(1f);
+            if (!WorldActions.WorldAllowed)
+                userSel_TPto.Disabled(true);
             yield break;
         }
 
         public static IEnumerator LoadVRTPButton(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(2f);
-            VRTeleport = new QMToggleButton("ShortcutMenu", 0, 2, "VR", () =>
+            if (VRTeleport != null)
+                yield break;
+
+            VRTeleport = new QMToggleButton("ShortcutMenu", 3, -2, "VR", () =>
             {
                 VRUtils.active = true;
             }, Language.theWord_Teleport, () =>
             {
                 VRUtils.active = false;
             }, Language.perferedHand_Tooltip);
-            if (ModCompatibility.DiscordMute)
-                VRTeleport.getGameObject().GetComponentInChildren<Transform>().localPosition = new Vector3(-1400f, 600.8f, 0.0f);
-            else
-                VRTeleport.getGameObject().GetComponentInChildren<Transform>().localPosition = new Vector3(-1170.0f, 600.8f, 0.0f);
+            VRTeleport.getGameObject().GetComponent<RectTransform>().anchoredPosition -= new Vector2(92f, 66.2f);
 
             VRTeleport.getGameObject().GetComponentInChildren<Transform>().localScale = new Vector3(0.6f, 0.75f, 1.0f);
             VRTeleport.getGameObject().name = BuildInfo.Name + "_VRTPToggleButton";
+
+            yield return new WaitForSeconds(1f);
+            if (!WorldActions.WorldAllowed)
+                VRTeleport.Disabled(true);
             yield break;
         }
 
@@ -203,8 +214,8 @@ namespace TeleporterVR
         private static IEnumerator ShiftButtons()
         {
             yield return new WaitForSecondsRealtime(4f);
-            if (Logic.ModCompatibility.DiscordMute)
-                VRTeleport.getGameObject().GetComponentInChildren<Transform>().localPosition = new Vector3(-1400f, 600.8f, 0.0f);
+            //if (Logic.ModCompatibility.DiscordMute)
+                //VRTeleport.getGameObject().GetComponentInChildren<Transform>().localPosition = new Vector3(-1400f, 600.8f, 0.0f);
             yield break;
         }
 
@@ -230,14 +241,24 @@ namespace TeleporterVR
 
             userSel_TPto.setButtonText(Language.theWord_Teleport);
 
-            if (VRTeleport != null)
-            {
-                VRTeleport.setOffText(Language.theWord_Teleport);
-                VRTeleport.setToolTip(Language.perferedHand_Tooltip);
-            }
+            MelonLoader.MelonCoroutines.Start(DoLateUpdateButtonText());
 
             if (Main.isDebug)
                 MelonLoader.MelonLogger.Msg("Updated button text and tooltip text");
+        }
+
+        private static IEnumerator DoLateUpdateButtonText()
+        {
+            yield return new WaitForSeconds(3f);
+            try
+            {
+                if (VRTeleport != null)
+                {
+                    VRTeleport.setOffText(Language.theWord_Teleport);
+                    VRTeleport.setToolTip(Language.perferedHand_Tooltip);
+                }
+            }
+            catch { MelonLoader.MelonLogger.Error("Could not update VRTeleport Button Text"); }
         }
     }
 }
