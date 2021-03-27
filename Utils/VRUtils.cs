@@ -84,5 +84,28 @@ namespace TeleporterVR.Utils
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        
+        #region Debug Testing
+        public static void OnUpdate()
+        {
+            if (Main.isDebug && !XRDevice.isPresent)
+            {
+                if (active)
+                {
+                    if ((Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.T)) || Input.GetKeyDown(KeyCode.Mouse3))
+                    {
+                        ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+                        RaycastHit raycastHit;
+                        if (Physics.Raycast(ray, out raycastHit))
+                        {
+                            PlayerActions.GetLocalVRCPlayer().transform.position = raycastHit.point;
+                        }
+                    }
+                }
+            }
+            else return;
+        }
+
+        #endregion
     }
 }
