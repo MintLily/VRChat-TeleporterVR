@@ -153,8 +153,8 @@ namespace TeleporterVR
             if (!ignoreWait) yield return new WaitForSeconds(2f);
             userSel_TPto = new QMSingleButton("UserInteractMenu", Main.userSel_x.Value, Main.userSel_y.Value, Language.theWord_Teleport, () =>
             {
-                Player selectedPlayer = PlayerActions.GetQuickMenu().GetSelectedPlayer();
-                PlayerActions.Teleport(selectedPlayer);
+                if (WorldActions.WorldAllowed)
+                    VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = QMStuff.GetQuickMenuInstance().field_Private_Player_0.field_Internal_VRCPlayer_0.transform.position;
             }, "Teleport to Selected Player");
             userSel_TPto.getGameObject().name = BuildInfo.Name + "_TPToPlayerButton";
             yield break;
