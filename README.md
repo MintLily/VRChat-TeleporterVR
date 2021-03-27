@@ -64,6 +64,9 @@ VRTeleport - There is a Left/Right Hand toggle to then use your VR Laser Cursor 
 * * Asset Bundle, Keyboard popup input - **knah**
 
 
-# Change Log
-### v1.0.0
-* Initial Release
+# Change Log (since Lily's edits)
+### v4.0.0
+* Initial Release for MelonLoader
+
+## Stay Updated
+Stay update to date with all my mods by joining my [discord server](https://discord.gg/qkycuAMUGS) today.
