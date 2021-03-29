@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TeleporterVR.Utils;
 using TeleporterVR.Logic;
 using UIExpansionKit.API;
+using UnityEngine.XR;
 
 namespace TeleporterVR
 {
@@ -36,7 +37,7 @@ namespace TeleporterVR
             {
                 isDebug = true;
                 MelonLogger.Msg("Debug mode is active");
-                VRUtils.inVR = true;
+                if (!XRDevice.isPresent) VRUtils.inVR = true;
             }
             
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
