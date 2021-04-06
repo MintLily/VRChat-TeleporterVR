@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.XR;
 
 namespace TeleporterVR.Utils
 {
@@ -22,17 +21,31 @@ namespace TeleporterVR.Utils
         private static bool readyL;
         public static bool active;
 
+        private static GameObject ControllerLeft, ControllerRight;
+
         public static bool perferRightHand;
 
-        public static bool inVR { get; internal set; } = XRDevice.isPresent;
+        public static void Init()
+        {
+            if (Environment.CurrentDirectory.Contains("vrchat-vrchat")) // Oculus Check came from emmVRC (Thanks Emmy)
+            {
+                ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/RightHandAnchor/PointerOrigin (1)");
+                ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/LeftHandAnchor/PointerOrigin (1)");
+            }
+            else
+            {
+                ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (right)/PointerOrigin");
+                ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (left)/PointerOrigin");
+            }
 
-        public static void Init() { MelonLoader.MelonCoroutines.Start(TeleportLoop()); }
+            MelonLoader.MelonCoroutines.Start(TeleportLoop());
+        }
 
         private static IEnumerator TeleportLoop()
         {
             while (true)
             {
-                if (!active && !Main.VRTeleportVisible.Value)
+                if (!active)// && !Main.VRTeleportVisible.Value)
                     yield break;
                 if (active)
                 {
@@ -42,7 +55,6 @@ namespace TeleporterVR.Utils
                         {
                             if (Input.GetAxis(InputInfo.RightTrigger) > 0.75f && !readyR)
                             {
-                                GameObject ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (right)/PointerOrigin");
                                 ray = new Ray(ControllerRight.transform.position, ControllerRight.transform.forward);
                                 RaycastHit raycastHit;
                                 if (Physics.Raycast(ray, out raycastHit))
@@ -64,7 +76,6 @@ namespace TeleporterVR.Utils
                         {
                             if (Input.GetAxis(InputInfo.LeftTrigger) > 0.75f && !readyL)
                             {
-                                GameObject ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (left)/PointerOrigin");
                                 ray = new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
                                 RaycastHit raycastHit;
                                 if (Physics.Raycast(ray, out raycastHit))
@@ -84,28 +95,5 @@ namespace TeleporterVR.Utils
                 yield return new WaitForSeconds(0.05f);
             }
         }
-        
-        #region Debug Testing
-        public static void OnUpdate()
-        {
-            if (Main.isDebug && !XRDevice.isPresent)
-            {
-                if (active)
-                {
-                    if ((Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.T)) || Input.GetKeyDown(KeyCode.Mouse3))
-                    {
-                        ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-                        RaycastHit raycastHit;
-                        if (Physics.Raycast(ray, out raycastHit))
-                        {
-                            PlayerActions.GetLocalVRCPlayer().transform.position = raycastHit.point;
-                        }
-                    }
-                }
-            }
-            else return;
-        }
-
-        #endregion
     }
 }
