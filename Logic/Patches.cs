@@ -65,10 +65,12 @@ namespace TeleporterVR.Logic
 
         private static void JoinedRoomPatch(string __0, float __1)
         {
-            if (Main.isDebug)
-                MelonLogger.Msg("Joined Room Patch");
             if (__0.Equals("BlackFade") && __1.Equals(0f) && RoomManager.field_Internal_Static_ApiWorldInstance_0 != null)
+            {
                 MelonCoroutines.Start(WorldActions.CheckWorld());
+                if (Main.isDebug)
+                    MelonLogger.Msg("Joined Room Patch");
+            }
         }
     }
 }

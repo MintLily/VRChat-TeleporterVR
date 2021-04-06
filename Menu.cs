@@ -19,14 +19,8 @@ namespace TeleporterVR
         public static QMSingleButton userSel_TPto;
         private static QMSingleButton TPtoName;
         private static QMSingleButton TPtoCoords;
-        private static QMSingleButton SavePos1;
-        private static QMSingleButton LoadPos1;
-        private static QMSingleButton SavePos2;
-        private static QMSingleButton LoadPos2;
-        private static QMSingleButton SavePos3;
-        private static QMSingleButton LoadPos3;
-        private static QMSingleButton SavePos4;
-        private static QMSingleButton LoadPos4;
+        private static QMSingleButton SavePos1, SavePos2, SavePos3, SavePos4;
+        private static QMSingleButton LoadPos1, LoadPos2, LoadPos3, LoadPos4;
         public static QMToggleButton VRTeleport;
         private static QMToggleButton perferdHand;
 
@@ -43,7 +37,7 @@ namespace TeleporterVR
 
             if (Main.visible.Value)
                 MelonLoader.MelonCoroutines.Start(LoadUserSelectTPButton());
-            if (Main.VRTeleportVisible.Value && VRUtils.inVR)
+            if (Main.VRTeleportVisible.Value)
                 MelonLoader.MelonCoroutines.Start(LoadVRTPButton());
 
             TPtoName = new QMSingleButton(menu, 1, 0, Logic.Language.TPtoName_Text, () =>
@@ -74,8 +68,7 @@ namespace TeleporterVR
                     }, null, "Enter coords as X[Space]Y[Space]Z");
             }, Logic.Language.TPtoCoord_Tooltip);
 
-            if (VRUtils.inVR)
-                perferdHand = new QMToggleButton(menu, 4, 0, "RightHanded", () => { VRUtils.perferRightHand = true; }, "LeftHanded", () => { VRUtils.perferRightHand = false; }, "TOGGLE: Choose wether you use Left or Right hand for VR Raycast Teleporting");
+            perferdHand = new QMToggleButton(menu, 4, 0, "RightHanded", () => { VRUtils.perferRightHand = true; }, "LeftHanded", () => { VRUtils.perferRightHand = false; }, "TOGGLE: Choose wether you use Left or Right hand for VR Raycast Teleporting");
 
             SavePos1 = new QMSingleButton(menu, 1, 1, Logic.Language.SavePos + "\n1", () =>
             {
@@ -198,14 +191,14 @@ namespace TeleporterVR
             {
                 menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.goodIcon;
                 menu.getMainButton().Disabled(false);
-                if (Main.VRTeleportVisible.Value && VRUtils.inVR)
+                if (Main.VRTeleportVisible.Value)
                     VRTeleport.Disabled(false);
             }
             else
             {
                 menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.badIcon;
                 menu.getMainButton().Disabled(true);
-                if (Main.VRTeleportVisible.Value && VRUtils.inVR)
+                if (Main.VRTeleportVisible.Value)
                     VRTeleport.Disabled(true);
             }
             yield break;

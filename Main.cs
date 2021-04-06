@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using TeleporterVR.Utils;
 using TeleporterVR.Logic;
 using UIExpansionKit.API;
-using UnityEngine.XR;
 
 namespace TeleporterVR
 {
@@ -37,7 +36,7 @@ namespace TeleporterVR
             {
                 isDebug = true;
                 MelonLogger.Msg("Debug mode is active");
-                if (!XRDevice.isPresent) VRUtils.inVR = true;
+                //if (!XRDevice.isPresent) VRUtils.inVR = true;
             }
             
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
@@ -72,21 +71,17 @@ namespace TeleporterVR
         {
             Menu.InitUi();
             ResourceManager.Init();
-            if (VRUtils.inVR)
-                VRUtils.Init();
+            VRUtils.Init();
             MelonCoroutines.Start(UiUtils.AllowToolTipTextColor());
         }
-
-        public override void OnUpdate() { VRUtils.OnUpdate(); }
 
         public override void OnPreferencesSaved()
         {
             if (Menu.userSel_TPto != null && !visible.Value) Menu.userSel_TPto.DestroyMe();
             else if (Menu.userSel_TPto == null && visible.Value) MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
 
-            if (VRUtils.inVR)
-                if (Menu.VRTeleport != null && !VRTeleportVisible.Value) Menu.VRTeleport.DestroyMe();
-                else if (Menu.VRTeleport == null && VRTeleportVisible.Value) MelonCoroutines.Start(Menu.LoadVRTPButton(false));
+            if (Menu.VRTeleport != null && !VRTeleportVisible.Value) Menu.VRTeleport.DestroyMe();
+            else if (Menu.VRTeleport == null && VRTeleportVisible.Value) MelonCoroutines.Start(Menu.LoadVRTPButton(false));
 
             Menu.UpdateButtonText();
 

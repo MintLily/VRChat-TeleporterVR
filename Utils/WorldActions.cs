@@ -6,7 +6,6 @@ using Il2CppSystem.Collections.Generic;
 using MelonLoader;
 using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
-using UnityEngine.XR;
 using VRC.Core;
 
 // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/Utilities.cs
