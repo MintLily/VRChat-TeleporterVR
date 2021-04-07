@@ -45,7 +45,7 @@ namespace TeleporterVR.Utils
         {
             while (true)
             {
-                if (!active)// && !Main.VRTeleportVisible.Value)
+                if (!active || !WorldActions.WorldAllowed)// && !Main.VRTeleportVisible.Value)
                     yield break;
                 if (active)
                 {

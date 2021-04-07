@@ -13,7 +13,7 @@ namespace TeleporterVR.Utils
 {
     internal static class WorldActions
     {
-        public static bool WorldAllowed;
+        internal static bool WorldAllowed;
         internal static IEnumerator CheckWorld()
         {
             // Hi KiraiChan, while removing this check too, add yourself as "author" too?

@@ -12,6 +12,7 @@ using TeleporterVR;
 using TeleporterVR.Utils;
 
 // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/ModPatches.cs
+//     &     https://github.com/ddakebono/BTKSANameplateFix/blob/master/BTKSANameplateMod.cs
 namespace TeleporterVR.Logic
 {
     internal static class Patches
@@ -52,8 +53,21 @@ namespace TeleporterVR.Logic
                 MelonLogger.Error("Failed to patch FadeTo Initialized room\n" + e.Message);
             }
 
+            MethodInfo closeQuickMenu = typeof(QuickMenu).GetMethods()
+                .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsed(mb, "Method_Public_Void_Int32_Boolean_")).First();
+
+            MethodInfo openQuickMenu = typeof(QuickMenu).GetMethods()
+                 .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && mb.GetParameters().Any(pi => pi.HasDefaultValue == false)).First();
+
+            try
+            {
+                instance.Patch(openQuickMenu, null, new HarmonyMethod(typeof(Patches).GetMethod("QMOpen", BindingFlags.Public | BindingFlags.Static)));
+                instance.Patch(closeQuickMenu, null, new HarmonyMethod(typeof(Patches).GetMethod("QMClose", BindingFlags.Public | BindingFlags.Static)));
+            }
+            catch (Exception e) { MelonLogger.Error("Unable to patch Quickmenu Open/Close functions!\n" + e.ToString()); }
+
             if (Main.isDebug)
-                MelonLoader.MelonLogger.Msg("Finished with Patches");
+                MelonLogger.Msg("Finished with Patches");
         }
 
         private static void LeftWorldPatch()
@@ -71,6 +85,22 @@ namespace TeleporterVR.Logic
                 if (Main.isDebug)
                     MelonLogger.Msg("Joined Room Patch");
             }
+        }
+
+        internal static bool IsQMOpen;
+
+        private static void QMOpen() { IsQMOpen = true; }
+
+        private static void QMClose() { IsQMOpen = false; }
+
+        private static bool CheckUsed(MethodBase methodBase, string methodName)
+        {
+            try
+            {
+                return UnhollowerRuntimeLib.XrefScans.XrefScanner.UsedBy(methodBase).Where(instance => instance.TryResolve() != null && instance.TryResolve().Name.Contains(methodName)).Any();
+            }
+            catch { }
+            return false;
         }
     }
 }
