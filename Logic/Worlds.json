@@ -1,0 +1,19 @@
+[
+	{
+        "WorldName": "Just B Club",
+        "WorldID": "wrld_1b3b3259-0a1f-4311-984e-826abab6f481",
+		"buttonNumber": 3,
+		"Reason": "VRTP / Disallowed other teleporting - personal request"
+    }/*,
+	{
+		"WorldName": "",
+        "WorldID": "",
+		"buttonNumber": 0,
+		"Reason": ""
+	}*/
+]
+/***
+If you want to request an allow or block to this mod's functions, sumbit a ticket here: https://github.com/KortyBoi/VRChat-TeleporterVR/issues
+
+For "personal requests" that you want changed, Please DM KortyBoi#0001 to change this: You will have to prove you own the world in question.
+***/
