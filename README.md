@@ -28,11 +28,12 @@ VRTeleportVisible - VRTeleport Button is visible (next to mute button)<br>
 overrideLanguage - force mod into a provided language
 
 ### Special Features
-Dynamic Language Settings - The language of the mod will be determined by your system's local region, you can override this in the settigs of the mod. Changing the language will update in real time (when you close the settings window)<br>
+Dynamic Language Settings - The language of the mod will be determined by your system's local region, you can override this in the settings of the mod. Changing the language will update in real time (when you close the settings window)<br>
 Input (partial) Name - input player's full name or partial name and teleport to them<br>
 Coordinates - Input the [X Y Z] coords to teleport to that location<br>
 Saved Positions - Save a Position in a world to later teleport to (Load Position) [This does not save across game restarts, but will save accross world changes]<br>
-VRTeleport - There is a Left/Right Hand toggle to then use your VR Laser Cursor to teleport to that location
+VRTeleport - There is a Left/Right Hand toggle to then use your VR Laser Cursor to teleport to that location<br>
+Oculus Support - Don't use SteamVR, that's okay, this mod was build for both Native Oculus and SteramVR VRChat use
 
 ### Preview
 ![Preview Main Menu](https://kortyboi.com/img/upload/VRChat_Sfa0ZuMDwQ.jpg)<br>

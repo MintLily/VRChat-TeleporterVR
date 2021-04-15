@@ -68,7 +68,7 @@ namespace TeleporterVR
                     }, null, "Enter coords as X[Space]Y[Space]Z");
             }, Logic.Language.TPtoCoord_Tooltip);
 
-            perferdHand = new QMToggleButton(menu, 4, 0, "RightHanded", () => { VRUtils.perferRightHand = true; }, "LeftHanded", () => { VRUtils.perferRightHand = false; }, "TOGGLE: Choose wether you use Left or Right hand for VR Raycast Teleporting");
+            perferdHand = new QMToggleButton(menu, 4, 0, "RightHanded", () => { VRUtils.preferRightHand = true; }, "LeftHanded", () => { VRUtils.preferRightHand = false; }, Logic.Language.perferedHand_Tooltip);
 
             SavePos1 = new QMSingleButton(menu, 1, 1, Logic.Language.SavePos + "\n1", () =>
             {
@@ -135,7 +135,7 @@ namespace TeleporterVR
             LoadPos4.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
 
             MelonLoader.MelonCoroutines.Start(UpdateMenuIcon());
-            if (VRTeleport != null) MelonLoader.MelonCoroutines.Start(ShiftButtons());
+            //if (VRTeleport != null) MelonLoader.MelonCoroutines.Start(ShiftButtons());
 
             if (Main.isDebug)
                 MelonLoader.MelonLogger.Msg("Finished creating Menus");
@@ -144,7 +144,7 @@ namespace TeleporterVR
         public static IEnumerator LoadUserSelectTPButton(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(2f);
-            if (userSel_TPto != null)
+            if (userSel_TPto == null)
                 yield break;
 
             userSel_TPto = new QMSingleButton("UserInteractMenu", Main.userSel_x.Value, Main.userSel_y.Value, Language.theWord_Teleport, () =>
@@ -159,7 +159,7 @@ namespace TeleporterVR
                 userSel_TPto.Disabled(true);
             yield break;
         }
-
+        
         public static IEnumerator LoadVRTPButton(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(2f);
@@ -191,24 +191,16 @@ namespace TeleporterVR
             {
                 menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.goodIcon;
                 menu.getMainButton().Disabled(false);
-                if (Main.VRTeleportVisible.Value)
+                if (Main.VRTeleportVisible.Value && VRTeleport != null)
                     VRTeleport.Disabled(false);
             }
             else
             {
                 menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.badIcon;
                 menu.getMainButton().Disabled(true);
-                if (Main.VRTeleportVisible.Value)
+                if (Main.VRTeleportVisible.Value && VRTeleport != null)
                     VRTeleport.Disabled(true);
             }
-            yield break;
-        }
-
-        private static IEnumerator ShiftButtons()
-        {
-            yield return new WaitForSecondsRealtime(4f);
-            //if (Logic.ModCompatibility.DiscordMute)
-                //VRTeleport.getGameObject().GetComponentInChildren<Transform>().localPosition = new Vector3(-1400f, 600.8f, 0.0f);
             yield break;
         }
 
@@ -240,14 +232,15 @@ namespace TeleporterVR
             LoadPos3.setToolTip(Language.LoadPos_Tooltip);
             LoadPos4.setToolTip(Language.LoadPos_Tooltip);
 
-            userSel_TPto.setButtonText(Language.theWord_Teleport);
+            if (userSel_TPto != null)
+                userSel_TPto.setButtonText(Language.theWord_Teleport);
 
             MelonLoader.MelonCoroutines.Start(DoLateUpdateButtonText());
 
             if (Main.isDebug)
                 MelonLoader.MelonLogger.Msg("Updated button text and tooltip text");
         }
-
+        
         private static IEnumerator DoLateUpdateButtonText()
         {
             yield return new WaitForSeconds(3f);
@@ -261,5 +254,6 @@ namespace TeleporterVR
             }
             catch { MelonLoader.MelonLogger.Error("Could not update VRTeleport Button Text"); }
         }
+        
     }
 }

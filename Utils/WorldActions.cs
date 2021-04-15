@@ -96,7 +96,8 @@ namespace TeleporterVR.Utils
         internal static void OnLeftWorld()
         {
             WorldAllowed = false;
-            VRUtils.active = false;
+            if (Menu.VRTeleport != null)
+                Menu.VRTeleport.setToggleState(false, true);
         }
     }
 }

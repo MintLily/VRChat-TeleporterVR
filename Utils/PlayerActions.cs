@@ -35,11 +35,7 @@ namespace TeleporterVR.Utils
 
         public static PlayerManager GetPlayerManager() { return PlayerManager.field_Private_Static_PlayerManager_0; }
 
-        public static void Teleport(VRCPlayer player)
-        {
-            GetLocalVRCPlayer().transform.position = player.transform.position;
-            //GetLocalVRCPlayer().transform.rotation = player.transform.rotation;
-        }
+        public static void Teleport(VRCPlayer player) { GetLocalVRCPlayer().transform.position = player.transform.position; }
 
         public static VRCPlayer GetSelectedPlayer() { return QMStuff.GetQuickMenuInstance().field_Private_Player_0.field_Internal_VRCPlayer_0; }
     }

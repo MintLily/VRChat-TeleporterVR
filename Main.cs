@@ -62,7 +62,6 @@ namespace TeleporterVR
 
             Patches.Init();
             Language.InitLanguageChange();
-            //ModCompatibility.Init();
 
             MelonLogger.Msg("Initialized!");
         }
@@ -72,6 +71,7 @@ namespace TeleporterVR
             Menu.InitUi();
             ResourceManager.Init();
             VRUtils.Init();
+            GetSetWorld.Init();
             MelonCoroutines.Start(UiUtils.AllowToolTipTextColor());
         }
 
@@ -85,7 +85,7 @@ namespace TeleporterVR
 
             Menu.UpdateButtonText();
 
-            preferRightHand.Value = VRUtils.perferRightHand;
+            preferRightHand.Value = VRUtils.preferRightHand;
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
@@ -97,14 +97,16 @@ namespace TeleporterVR
                     break;
                 default:
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                    MelonCoroutines.Start(GetSetWorld.DelayedLoad());
                     break;
             }
         }
 
-        public override void OnApplicationQuit() { preferRightHand.Value = VRUtils.perferRightHand; }
+        public override void OnApplicationQuit() { preferRightHand.Value = VRUtils.preferRightHand; }
 
         public override void OnUpdate()
         {
+            VRUtils.OnUpdate();
             // This check is to keep the menu Disabled in Disallowed worlds, this was super easy to patch into or use UnityExplorer to re-enable the button
             if (!WorldActions.WorldAllowed && Patches.IsQMOpen && (Menu.menu.getMainButton().getGameObject().GetComponent<Button>().enabled || Menu.VRTeleport.getGameObject().GetComponent<Button>().enabled) &&
                 Menu.menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite == ResourceManager.badIcon)
