@@ -35,23 +35,20 @@ namespace TeleporterVR.Utils
                     case "allowed":
                         WorldAllowed = true;
                         if (Main.isDebug)
-                            MelonLogger.Msg("EmmVRC Allowed");
-                        if (Main.visible.Value && Menu.userSel_TPto != null)
-                            Menu.userSel_TPto.Disabled(false);
-                        if (Main.VRTeleportVisible.Value && Menu.VRTeleport != null)
-                            Menu.VRTeleport.Disabled(false);
+                            MelonLogger.Msg(ConsoleColor.Cyan, "EmmVRC Allowed");
+                        Menu.userSel_TPto.Disabled(false);
+                        Menu.VRTeleport.Disabled(false);
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                         yield break;
 
                     case "denied":
                         WorldAllowed = false;
                         if (Main.isDebug)
-                            MelonLogger.Msg("EmmVRC Disallowed");
-                        if (Main.visible.Value && Menu.userSel_TPto != null)
-                            Menu.userSel_TPto.Disabled(true);
-                        if (Main.VRTeleportVisible.Value && Menu.VRTeleport != null)
-                            Menu.VRTeleport.Disabled(true);
+                            MelonLogger.Msg(ConsoleColor.Red, "EmmVRC Disallowed");
+                        Menu.userSel_TPto.Disabled(true);
+                        Menu.VRTeleport.Disabled(true);
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                        Menu.VRTeleport.setToggleState(false, true);
                         yield break;
                 }
 
@@ -69,21 +66,18 @@ namespace TeleporterVR.Utils
                         if (worldTag.IndexOf("game", StringComparison.OrdinalIgnoreCase) >= 0)
                         {
                             if (Main.isDebug)
-                                MelonLogger.Msg("Found Game Tag(s)");
+                                MelonLogger.Msg(ConsoleColor.Red, "Found Game Tag(s)");
                             WorldAllowed = false;
-                            if (Main.visible.Value && Menu.userSel_TPto != null)
-                                Menu.userSel_TPto.Disabled(true);
-                            if (Main.VRTeleportVisible.Value && Menu.VRTeleport != null)
-                                Menu.VRTeleport.Disabled(true);
+                            Menu.userSel_TPto.Disabled(true);
+                            Menu.VRTeleport.Disabled(true);
                             MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                            Menu.VRTeleport.setToggleState(false, true);
                             return;
                         }
 
                     WorldAllowed = true;
-                    if (Main.visible.Value && Menu.userSel_TPto != null)
-                        Menu.userSel_TPto.Disabled(false);
-                    if (Main.VRTeleportVisible.Value && Menu.VRTeleport != null)
-                        Menu.VRTeleport.Disabled(false);
+                    Menu.userSel_TPto.Disabled(false);
+                    Menu.VRTeleport.Disabled(false);
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                 }
                 else
@@ -96,8 +90,7 @@ namespace TeleporterVR.Utils
         internal static void OnLeftWorld()
         {
             WorldAllowed = false;
-            if (Menu.VRTeleport != null)
-                Menu.VRTeleport.setToggleState(false, true);
+            Menu.VRTeleport.setToggleState(false, true);
         }
     }
 }

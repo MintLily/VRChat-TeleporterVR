@@ -35,10 +35,23 @@ namespace TeleporterVR
             rec.anchoredPosition += new Vector2(-125f, -125f);
             rec.sizeDelta /= new Vector2(2.5f, 2.5f);
 
-            if (Main.visible.Value)
-                MelonLoader.MelonCoroutines.Start(LoadUserSelectTPButton());
-            if (Main.VRTeleportVisible.Value)
-                MelonLoader.MelonCoroutines.Start(LoadVRTPButton());
+            userSel_TPto = new QMSingleButton("UserInteractMenu", Main.userSel_x.Value, Main.userSel_y.Value, Language.theWord_Teleport, () =>
+            {
+                if (WorldActions.WorldAllowed)
+                    PlayerActions.Teleport(PlayerActions.GetSelectedPlayer());
+            }, "Teleport to Selected Player");
+            userSel_TPto.getGameObject().name = BuildInfo.Name + "_TPToPlayerButton";
+
+            VRTeleport = new QMToggleButton("ShortcutMenu", 3, -2, "VR", () =>
+            {
+                VRUtils.active = true;
+            }, Language.theWord_Teleport, () =>
+            {
+                VRUtils.active = false;
+            }, Language.perferedHand_Tooltip);
+            VRTeleport.getGameObject().GetComponent<RectTransform>().anchoredPosition -= new Vector2(92f, 66.2f);
+            VRTeleport.getGameObject().GetComponentInChildren<Transform>().localScale = new Vector3(0.6f, 0.75f, 1.0f);
+            VRTeleport.getGameObject().name = BuildInfo.Name + "_VRTPToggleButton";
 
             TPtoName = new QMSingleButton(menu, 1, 0, Logic.Language.TPtoName_Text, () =>
             {
@@ -135,72 +148,25 @@ namespace TeleporterVR
             LoadPos4.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
 
             MelonLoader.MelonCoroutines.Start(UpdateMenuIcon());
-            //if (VRTeleport != null) MelonLoader.MelonCoroutines.Start(ShiftButtons());
+            UpdateUserSelectTeleportButton();
+            UpdateVRTeleportButton();
+            perferdHand.setToggleState(Main.preferRightHand.Value);
 
             if (Main.isDebug)
-                MelonLoader.MelonLogger.Msg("Finished creating Menus");
+                MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Finished creating Menus");
         }
 
-        public static IEnumerator LoadUserSelectTPButton(bool ignoreWait = true)
-        {
-            if (!ignoreWait) yield return new WaitForSeconds(2f);
-            if (userSel_TPto == null)
-                yield break;
+        public static void UpdateUserSelectTeleportButton() { userSel_TPto.setActive(Main.visible.Value); }
 
-            userSel_TPto = new QMSingleButton("UserInteractMenu", Main.userSel_x.Value, Main.userSel_y.Value, Language.theWord_Teleport, () =>
-            {
-                if (WorldActions.WorldAllowed)
-                    PlayerActions.Teleport(PlayerActions.GetSelectedPlayer());
-            }, "Teleport to Selected Player");
-            userSel_TPto.getGameObject().name = BuildInfo.Name + "_TPToPlayerButton";
-
-            yield return new WaitForSeconds(1f);
-            if (!WorldActions.WorldAllowed)
-                userSel_TPto.Disabled(true);
-            yield break;
-        }
-        
-        public static IEnumerator LoadVRTPButton(bool ignoreWait = true)
-        {
-            if (!ignoreWait) yield return new WaitForSeconds(2f);
-            if (VRTeleport != null)
-                yield break;
-
-            VRTeleport = new QMToggleButton("ShortcutMenu", 3, -2, "VR", () =>
-            {
-                VRUtils.active = true;
-            }, Language.theWord_Teleport, () =>
-            {
-                VRUtils.active = false;
-            }, Language.perferedHand_Tooltip);
-            VRTeleport.getGameObject().GetComponent<RectTransform>().anchoredPosition -= new Vector2(92f, 66.2f);
-
-            VRTeleport.getGameObject().GetComponentInChildren<Transform>().localScale = new Vector3(0.6f, 0.75f, 1.0f);
-            VRTeleport.getGameObject().name = BuildInfo.Name + "_VRTPToggleButton";
-
-            yield return new WaitForSeconds(1f);
-            if (!WorldActions.WorldAllowed)
-                VRTeleport.Disabled(true);
-            yield break;
-        }
+        public static void UpdateVRTeleportButton() { VRTeleport.setActive(Main.VRTeleportVisible.Value); }
 
         public static IEnumerator UpdateMenuIcon(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(1f);
-            if (WorldActions.WorldAllowed)
-            {
-                menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.goodIcon;
-                menu.getMainButton().Disabled(false);
-                if (Main.VRTeleportVisible.Value && VRTeleport != null)
-                    VRTeleport.Disabled(false);
-            }
-            else
-            {
-                menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.badIcon;
-                menu.getMainButton().Disabled(true);
-                if (Main.VRTeleportVisible.Value && VRTeleport != null)
-                    VRTeleport.Disabled(true);
-            }
+            menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = WorldActions.WorldAllowed ? ResourceManager.goodIcon : ResourceManager.badIcon;
+            menu.getMainButton().Disabled(!WorldActions.WorldAllowed);
+            VRTeleport.Disabled(!WorldActions.WorldAllowed);
+            userSel_TPto.Disabled(!WorldActions.WorldAllowed);
             yield break;
         }
 
@@ -232,28 +198,13 @@ namespace TeleporterVR
             LoadPos3.setToolTip(Language.LoadPos_Tooltip);
             LoadPos4.setToolTip(Language.LoadPos_Tooltip);
 
-            if (userSel_TPto != null)
-                userSel_TPto.setButtonText(Language.theWord_Teleport);
+            userSel_TPto.setButtonText(Language.theWord_Teleport);
 
-            MelonLoader.MelonCoroutines.Start(DoLateUpdateButtonText());
+            VRTeleport.setOffText(Language.theWord_Teleport);
+            VRTeleport.setToolTip(Language.perferedHand_Tooltip);
 
             if (Main.isDebug)
                 MelonLoader.MelonLogger.Msg("Updated button text and tooltip text");
         }
-        
-        private static IEnumerator DoLateUpdateButtonText()
-        {
-            yield return new WaitForSeconds(3f);
-            try
-            {
-                if (VRTeleport != null)
-                {
-                    VRTeleport.setOffText(Language.theWord_Teleport);
-                    VRTeleport.setToolTip(Language.perferedHand_Tooltip);
-                }
-            }
-            catch { MelonLoader.MelonLogger.Error("Could not update VRTeleport Button Text"); }
-        }
-        
     }
 }

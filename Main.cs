@@ -35,7 +35,7 @@ namespace TeleporterVR
             if (MelonDebug.IsEnabled() || Environment.CommandLine.Contains("--vrt.debug"))
             {
                 isDebug = true;
-                MelonLogger.Msg("Debug mode is active");
+                MelonLogger.Msg(ConsoleColor.Green, "Debug mode is active");
                 //if (!XRDevice.isPresent) VRUtils.inVR = true;
             }
             
@@ -77,14 +77,9 @@ namespace TeleporterVR
 
         public override void OnPreferencesSaved()
         {
-            if (Menu.userSel_TPto != null && !visible.Value) Menu.userSel_TPto.DestroyMe();
-            else if (Menu.userSel_TPto == null && visible.Value) MelonCoroutines.Start(Menu.LoadUserSelectTPButton(false));
-
-            if (Menu.VRTeleport != null && !VRTeleportVisible.Value) Menu.VRTeleport.DestroyMe();
-            else if (Menu.VRTeleport == null && VRTeleportVisible.Value) MelonCoroutines.Start(Menu.LoadVRTPButton(false));
-
+            Menu.UpdateUserSelectTeleportButton();
+            Menu.UpdateVRTeleportButton();
             Menu.UpdateButtonText();
-
             preferRightHand.Value = VRUtils.preferRightHand;
         }
 
@@ -112,8 +107,8 @@ namespace TeleporterVR
                 Menu.menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite == ResourceManager.badIcon)
             {
                 Menu.menu.getMainButton().Disabled(true);
-                if (VRTeleportVisible.Value)
-                    Menu.VRTeleport.Disabled(true);
+                Menu.VRTeleport.Disabled(true);
+                Menu.userSel_TPto.Disabled(true);
             }
         }
     }

@@ -16,9 +16,8 @@ namespace TeleporterVR.Utils
 
     class VRUtils
     {
-        private static bool _oculus = false;
+        private static bool _oculus = false, faulted = false;
         private static Ray ray;
-        private static bool readyR, readyL;
         public static bool active;
 
         private static GameObject ControllerLeft, ControllerRight;
@@ -35,28 +34,32 @@ namespace TeleporterVR.Utils
 
         private static void AssignBindings()
         {
-            if (_oculus) {
-                ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/RightHandAnchor/PointerOrigin (1)");
-                ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/LeftHandAnchor/PointerOrigin (1)");
-                if (Main.isDebug) MelonLoader.MelonLogger.Msg("Binds set: Oculus");
+            try {
+                if (_oculus) {
+                    ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/RightHandAnchor/PointerOrigin (1)");
+                    ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/LeftHandAnchor/PointerOrigin (1)");
+                    if (Main.isDebug) MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Binds set: Oculus");
+                }
+                else {
+                    ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (right)/PointerOrigin");
+                    ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (left)/PointerOrigin");
+                    if (Main.isDebug) MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Binds set: SteamVR");
+                }
             }
-            else {
-                ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (right)/PointerOrigin");
-                ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (left)/PointerOrigin");
-                if (Main.isDebug) MelonLoader.MelonLogger.Msg("Binds set: SteamVR");
-            }
+            catch { faulted = true; }
         }
 
-        public static /*async*/ void OnUpdate()
+        public static void OnUpdate()
         {
-            if (!active || !WorldActions.WorldAllowed || (!Main.VRTeleportVisible.Value && Menu.VRTeleport == null)) return;
+            if (!active || faulted) return;
             if (ControllerLeft == null || ControllerRight == null) AssignBindings();
-            if (active && (preferRightHand ? Input.GetButtonDown(InputInfo.RightTrigger) : Input.GetButtonDown(InputInfo.LeftTrigger))) {
+            if (preferRightHand ? Input.GetButtonDown(InputInfo.RightTrigger) : Input.GetButtonDown(InputInfo.LeftTrigger)) {
                 ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) : new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
                 if (Physics.Raycast(ray, out RaycastHit raycastHit))
                     VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
             }
-            //await Task.Delay(50);
+            if (Main.isDebug && faulted)
+                MelonLoader.MelonLogger.Warning("GameObject has faulted");
         }
     }
 }
