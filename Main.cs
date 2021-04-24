@@ -14,7 +14,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.0.0";
+        public const string Version = "4.0.1";
         public const string DownloadLink = "https://github.com/KortyBoi/TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
