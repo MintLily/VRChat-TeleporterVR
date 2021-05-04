@@ -37,6 +37,6 @@ namespace TeleporterVR.Utils
 
         public static void Teleport(VRCPlayer player) { GetLocalVRCPlayer().transform.position = player.transform.position; }
 
-        public static VRCPlayer GetSelectedPlayer() { return QMStuff.GetQuickMenuInstance().field_Private_Player_0.field_Internal_VRCPlayer_0; }
+        public static VRCPlayer GetSelectedPlayer() { return QMStuff.GetQuickMenuInstance().field_Private_Player_0._vrcplayer; }
     }
 }

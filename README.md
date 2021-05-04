@@ -7,7 +7,7 @@ Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
 MelonLoader: v0.3.0 (Alpha)<br>
-Game: VRChat (2021.1.5 [build 1067+])<br>
+Game: VRChat (2021.2.1 [build 1088+])<br>
 [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### MelonPreferences (Default Values)
@@ -66,6 +66,12 @@ Oculus Support - Don't use SteamVR, that's okay, this mod was build for both Nat
 
 
 # Change Log (since Lily's edits)
+### v4.0.2
+* Updated for VRChat build 1088
+
+### v4.0.1
+* Updated internal link
+
 ### v4.0.0
 * Initial Release for MelonLoader
 
