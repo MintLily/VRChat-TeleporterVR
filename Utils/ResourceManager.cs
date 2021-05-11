@@ -19,6 +19,7 @@ namespace TeleporterVR.Utils
 		private static AssetBundle Bundle;
         public static Sprite goodIcon;
         public static Sprite badIcon;
+        public static Texture2D AMMain, AMVRTP, AMSave, AMLoad, AMSL1, AMSL2, AMSL3, AMSL4;
 
 		private static Sprite LoadSprite(string sprite)
 		{
@@ -28,7 +29,15 @@ namespace TeleporterVR.Utils
 			return sprite2;
 		}
 
-		public static void Init() { MelonCoroutines.Start(LoadResources()); }
+        private static Texture2D LoadTexture(string Texture)
+        {
+            Texture2D Texture2 = Bundle.LoadAsset_Internal(Texture, Il2CppType.Of<Texture2D>()).Cast<Texture2D>();
+            Texture2.hideFlags |= HideFlags.DontUnloadUnusedAsset;
+            Texture2.hideFlags = HideFlags.HideAndDontSave;
+            return Texture2;
+        }
+
+        public static void Init() { MelonCoroutines.Start(LoadResources()); }
 
 		private static IEnumerator LoadResources()
         {
@@ -41,13 +50,24 @@ namespace TeleporterVR.Utils
                     stream.CopyTo(memoryStream);
                     Bundle = AssetBundle.LoadFromMemory_Internal(memoryStream.ToArray(), 0);
                     Bundle.hideFlags |= HideFlags.DontUnloadUnusedAsset;
-                    try { goodIcon = LoadSprite("people-solid.png"); } catch { MelonLogger.Error("Failed to load image 1"); }
-                    try { badIcon = LoadSprite("invalid.png"); } catch { MelonLogger.Error("Failed to load image 2"); }
+                    try { goodIcon = LoadSprite("people-solid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid.png"); }
+                    try { badIcon = LoadSprite("invalid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid.png"); }
+                    
+                    // Added with ActionMenuApi
+                    try { AMMain = LoadTexture("people-solid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid-tex.png"); }
+                    try { AMVRTP = LoadTexture("vrtp-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: vrtp-icon.png"); }
+                    try { AMSave = LoadTexture("save-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: save-icon.png"); }
+                    try { AMLoad = LoadTexture("load-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: load-icon.png"); }
+                    try { AMSL1 = LoadTexture("Option1.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option1.png"); }
+                    try { AMSL2 = LoadTexture("Option2.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option2.png"); }
+                    try { AMSL3 = LoadTexture("Option3.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option3.png"); }
+                    try { AMSL4 = LoadTexture("Option4.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option4.png"); }
+                    // - End -
                 }
             }
 
             if (Main.isDebug)
-                MelonLoader.MelonLogger.Msg("Finihsed with Asset Bundle Resource Managment");
+                MelonLogger.Msg("Finihsed with Asset Bundle Resource Managment");
             yield break;
         }
 	}

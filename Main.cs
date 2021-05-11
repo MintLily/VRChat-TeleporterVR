@@ -14,7 +14,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.0.2";
+        public const string Version = "4.1.0";
         public const string DownloadLink = "https://github.com/KortyBoi/TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -29,6 +29,7 @@ namespace TeleporterVR
         public static MelonPreferences_Entry<bool> preferRightHand;
         public static MelonPreferences_Entry<bool> VRTeleportVisible;
         public static MelonPreferences_Entry<string> OverrideLanguage;
+        public static MelonPreferences_Entry<bool> ActionMenuApiIntegration;
 
         public override void OnApplicationStart()
         {
@@ -36,7 +37,6 @@ namespace TeleporterVR
             {
                 isDebug = true;
                 MelonLogger.Msg(ConsoleColor.Green, "Debug mode is active");
-                //if (!XRDevice.isPresent) VRUtils.inVR = true;
             }
             
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
@@ -44,7 +44,7 @@ namespace TeleporterVR
             userSel_x = (MelonPreferences_Entry<int>)melon.CreateEntry("UserInteractTPButtonPositionX", 1, "X-Coordinate (User Selected TPButton)");
             userSel_y = (MelonPreferences_Entry<int>)melon.CreateEntry("UserInteractTPButtonPositionY", 3, "Y-Coordinate (User Selected TPButton)");
             preferRightHand = (MelonPreferences_Entry<bool>)melon.CreateEntry("perferRightHand", true, "Right Handed", true);
-            VRTeleportVisible = (MelonPreferences_Entry<bool>)melon.CreateEntry("VRTeleportVisible", false, "Is VRTeleport Button Visible");
+            VRTeleportVisible = (MelonPreferences_Entry<bool>)melon.CreateEntry("VRTeleportVisible", true, "Is VRTeleport Button Visible");
             OverrideLanguage = (MelonPreferences_Entry<string>)melon.CreateEntry("overrideLanguage", "off", "Override Language");
             ExpansionKitApi.RegisterSettingAsStringEnum(melon.Identifier, OverrideLanguage.Identifier, 
                 new[] {
@@ -53,23 +53,27 @@ namespace TeleporterVR
                 ("fr", "Français"),
                 ("de", "Deutsch"),
                 ("ja", "日本語"),
-                ("no", "Bokmål"),
+                ("no_bm", "Bokmål"),
                 ("ru", "русский"),
                 ("es", "Español"),
                 ("po", "Português"),
                 ("sw", "Svensk")
             });
+            ActionMenuApiIntegration = (MelonPreferences_Entry<bool>)melon.CreateEntry("ActionMenuApiIntegration", false, "Has ActionMenu Support\n(disable requires game restart)");
 
+            ResourceManager.Init();
             Patches.Init();
             Language.InitLanguageChange();
+            ActionMenu.InitUi();
 
             MelonLogger.Msg("Initialized!");
+
+            if (OverrideLanguage.Value == "no") OverrideLanguage.Value = "no_bm";
         }
 
         public override void VRChat_OnUiManagerInit()
         {
             Menu.InitUi();
-            ResourceManager.Init();
             VRUtils.Init();
             GetSetWorld.Init();
             MelonCoroutines.Start(UiUtils.AllowToolTipTextColor());
@@ -79,8 +83,18 @@ namespace TeleporterVR
         {
             Menu.UpdateUserSelectTeleportButton();
             Menu.UpdateVRTeleportButton();
+            Menu.UpdateLeftRightHandButton();
             Menu.UpdateButtonText();
             preferRightHand.Value = VRUtils.preferRightHand;
+            if (ActionMenuApiIntegration.Value // if true
+                && !ActionMenu.hasStarted // if has not started yet
+                && ActionMenu.hasAMApiInstalled // if gompo's mod is installed
+                && !ActionMenu.AMApiOutdated // if gompo's mod is not outdated
+                && ActionMenu.VRTP == null) // if (one) ActionMenu element is not created
+            {
+                MelonLogger.Msg(ConsoleColor.Yellow, "You may have to change or reload your current world to allow the ActionMenu to show.");
+                ActionMenu.InitUi();
+            }
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
@@ -101,7 +115,6 @@ namespace TeleporterVR
 
         public override void OnUpdate()
         {
-            VRUtils.OnUpdate();
             // This check is to keep the menu Disabled in Disallowed worlds, this was super easy to patch into or use UnityExplorer to re-enable the button
             if (!WorldActions.WorldAllowed && Patches.IsQMOpen && (Menu.menu.getMainButton().getGameObject().GetComponent<Button>().enabled || Menu.VRTeleport.getGameObject().GetComponent<Button>().enabled) &&
                 Menu.menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite == ResourceManager.badIcon)
