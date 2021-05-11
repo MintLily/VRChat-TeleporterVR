@@ -67,7 +67,7 @@ namespace TeleporterVR.Logic
             catch (Exception e) { MelonLogger.Error("Unable to patch Quickmenu Open/Close functions!\n" + e.ToString()); }
 
             if (Main.isDebug)
-                MelonLogger.Msg("Finished with Patches");
+                MelonLogger.Msg(ConsoleColor.Green, "Finished with Patches");
         }
 
         private static void LeftWorldPatch()

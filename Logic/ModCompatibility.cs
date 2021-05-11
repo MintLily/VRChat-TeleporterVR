@@ -9,10 +9,11 @@ namespace TeleporterVR.Logic
 {
     class ModCompatibility
     {
-        //public static bool  = false;
+        public static bool  = false;
 
         public static void Init()
         {
+            
         }
     }
 }
