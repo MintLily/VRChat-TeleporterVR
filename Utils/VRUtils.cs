@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using MelonLoader;
 
 namespace TeleporterVR.Utils
 {
@@ -16,50 +13,51 @@ namespace TeleporterVR.Utils
 
     class VRUtils
     {
-        private static bool _oculus = false, faulted = false;
+        private static bool _oculus = false;
         private static Ray ray;
-        public static bool active;
-
+        public static bool active, preferRightHand;
         private static GameObject ControllerLeft, ControllerRight;
 
-        public static bool preferRightHand;
+        private static bool InputDown {
+            get {
+                return Input.GetButtonDown(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) ||
+                    Input.GetAxisRaw(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) != 0 ||
+                    Input.GetAxis(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) >= 0.75f;
+            }
+        }
 
         public static void Init()
         {
-            if (Environment.CurrentDirectory.Contains("vrchat-vrchat")) // Oculus Check came from emmVRC (Thanks Emmy)
-                _oculus = true;
-
+            if (Environment.CurrentDirectory.Contains("vrchat-vrchat")) _oculus = true; // Oculus Check came from emmVRC (Thanks Emmy)
             AssignBindings();
+            MelonCoroutines.Start(UpdateVRTP());
         }
 
         private static void AssignBindings()
         {
-            try {
-                if (_oculus) {
-                    ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/RightHandAnchor/PointerOrigin (1)");
-                    ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/LeftHandAnchor/PointerOrigin (1)");
-                    if (Main.isDebug) MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Binds set: Oculus");
-                }
-                else {
-                    ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (right)/PointerOrigin");
-                    ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (left)/PointerOrigin");
-                    if (Main.isDebug) MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Binds set: SteamVR");
-                }
+            if (_oculus) {
+                ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/RightHandAnchor/PointerOrigin (1)");
+                ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/LeftHandAnchor/PointerOrigin (1)");
+                if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Blue, "Binds set: Oculus");
+            } else {
+                ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (right)/PointerOrigin");
+                ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (left)/PointerOrigin");
+                if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Blue, "Binds set: SteamVR");
             }
-            catch { faulted = true; }
         }
 
-        public static void OnUpdate()
+        public static IEnumerator UpdateVRTP()
         {
-            if (!active || faulted) return;
-            if (ControllerLeft == null || ControllerRight == null) AssignBindings();
-            if (preferRightHand ? Input.GetButtonDown(InputInfo.RightTrigger) : Input.GetButtonDown(InputInfo.LeftTrigger)) {
-                ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) : new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
-                if (Physics.Raycast(ray, out RaycastHit raycastHit))
-                    VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
+            while (active) {
+                if (ControllerLeft == null || ControllerRight == null) AssignBindings();
+                if (InputDown) {
+                    ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+                        new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
+                    if (Physics.Raycast(ray, out RaycastHit raycastHit))
+                        VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
+                }
+                yield return new WaitForSeconds(0.05f);
             }
-            if (Main.isDebug && faulted)
-                MelonLoader.MelonLogger.Warning("GameObject has faulted");
         }
     }
 }
