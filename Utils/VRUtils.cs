@@ -13,8 +13,7 @@ namespace TeleporterVR.Utils
 
     class VRUtils
     {
-        private static bool _oculus = false;
-        private static Ray ray;
+        private static bool _oculus;
         public static bool active, preferRightHand;
         private static GameObject ControllerLeft, ControllerRight;
 
@@ -30,7 +29,6 @@ namespace TeleporterVR.Utils
         {
             if (Environment.CurrentDirectory.Contains("vrchat-vrchat")) _oculus = true; // Oculus Check came from emmVRC (Thanks Emmy)
             AssignBindings();
-            MelonCoroutines.Start(UpdateVRTP());
         }
 
         private static void AssignBindings()
@@ -45,13 +43,13 @@ namespace TeleporterVR.Utils
                 if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Blue, "Binds set: SteamVR");
             }
         }
-
+        
         public static IEnumerator UpdateVRTP()
         {
             while (active) {
                 if (ControllerLeft == null || ControllerRight == null) AssignBindings();
                 if (InputDown) {
-                    ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+                    Ray ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
                         new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
                     if (Physics.Raycast(ray, out RaycastHit raycastHit))
                         VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;

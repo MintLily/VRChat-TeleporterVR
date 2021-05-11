@@ -107,6 +107,7 @@ namespace TeleporterVR
                 default:
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                     MelonCoroutines.Start(GetSetWorld.DelayedLoad());
+                    Menu.VRTeleport.setToggleState(false, true);
                     break;
             }
         }
