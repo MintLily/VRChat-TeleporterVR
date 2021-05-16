@@ -19,7 +19,7 @@ namespace TeleporterVR.Utils
 		private static AssetBundle Bundle;
         public static Sprite goodIcon;
         public static Sprite badIcon;
-        public static Texture2D AMMain, AMVRTP, AMSave, AMLoad, AMSL1, AMSL2, AMSL3, AMSL4;
+        public static Texture2D AMMain, AMBad, AMVRTP, AMSave, AMLoad, AMSL1, AMSL2, AMSL3, AMSL4;
 
 		private static Sprite LoadSprite(string sprite)
 		{
@@ -55,6 +55,7 @@ namespace TeleporterVR.Utils
                     
                     // Added with ActionMenuApi
                     try { AMMain = LoadTexture("people-solid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid-tex.png"); }
+                    try { AMBad = LoadTexture("invalid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid-tex.png"); }
                     try { AMVRTP = LoadTexture("vrtp-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: vrtp-icon.png"); }
                     try { AMSave = LoadTexture("save-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: save-icon.png"); }
                     try { AMLoad = LoadTexture("load-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: load-icon.png"); }

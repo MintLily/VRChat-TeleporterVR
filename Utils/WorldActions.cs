@@ -7,6 +7,7 @@ using MelonLoader;
 using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using VRC.Core;
+using ActionMenuApi.Api;
 
 // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/Utilities.cs
 namespace TeleporterVR.Utils
@@ -16,8 +17,6 @@ namespace TeleporterVR.Utils
         internal static bool WorldAllowed;
         internal static IEnumerator CheckWorld()
         {
-            // Hi KiraiChan, while removing this check too, add yourself as "author" too?
-            // So it isn't just me in your unlocked version
             if (Main.isDebug)
                 MelonLogger.Msg("Checking World");
             string worldId = RoomManager.field_Internal_Static_ApiWorld_0.id;
@@ -38,7 +37,10 @@ namespace TeleporterVR.Utils
                             MelonLogger.Msg(ConsoleColor.Cyan, "EmmVRC Allowed");
                         Menu.userSel_TPto.Disabled(false);
                         Menu.VRTeleport.Disabled(false);
+                        ActionMenu.subMenu.locked = false;
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                        MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
+                        AMUtils.RefreshActionMenu();
                         yield break;
 
                     case "denied":
@@ -47,8 +49,11 @@ namespace TeleporterVR.Utils
                             MelonLogger.Msg(ConsoleColor.Red, "EmmVRC Disallowed");
                         Menu.userSel_TPto.Disabled(true);
                         Menu.VRTeleport.Disabled(true);
+                        ActionMenu.subMenu.locked = true;
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                        MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                         Menu.VRTeleport.setToggleState(false, true);
+                        AMUtils.RefreshActionMenu();
                         yield break;
                 }
 
@@ -70,15 +75,21 @@ namespace TeleporterVR.Utils
                             WorldAllowed = false;
                             Menu.userSel_TPto.Disabled(true);
                             Menu.VRTeleport.Disabled(true);
+                            ActionMenu.subMenu.locked = true;
                             MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                            MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                             Menu.VRTeleport.setToggleState(false, true);
+                            AMUtils.RefreshActionMenu();
                             return;
                         }
 
                     WorldAllowed = true;
                     Menu.userSel_TPto.Disabled(false);
                     Menu.VRTeleport.Disabled(false);
+                    ActionMenu.subMenu.locked = false;
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                    MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
+                    AMUtils.RefreshActionMenu();
                 }
                 else
                 {

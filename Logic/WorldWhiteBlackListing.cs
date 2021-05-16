@@ -4,6 +4,7 @@ using System.Net;
 using MelonLoader;
 using Newtonsoft.Json;
 using UnityEngine;
+using ActionMenuApi.Api;
 
 namespace TeleporterVR.Logic
 {
@@ -65,7 +66,10 @@ namespace TeleporterVR.Logic
                         MelonLogger.Msg(System.ConsoleColor.Cyan, "Force Allowed");
                     Menu.userSel_TPto.Disabled(false);
                     Menu.VRTeleport.Disabled(false);
+                    ActionMenu.subMenu.locked = false;
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                    MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
+                    AMUtils.RefreshActionMenu();
                     break;
                 case 2: // disallowed
                     Utils.WorldActions.WorldAllowed = false;
@@ -73,7 +77,10 @@ namespace TeleporterVR.Logic
                         MelonLogger.Msg(System.ConsoleColor.Red, "Force Disallowed");
                     Menu.userSel_TPto.Disabled(true);
                     Menu.VRTeleport.Disabled(true);
+                    ActionMenu.subMenu.locked = true;
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
+                    MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
+                    AMUtils.RefreshActionMenu();
                     break;
                 case 3: // only disable VRTP
                     Menu.VRTeleport.Disabled(true);

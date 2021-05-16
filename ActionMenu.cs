@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using ActionMenuApi;
+using ActionMenuApi.Api;
+using ActionMenuApi.Pedals;
 using TeleporterVR.Logic;
 using TeleporterVR.Utils;
 using MelonLoader;
@@ -15,9 +17,10 @@ namespace TeleporterVR
 {
     public class ActionMenu
     {
-        private static readonly string[] AMApiOutdatedVersions = { "0.1.0" };//, ""};
+        private static readonly string[] AMApiOutdatedVersions = { "0.1.0" , "0.1.2"};
         public static bool hasAMApiInstalled, AMApiOutdated, hasStarted;
         public static PedalOption VRTP, TP2Name, TP2Coord, Save, Load;
+        internal static PedalSubMenu subMenu;
 
         public static void InitUi()
         {
@@ -33,33 +36,41 @@ namespace TeleporterVR
             } else return;
             if (!Main.ActionMenuApiIntegration.Value) return;
 
-            AMAPI.AddSubMenuToMenu(ActionMenuApi.Types.ActionMenuPageType.Main, "<color=#13cf13>TeleporterVR</color>", () =>
+            subMenu = VRCActionMenuPage.AddSubMenu(ActionMenuPage.Main, "<color=#13cf13>TeleporterVR</color>", () =>
             {
-                VRTP = AMAPI.AddTogglePedalToSubMenu("VR" + Language.theWord_Teleport, false, 
-                    (bool choice) => Menu.VRTeleport.setToggleState(choice, true), ResourceManager.AMVRTP);
+                VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, false,
+                (bool choice) => Menu.VRTeleport.setToggleState(choice, true), ResourceManager.AMVRTP);
 
-                TP2Name = AMAPI.AddButtonPedalToSubMenu(Language.TPtoName_Text, () => Menu.OpenKeyboardForPlayerTP(), ResourceManager.AMMain);
+                TP2Name = CustomSubMenu.AddButton(Language.TPtoName_Text, () => Menu.OpenKeyboardForPlayerTP(), ResourceManager.AMMain);
 
-                TP2Coord = AMAPI.AddButtonPedalToSubMenu(Language.TPtoCoord_Text, () => Menu.OpenKeyboardForCoordTP(), ResourceManager.AMMain);
+                TP2Coord = CustomSubMenu.AddButton(Language.TPtoCoord_Text, () => Menu.OpenKeyboardForCoordTP(), ResourceManager.AMMain);
 
-                Save = AMAPI.AddSubMenuToSubMenu(Language.SavePos, () => 
+                Save = CustomSubMenu.AddSubMenu(Language.SavePos, () =>
                 {
-                    AMAPI.AddButtonPedalToSubMenu(Language.SavePos, () => Menu.SaveAction(1), ResourceManager.AMSL1);
-                    AMAPI.AddButtonPedalToSubMenu(Language.SavePos, () => Menu.SaveAction(2), ResourceManager.AMSL2);
-                    AMAPI.AddButtonPedalToSubMenu(Language.SavePos, () => Menu.SaveAction(3), ResourceManager.AMSL3);
-                    AMAPI.AddButtonPedalToSubMenu(Language.SavePos, () => Menu.SaveAction(4), ResourceManager.AMSL4);
+                    CustomSubMenu.AddButton(Language.SavePos, () => Menu.SaveAction(1), ResourceManager.AMSL1);
+                    CustomSubMenu.AddButton(Language.SavePos, () => Menu.SaveAction(2), ResourceManager.AMSL2);
+                    CustomSubMenu.AddButton(Language.SavePos, () => Menu.SaveAction(3), ResourceManager.AMSL3);
+                    CustomSubMenu.AddButton(Language.SavePos, () => Menu.SaveAction(4), ResourceManager.AMSL4);
                 }, ResourceManager.AMSave);
 
-                Load = AMAPI.AddSubMenuToSubMenu(Language.LoadPos, () => 
+                Load = CustomSubMenu.AddSubMenu(Language.LoadPos, () =>
                 {
-                    AMAPI.AddButtonPedalToSubMenu(Language.LoadPos, () => Menu.LoadAction(1), ResourceManager.AMSL1);
-                    AMAPI.AddButtonPedalToSubMenu(Language.LoadPos, () => Menu.LoadAction(2), ResourceManager.AMSL2);
-                    AMAPI.AddButtonPedalToSubMenu(Language.LoadPos, () => Menu.LoadAction(3), ResourceManager.AMSL3);
-                    AMAPI.AddButtonPedalToSubMenu(Language.LoadPos, () => Menu.LoadAction(4), ResourceManager.AMSL4);
-                }, ResourceManager.AMLoad);
+                    CustomSubMenu.AddButton(Language.LoadPos, () => Menu.LoadAction(1), ResourceManager.AMSL1);
+                    CustomSubMenu.AddButton(Language.LoadPos, () => Menu.LoadAction(2), ResourceManager.AMSL2);
+                    CustomSubMenu.AddButton(Language.LoadPos, () => Menu.LoadAction(3), ResourceManager.AMSL3);
+                    CustomSubMenu.AddButton(Language.LoadPos, () => Menu.LoadAction(4), ResourceManager.AMSL4);
+                }, ResourceManager.AMSave);
             }, ResourceManager.AMMain);
+            subMenu.locked = true;
             hasStarted = true;
             if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Green, "Finished creating ActionMenu");
+        }
+
+        public static IEnumerator UpdateIcon(bool ignoreWait = true)
+        {
+            if (!ignoreWait) yield return new WaitForSeconds(1f);
+            subMenu.icon = WorldActions.WorldAllowed ? ResourceManager.AMMain : ResourceManager.AMBad;
+            yield break;
         }
     }
 }
