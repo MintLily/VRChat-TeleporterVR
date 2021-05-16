@@ -45,7 +45,7 @@ ActionMenu Control - With gompo's [ActionMenuAPI](https://github.com/gompocp/Act
 ### Preview
 ![Preview Main Menu](https://kortyboi.com/img/upload/VRChat_Sfa0ZuMDwQ.jpg)<br>
 ![Preview Menu Content ENG](https://kortyboi.com/img/upload/VRChat_6oSV31AEjG.jpg)
-![ActionMenu Preview](https://kortyboi.com/img/upload/xa24EcvGcE.gif)
+![ActionMenu Preview](https://kortyboi.com/img/upload/ActionMenuApi-Preview.png)
 
 # Credits
 * RubyButtonAPI
