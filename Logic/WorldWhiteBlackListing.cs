@@ -66,10 +66,13 @@ namespace TeleporterVR.Logic
                         MelonLogger.Msg(System.ConsoleColor.Cyan, "Force Allowed");
                     Menu.userSel_TPto.Disabled(false);
                     Menu.VRTeleport.Disabled(false);
-                    ActionMenu.subMenu.locked = false;
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
-                    MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
-                    AMUtils.RefreshActionMenu();
+
+                    if (Main.ActionMenuApiIntegration.Value) {
+                        try { ActionMenu.subMenu.locked = false; } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("ActionMenu subMenu could not be unlocked"); }
+                        try { MelonCoroutines.Start(ActionMenu.UpdateIcon(false)); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to change subMenu Icon"); }
+                        try { AMUtils.RefreshActionMenu(); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to Refresh ActionMenu"); }
+                    }
                     break;
                 case 2: // disallowed
                     Utils.WorldActions.WorldAllowed = false;
@@ -77,10 +80,10 @@ namespace TeleporterVR.Logic
                         MelonLogger.Msg(System.ConsoleColor.Red, "Force Disallowed");
                     Menu.userSel_TPto.Disabled(true);
                     Menu.VRTeleport.Disabled(true);
-                    ActionMenu.subMenu.locked = true;
+                    try { ActionMenu.subMenu.locked = true; } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("ActionMenu subMenu could not be locked"); }
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
-                    MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
-                    AMUtils.RefreshActionMenu();
+                    try { MelonCoroutines.Start(ActionMenu.UpdateIcon(false)); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to change subMenu Icon"); }
+                    try { AMUtils.RefreshActionMenu(); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to Refresh ActionMenu"); }
                     break;
                 case 3: // only disable VRTP
                     Menu.VRTeleport.Disabled(true);
