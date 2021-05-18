@@ -7,7 +7,7 @@ Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
 MelonLoader: v0.3.0 (Alpha)<br>
-Game: VRChat (2021.2.1 [build 1088+]) -- (Tested up to build 1093)<br>
+Game: VRChat (2021.2.1 [build 1088+]) -- (Tested up to build 1095)<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
@@ -29,7 +29,7 @@ UserInteractTPButtonPositionX - X-Coordinate (User Selected TPButton)<br>
 UserInteractTPButtonPositionY - Y-Coordinate (User Selected TPButton)<br>
 preferRightHand  - Prefer Right Handed (for VRTeleport)<br>
 VRTeleportVisible - VRTeleport Button is visible (next to mute button)<br>
-overrideLanguage - force mod into a provided language
+overrideLanguage - force mod into a provided language<br>
 ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) to add options to your Action Menu
 
 ### Special Features
