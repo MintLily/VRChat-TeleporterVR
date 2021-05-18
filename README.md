@@ -11,7 +11,7 @@ Game: VRChat (2021.2.1 [build 1088+]) -- (Tested up to build 1093)<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
-Mod: [ActionMenuAPI](https://github.com/gompocp/ActionMenuApi) v0.1.2+
+Mod: [ActionMenuAPI](https://github.com/gompocp/ActionMenuApi) v0.2.0+
 
 ### MelonPreferences (Default Values)
 ```ini
