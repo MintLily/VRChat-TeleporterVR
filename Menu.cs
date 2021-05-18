@@ -41,18 +41,18 @@ namespace TeleporterVR
             }, "Teleport to Selected Player");
             userSel_TPto.getGameObject().name = BuildInfo.Name + "_TPToPlayerButton";
 
-            object run = MelonLoader.MelonCoroutines.Start(VRUtils.UpdateVRTP());
+            //object run = MelonLoader.MelonCoroutines.Start(VRUtils.UpdateVRTP());
             VRTeleport = new QMToggleButton("ShortcutMenu", 3, -2, "VR", () =>
             {
                 if (WorldActions.WorldAllowed) {
                     VRUtils.active = true;
-                    MelonLoader.MelonCoroutines.Start(VRUtils.UpdateVRTP());
+                    //MelonLoader.MelonCoroutines.Start(VRUtils.UpdateVRTP());
                 }
             }, Language.theWord_Teleport, () =>
             {
                 if (WorldActions.WorldAllowed) {
                     VRUtils.active = false;
-                    MelonLoader.MelonCoroutines.Stop(run);
+                    //MelonLoader.MelonCoroutines.Stop(run);
                 }
             }, Language.perferedHand_Tooltip);
             VRTeleport.getGameObject().GetComponent<RectTransform>().anchoredPosition -= new Vector2(92f, 66.2f);

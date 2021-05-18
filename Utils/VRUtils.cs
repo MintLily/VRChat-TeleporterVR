@@ -13,7 +13,7 @@ namespace TeleporterVR.Utils
 
     class VRUtils
     {
-        private static bool _oculus;
+        private static bool _oculus, __ = true; // fear my variable naming scheme
         public static bool active, preferRightHand;
         private static GameObject ControllerLeft, ControllerRight;
 
@@ -43,8 +43,21 @@ namespace TeleporterVR.Utils
                 if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Blue, "Binds set: SteamVR");
             }
         }
+
+        public static void OnUpdate() // Suggestion from Davi > Only click once at a time to not spam teleport OnUpdate
+        {
+            if (!active) return;
+            if (ControllerLeft == null || ControllerRight == null) AssignBindings();
+            if (__ && InputDown) {
+                Ray ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+                        new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
+                if (Physics.Raycast(ray, out RaycastHit raycastHit))
+                    VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
+                __ = false;
+            } else if (!__ && !InputDown) __ = true;
+        }
         
-        public static IEnumerator UpdateVRTP()
+        /*public static IEnumerator UpdateVRTP()
         {
             while (active) {
                 if (ControllerLeft == null || ControllerRight == null) AssignBindings();
@@ -54,8 +67,8 @@ namespace TeleporterVR.Utils
                     if (Physics.Raycast(ray, out RaycastHit raycastHit))
                         VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
                 }
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.15f);
             }
-        }
+        }*/
     }
 }
