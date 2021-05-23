@@ -107,6 +107,7 @@
     <Compile Include="Logic\WorldWhiteBlackListing.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="Utils\ActionMenuUtils.cs" />
     <Compile Include="Utils\PlayerActions.cs" />
     <Compile Include="Utils\PopupManager.cs" />
     <Compile Include="Utils\ResourceManager.cs" />
