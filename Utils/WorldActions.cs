@@ -38,10 +38,9 @@ namespace TeleporterVR.Utils
                         Menu.userSel_TPto.Disabled(false);
                         Menu.VRTeleport.Disabled(false);
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
-                        if (Main.ActionMenuApiIntegration.Value) {
-                            try { ActionMenu.subMenu.locked = false; } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("ActionMenu subMenu could not be unlocked"); }
-                            try { MelonCoroutines.Start(ActionMenu.UpdateIcon(false)); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to change subMenu Icon"); }
-                            try { AMUtils.RefreshActionMenu(); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to Refresh ActionMenu"); }
+                        if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
+                            ActionMenu.CheckForRiskyFunctions(false);
+                            MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                         }
                         yield break;
 
@@ -52,10 +51,9 @@ namespace TeleporterVR.Utils
                         Menu.userSel_TPto.Disabled(true);
                         MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                         Menu.VRTeleport.setToggleState(false, true);
-                        if (Main.ActionMenuApiIntegration.Value) {
-                            try { ActionMenu.subMenu.locked = true; } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("ActionMenu subMenu could not be locked"); }
-                            try { MelonCoroutines.Start(ActionMenu.UpdateIcon(false)); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to change subMenu Icon"); }
-                            try { AMUtils.RefreshActionMenu(); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to Refresh ActionMenu"); }
+                        if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
+                            ActionMenu.CheckForRiskyFunctions(true);
+                            MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                         }
                         yield break;
                 }
@@ -80,10 +78,9 @@ namespace TeleporterVR.Utils
                             Menu.VRTeleport.Disabled(true);
                             MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                             Menu.VRTeleport.setToggleState(false, true);
-                            if (Main.ActionMenuApiIntegration.Value) {
-                                try { ActionMenu.subMenu.locked = true; } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("ActionMenu subMenu could not be locked"); }
-                                try { MelonCoroutines.Start(ActionMenu.UpdateIcon(false)); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to change subMenu Icon"); }
-                                try { AMUtils.RefreshActionMenu(); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to Refresh ActionMenu"); }
+                            if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
+                                ActionMenu.CheckForRiskyFunctions(true);
+                                MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                             }
                             return;
                         }
@@ -92,10 +89,9 @@ namespace TeleporterVR.Utils
                     Menu.userSel_TPto.Disabled(false);
                     Menu.VRTeleport.Disabled(false);
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
-                    if (Main.ActionMenuApiIntegration.Value) {
-                        try { ActionMenu.subMenu.locked = false; } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("ActionMenu subMenu could not be unlocked"); }
-                        try { MelonCoroutines.Start(ActionMenu.UpdateIcon(false)); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to change subMenu Icon"); }
-                        try { AMUtils.RefreshActionMenu(); } catch { if (ActionMenu.hasAMApiInstalled) MelonLogger.Error("Failed to Refresh ActionMenu"); }
+                    if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
+                        ActionMenu.CheckForRiskyFunctions(false);
+                        MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                     }
                 }
                 else MelonLogger.Error("Failed to cast ApiModel to ApiWorld");

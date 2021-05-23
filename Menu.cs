@@ -21,7 +21,7 @@ namespace TeleporterVR
         private static QMSingleButton SavePos1, SavePos2, SavePos3, SavePos4;
         private static QMSingleButton LoadPos1, LoadPos2, LoadPos3, LoadPos4;
         public static QMToggleButton VRTeleport;
-        private static QMToggleButton perferdHand;
+        private static QMToggleButton preferdHand;
 
         private static Vector3 Pos1, Pos2, Pos3, Pos4;
         private static Quaternion Rot1, Rot2, Rot3, Rot4;
@@ -63,7 +63,7 @@ namespace TeleporterVR
 
             TPtoCoords = new QMSingleButton(menu, 2, 0, Logic.Language.TPtoCoord_Text, () => OpenKeyboardForCoordTP(), Logic.Language.TPtoCoord_Tooltip);
 
-            perferdHand = new QMToggleButton(menu, 4, 0, "Right Handed", () => { VRUtils.preferRightHand = true; }, "Left Handed", () => { VRUtils.preferRightHand = false; }, Logic.Language.perferedHand_Tooltip);
+            preferdHand = new QMToggleButton(menu, 4, 0, "Right Handed", () => { VRUtils.preferRightHand = true; }, "Left Handed", () => { VRUtils.preferRightHand = false; }, Logic.Language.perferedHand_Tooltip);
 
             SavePos1 = new QMSingleButton(menu, 1, 1, Logic.Language.SavePos + "\n1", () => SaveAction(1), Logic.Language.SavePos_ToolTip);
 
@@ -92,13 +92,13 @@ namespace TeleporterVR
             LoadPos2.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
             LoadPos3.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
             LoadPos4.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
-            perferdHand.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
+            preferdHand.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
 
             MelonLoader.MelonCoroutines.Start(UpdateMenuIcon());
             UpdateUserSelectTeleportButton();
             UpdateVRTeleportButton();
             UpdateLeftRightHandButton();
-            perferdHand.setToggleState(Main.preferRightHand.Value);
+            preferdHand.setToggleState(Main.preferRightHand.Value);
 
             if (Main.isDebug)
                 MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Finished creating Menus");
@@ -108,7 +108,11 @@ namespace TeleporterVR
 
         public static void UpdateVRTeleportButton() { VRTeleport.setActive(Main.VRTeleportVisible.Value); }
 
-        public static void UpdateLeftRightHandButton() { perferdHand.setActive(Main.VRTeleportVisible.Value); }
+        public static void UpdateLeftRightHandButton()
+        {
+            preferdHand.setActive(Main.VRTeleportVisible.Value);
+            preferdHand.setToggleState(Main.preferRightHand.Value, true);
+        }
 
         public static IEnumerator UpdateMenuIcon(bool ignoreWait = true)
         {
@@ -152,9 +156,9 @@ namespace TeleporterVR
 
             VRTeleport.setOffText(Language.theWord_Teleport);
             VRTeleport.setToolTip(Language.perferedHand_Tooltip);
-            perferdHand.setToolTip(Language.perferedHand_Tooltip);
-            perferdHand.setOnText(Language.preferedHanded_Text_ON);
-            perferdHand.setOffText(Language.preferedHanded_Text_OFF);
+            preferdHand.setToolTip(Language.perferedHand_Tooltip);
+            preferdHand.setOnText(Language.preferedHanded_Text_ON);
+            preferdHand.setOffText(Language.preferedHanded_Text_OFF);
 
             if (Main.isDebug)
                 MelonLoader.MelonLogger.Msg("Updated button text and tooltip text");

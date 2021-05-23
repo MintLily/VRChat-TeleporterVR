@@ -14,7 +14,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.1.0";
+        public const string Version = "4.1.1";
         public const string DownloadLink = "https://github.com/KortyBoi/TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -43,7 +43,7 @@ namespace TeleporterVR
             visible = (MelonPreferences_Entry<bool>)melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
             userSel_x = (MelonPreferences_Entry<int>)melon.CreateEntry("UserInteractTPButtonPositionX", 1, "X-Coordinate (User Selected TPButton)");
             userSel_y = (MelonPreferences_Entry<int>)melon.CreateEntry("UserInteractTPButtonPositionY", 3, "Y-Coordinate (User Selected TPButton)");
-            preferRightHand = (MelonPreferences_Entry<bool>)melon.CreateEntry("perferRightHand", true, "Right Handed", true);
+            preferRightHand = (MelonPreferences_Entry<bool>)melon.CreateEntry("preferRightHand", true, "Right Handed");
             VRTeleportVisible = (MelonPreferences_Entry<bool>)melon.CreateEntry("VRTeleportVisible", true, "Is VRTeleport Button Visible");
             OverrideLanguage = (MelonPreferences_Entry<string>)melon.CreateEntry("overrideLanguage", "off", "Override Language");
             ExpansionKitApi.RegisterSettingAsStringEnum(melon.Identifier, OverrideLanguage.Identifier, 
@@ -90,7 +90,7 @@ namespace TeleporterVR
                 && !ActionMenu.hasStarted // if has not started yet
                 && ActionMenu.hasAMApiInstalled // if gompo's mod is installed
                 && !ActionMenu.AMApiOutdated // if gompo's mod is not outdated
-                && ActionMenu.VRTP == null) // if (one) ActionMenu element is not created
+                && AMSubMenu.subMenu == null) // if (one) ActionMenu element is not created
             {
                 MelonLogger.Msg(ConsoleColor.Yellow, "You may have to change or reload your current world to allow the ActionMenu to show.");
                 ActionMenu.InitUi();

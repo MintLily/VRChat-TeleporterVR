@@ -7,7 +7,7 @@ Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
 MelonLoader: v0.3.0 (Alpha)<br>
-Game: VRChat (2021.2.1 [build 1088+]) -- (Tested up to build 1095)<br>
+Game: VRChat (2021.2.2p1 [build 1097])<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
@@ -36,10 +36,10 @@ ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompo
 Dynamic Language Settings - The language of the mod will be determined by your system's local region, you can override this in the settings of the mod. Changing the language will update in real time (when you close the settings window)<br>
 Input (partial) Name - input player's full name or partial name and teleport to them<br>
 Coordinates - Input the [X Y Z] coords to teleport to that location<br>
-Saved Positions - Save a Position in a world to later teleport to (Load Position) [This does not save across game restarts, but will save accross world changes]<br>
+Saved Positions - Save a Position in a world to later teleport to (Load Position) [This does not save across game restarts, but will save across world changes]<br>
 VRTeleport - There is a Left/Right Hand toggle to then use your VR Laser Cursor to teleport to that location<br>
-Oculus Support - Don't use SteamVR, that's okay, this mod was build for both Native Oculus and SteramVR VRChat use<br>
-Languages - This mod uses muliple laguages to the mod, you can force a language or let let the mod use your system's laguage<br>
+Oculus Support - Don't use SteamVR, that's okay, this mod was build for both Native Oculus and SteamVR VRChat use<br>
+Languages - This mod uses multiple languages to the mod, you can force a language or let let the mod use your system's language<br>
 ActionMenu Control - With gompo's [ActionMenuAPI](https://github.com/gompocp/ActionMenuApi) mod, you can add the main buttons to your action menu in game
 
 ### Preview
@@ -74,6 +74,11 @@ ActionMenu Control - With gompo's [ActionMenuAPI](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.1.1
+* Fixed an error that would show when you didn't have ActionMenuApi installed
+* Fixed the Left/Right Hand button toggle not changing its state on game start
+* preferRightHand is now visible in UIX's MelonPref Viewer
+
 ### v4.1.0
 * Added [ActionMenuAPI](https://github.com/gompocp/ActionMenuApi) support
 * Fixed VR Teleport
