@@ -17,8 +17,7 @@ namespace TeleporterVR.Utils
     class ResourceManager
     {
 		private static AssetBundle Bundle;
-        public static Sprite goodIcon;
-        public static Sprite badIcon;
+        public static Sprite goodIcon, badIcon, DiscordLogo, GitHubLogo;
         public static Texture2D AMMain, AMBad, AMVRTP, AMSave, AMLoad, AMSL1, AMSL2, AMSL3, AMSL4;
 
 		private static Sprite LoadSprite(string sprite)
@@ -52,7 +51,9 @@ namespace TeleporterVR.Utils
                     Bundle.hideFlags |= HideFlags.DontUnloadUnusedAsset;
                     try { goodIcon = LoadSprite("people-solid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid.png"); }
                     try { badIcon = LoadSprite("invalid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid.png"); }
-                    
+                    try { DiscordLogo = LoadSprite("DiscordLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: DiscordLogo.png"); }
+                    try { GitHubLogo = LoadSprite("GitHubLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: GitHubLogo.png"); }
+
                     // Added with ActionMenuApi
                     try { AMMain = LoadTexture("people-solid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid-tex.png"); }
                     try { AMBad = LoadTexture("invalid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid-tex.png"); }
