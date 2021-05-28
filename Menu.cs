@@ -10,6 +10,8 @@ using UnityEngine;
 using VRC;
 using UnityEngine.UI;
 using TeleporterVR.Logic;
+using TeleporterVR.Rendering;
+using System.Diagnostics;
 
 namespace TeleporterVR
 {
@@ -22,6 +24,7 @@ namespace TeleporterVR
         private static QMSingleButton LoadPos1, LoadPos2, LoadPos3, LoadPos4;
         public static QMToggleButton VRTeleport;
         private static QMToggleButton preferdHand;
+        private static QMSingleButton DiscordBtn, GitHubBtn;
 
         private static Vector3 Pos1, Pos2, Pos3, Pos4;
         private static Quaternion Rot1, Rot2, Rot3, Rot4;
@@ -41,18 +44,17 @@ namespace TeleporterVR
             }, "Teleport to Selected Player");
             userSel_TPto.getGameObject().name = BuildInfo.Name + "_TPToPlayerButton";
 
-            //object run = MelonLoader.MelonCoroutines.Start(VRUtils.UpdateVRTP());
             VRTeleport = new QMToggleButton("ShortcutMenu", 3, -2, "VR", () =>
             {
                 if (WorldActions.WorldAllowed) {
                     VRUtils.active = true;
-                    //MelonLoader.MelonCoroutines.Start(VRUtils.UpdateVRTP());
+                    TPLocationIndicator.Toggle();
                 }
             }, Language.theWord_Teleport, () =>
             {
                 if (WorldActions.WorldAllowed) {
                     VRUtils.active = false;
-                    //MelonLoader.MelonCoroutines.Stop(run);
+                    TPLocationIndicator.Toggle();
                 }
             }, Language.perferedHand_Tooltip);
             VRTeleport.getGameObject().GetComponent<RectTransform>().anchoredPosition -= new Vector2(92f, 66.2f);
@@ -63,7 +65,17 @@ namespace TeleporterVR
 
             TPtoCoords = new QMSingleButton(menu, 2, 0, Logic.Language.TPtoCoord_Text, () => OpenKeyboardForCoordTP(), Logic.Language.TPtoCoord_Tooltip);
 
-            preferdHand = new QMToggleButton(menu, 4, 0, "Right Handed", () => { VRUtils.preferRightHand = true; }, "Left Handed", () => { VRUtils.preferRightHand = false; }, Logic.Language.perferedHand_Tooltip);
+            preferdHand = new QMToggleButton(menu, 4, 0, "Right Handed", () =>
+            {
+                VRUtils.preferRightHand = true;
+                VRTeleport.setToolTip(Language.perferedHand_Tooltip);
+                preferdHand.setToolTip(Language.perferedHand_Tooltip);
+            }, "Left Handed", () =>
+            {
+                VRUtils.preferRightHand = false;
+                VRTeleport.setToolTip(Language.perferedHand_Tooltip);
+                preferdHand.setToolTip(Language.perferedHand_Tooltip);
+            }, Logic.Language.perferedHand_Tooltip);
 
             SavePos1 = new QMSingleButton(menu, 1, 1, Logic.Language.SavePos + "\n1", () => SaveAction(1), Logic.Language.SavePos_ToolTip);
 
@@ -80,6 +92,16 @@ namespace TeleporterVR
             LoadPos3 = new QMSingleButton(menu, 3, 2, Logic.Language.LoadPos + "\n3", () => LoadAction(3), Logic.Language.LoadPos_Tooltip);
 
             LoadPos4 = new QMSingleButton(menu, 4, 2, Logic.Language.LoadPos + "\n4", () => LoadAction(4), Logic.Language.LoadPos_Tooltip);
+
+            DiscordBtn = new QMSingleButton(menu, 5, -1, string.Empty, () => OpenWebpage("https://discord.gg/qkycuAMUGS"), "Invite to Discord Server of Lily's Mods", Color.white);
+            DiscordBtn.getGameObject().GetComponent<RectTransform>().sizeDelta /= new Vector2(2.0f, 2.0f);
+            DiscordBtn.getGameObject().GetComponent<RectTransform>().anchoredPosition += new Vector2(-105f, 105f);
+
+            GitHubBtn = new QMSingleButton(menu, 5, -1, string.Empty, () => OpenWebpage(BuildInfo.DownloadLink), "Opens browser to GitHub project", Color.white);
+            GitHubBtn.getGameObject().GetComponent<RectTransform>().sizeDelta /= new Vector2(2.0f, 2.0f);
+            GitHubBtn.getGameObject().GetComponent<RectTransform>().anchoredPosition += new Vector2(-105f, -105f);
+
+            MelonLoader.MelonCoroutines.Start(ApplySocialIconsToButtons());
 
             menu.getMainButton().getGameObject().GetComponentInChildren<Text>().fontSize = 55;
             TPtoName.getGameObject().GetComponentInChildren<Text>().fontSize = 55;
@@ -163,6 +185,17 @@ namespace TeleporterVR
             if (Main.isDebug)
                 MelonLoader.MelonLogger.Msg("Updated button text and tooltip text");
         }
+
+        private static IEnumerator ApplySocialIconsToButtons()
+        {
+            yield return new WaitForSeconds(4.5f);
+            DiscordBtn.getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.DiscordLogo;
+            yield return new WaitForSeconds(0.5f);
+            GitHubBtn.getGameObject().GetComponentInChildren<Image>().sprite = ResourceManager.GitHubLogo;
+            yield break;
+        }
+
+        private static void OpenWebpage(string site) { Process.Start(site); }
 
         public static void SaveAction(int slot)
         {

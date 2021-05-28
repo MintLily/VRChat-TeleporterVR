@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 using MelonLoader;
+using TeleporterVR.Rendering;
+using TeleporterVR.Logic;
 
 namespace TeleporterVR.Utils
 {
@@ -15,7 +17,8 @@ namespace TeleporterVR.Utils
     {
         private static bool _oculus, __ = true; // fear my variable naming scheme
         public static bool active, preferRightHand;
-        private static GameObject ControllerLeft, ControllerRight;
+        public static GameObject ControllerLeft, ControllerRight;
+        public static Ray ray;
 
         private static bool InputDown {
             get {
@@ -48,15 +51,29 @@ namespace TeleporterVR.Utils
         {
             if (!active) return;
             if (ControllerLeft == null || ControllerRight == null) AssignBindings();
+            if (Patches.IsQMOpen) return; // Temporarily Disables Teleporting if the QuickMenu is currently open
             if (__ && InputDown) {
-                Ray ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+                ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
                         new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
                 if (Physics.Raycast(ray, out RaycastHit raycastHit))
                     VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
                 __ = false;
             } else if (!__ && !InputDown) __ = true;
         }
-        
+
+        public static Vector3 GetControllerPos()
+        {
+            return preferRightHand ? ControllerRight.transform.position : ControllerLeft.transform.position;
+        }
+
+        public static RaycastHit RaycastVR()
+        {
+            ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+                new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
+            Physics.Raycast(ray, out RaycastHit hit, TPLocationIndicator.defaultLength);
+            return hit;
+        }
+
         /*public static IEnumerator UpdateVRTP()
         {
             while (active) {

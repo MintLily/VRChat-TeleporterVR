@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TeleporterVR.Utils;
 using TeleporterVR.Logic;
 using UIExpansionKit.API;
+using TeleporterVR.Rendering;
 
 namespace TeleporterVR
 {
@@ -14,14 +15,16 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.1.1";
-        public const string DownloadLink = "https://github.com/KortyBoi/TeleporterVR";
+        public const string Version = "4.2.0";
+        public const string DownloadLink = "https://github.com/KortyBoi/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
 
     public class Main : MelonMod
     {
+        private static MelonMod Instance;
         public static bool isDebug;
+        private static TPLocationIndicator LR;
         public static MelonPreferences_Category melon;
         public static MelonPreferences_Entry<bool> visible;
         public static MelonPreferences_Entry<int> userSel_x;
@@ -30,9 +33,12 @@ namespace TeleporterVR
         public static MelonPreferences_Entry<bool> VRTeleportVisible;
         public static MelonPreferences_Entry<string> OverrideLanguage;
         public static MelonPreferences_Entry<bool> ActionMenuApiIntegration;
+        public static MelonPreferences_Entry<bool> EnableTeleportIndicator;
+        public static MelonPreferences_Entry<string> IndicatorHexColor;
 
         public override void OnApplicationStart()
         {
+            Instance = this;
             if (MelonDebug.IsEnabled() || Environment.CommandLine.Contains("--vrt.debug"))
             {
                 isDebug = true;
@@ -60,11 +66,15 @@ namespace TeleporterVR
                 ("sw", "Svensk")
             });
             ActionMenuApiIntegration = (MelonPreferences_Entry<bool>)melon.CreateEntry("ActionMenuApiIntegration", false, "Has ActionMenu Support\n(disable requires game restart)");
+            EnableTeleportIndicator = (MelonPreferences_Entry<bool>)melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
+            IndicatorHexColor = (MelonPreferences_Entry<string>)melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
 
             ResourceManager.Init();
             Patches.Init();
             Language.InitLanguageChange();
             ActionMenu.InitUi();
+
+            RenderingIndicator.Init();
 
             MelonLogger.Msg("Initialized!");
 
@@ -77,6 +87,7 @@ namespace TeleporterVR
             VRUtils.Init();
             GetSetWorld.Init();
             MelonCoroutines.Start(UiUtils.AllowToolTipTextColor());
+            LR = GeneralUtils.GetPtrObj().GetOrAddComponent<TPLocationIndicator>();
         }
 
         public override void OnPreferencesSaved()
@@ -89,8 +100,7 @@ namespace TeleporterVR
             if (ActionMenuApiIntegration.Value // if true
                 && !ActionMenu.hasStarted // if has not started yet
                 && ActionMenu.hasAMApiInstalled // if gompo's mod is installed
-                && !ActionMenu.AMApiOutdated // if gompo's mod is not outdated
-                && AMSubMenu.subMenu == null) // if (one) ActionMenu element is not created
+                && !ActionMenu.AMApiOutdated) // if gompo's mod is not outdated
             {
                 MelonLogger.Msg(ConsoleColor.Yellow, "You may have to change or reload your current world to allow the ActionMenu to show.");
                 ActionMenu.InitUi();
@@ -108,6 +118,7 @@ namespace TeleporterVR
                     MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                     MelonCoroutines.Start(GetSetWorld.DelayedLoad());
                     Menu.VRTeleport.setToggleState(false, true);
+                    TPLocationIndicator.Toggle(false);
                     break;
             }
         }
