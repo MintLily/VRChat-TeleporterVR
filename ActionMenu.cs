@@ -16,7 +16,8 @@ namespace TeleporterVR
 {
     public class ActionMenu
     {
-        private static readonly string[] AmApiOutdatedVersions = { "0.1.0" , "0.1.2", "0.2.0"};
+        private static readonly string[] AmApiOutdatedVersions = { "0.1.0" , "0.1.2", "0.2.0", "0.2.1"};
+        // Tested versions to be good => 0.2.2   
         public static bool hasAMApiInstalled, AMApiOutdated, hasStarted;
         private static PedalOption VRTP, TP2Name, TP2Coord, Save, Load;
 
