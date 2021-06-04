@@ -581,7 +581,7 @@ namespace RubyButtonAPIVRT
         // Set the current Quick Menu index
         public static void SetIndex(int index)
         {
-            GetQuickMenuInstance().field_Private_Int32_0 = index;
+            GetQuickMenuInstance().field_Private_EnumNPublicSealedvaUnShEmUsEmNoCaMo_nUnique_0 = (QuickMenu.EnumNPublicSealedvaUnShEmUsEmNoCaMo_nUnique)index;
         }
     }
 }

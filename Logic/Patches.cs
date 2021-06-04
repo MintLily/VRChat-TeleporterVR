@@ -54,10 +54,10 @@ namespace TeleporterVR.Logic
             }
 
             MethodInfo closeQuickMenu = typeof(QuickMenu).GetMethods()
-                .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsed(mb, "Method_Public_Void_Int32_Boolean_")).First();
+                    .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsed(mb, "Method_Private_Void_String_String_LoadErrorReason_")).First();
 
             MethodInfo openQuickMenu = typeof(QuickMenu).GetMethods()
-                 .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && mb.GetParameters().Any(pi => pi.HasDefaultValue == false)).First();
+                .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsing(mb, "Method_Public_Static_Boolean_byref_Boolean_0", typeof(VRCInputManager))).First();
 
             try
             {
@@ -100,6 +100,22 @@ namespace TeleporterVR.Logic
                 return UnhollowerRuntimeLib.XrefScans.XrefScanner.UsedBy(methodBase).Where(instance => instance.TryResolve() != null && instance.TryResolve().Name.Contains(methodName)).Any();
             }
             catch { }
+            return false;
+        }
+
+        public static bool CheckUsing(MethodInfo method, string match, Type type)
+        {
+            foreach (XrefInstance instance in XrefScanner.XrefScan(method))
+                if (instance.Type == XrefType.Method)
+                    try
+                    {
+                        if (instance.TryResolve().DeclaringType == type && instance.TryResolve().Name.Contains(match))
+                            return true;
+                    }
+                    catch
+                    {
+
+                    }
             return false;
         }
     }
