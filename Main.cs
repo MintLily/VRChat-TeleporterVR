@@ -15,7 +15,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.2.1";
+        public const string Version = "4.2.2";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -129,7 +129,8 @@ namespace TeleporterVR
         {
             VRUtils.OnUpdate();
             // This check is to keep the menu Disabled in Disallowed worlds, this was super easy to patch into or use UnityExplorer to re-enable the button
-            if (!WorldActions.WorldAllowed && Patches.IsQMOpen && (Menu.menu.getMainButton().getGameObject().GetComponent<Button>().enabled || Menu.VRTeleport.getGameObject().GetComponent<Button>().enabled) &&
+            if (!WorldActions.WorldAllowed && ((Patches.openQuickMenu != null && Patches.closeQuickMenu != null) ? Patches.IsQMOpen : true) && 
+                (Menu.menu.getMainButton().getGameObject().GetComponent<Button>().enabled || Menu.VRTeleport.getGameObject().GetComponent<Button>().enabled) &&
                 Menu.menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite == ResourceManager.badIcon)
             {
                 Menu.menu.getMainButton().Disabled(true);

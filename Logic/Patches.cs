@@ -24,6 +24,8 @@ namespace TeleporterVR.Logic
             return new HarmonyMethod(typeof(Patches).GetMethod(name, BindingFlags.NonPublic | BindingFlags.Static));
         }
 
+        public static MethodInfo closeQuickMenu, openQuickMenu;
+
         public static void Init()
         {
             try
@@ -53,12 +55,16 @@ namespace TeleporterVR.Logic
                 MelonLogger.Error("Failed to patch FadeTo Initialized room\n" + e.Message);
             }
 
-            MethodInfo closeQuickMenu = typeof(QuickMenu).GetMethods()
-                    .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsed(mb, "Method_Private_Void_String_String_LoadErrorReason_")).First();
+            closeQuickMenu = typeof(QuickMenu).GetMethods()
+                    .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsed(mb, "Method_Public_Void_EnumNPublicSealedvaUnWoAvSoSeUsDeSaCuUnique_Boolean")).FirstOrDefault();
 
-            MethodInfo openQuickMenu = typeof(QuickMenu).GetMethods()
-                .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsing(mb, "Method_Public_Static_Boolean_byref_Boolean_0", typeof(VRCInputManager))).First();
+            openQuickMenu = typeof(QuickMenu).GetMethods()
+                .Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 && !mb.Name.Contains("PDM") && CheckUsed(mb, "Method_Public_Void_24")).FirstOrDefault();
 
+            if (closeQuickMenu == null)
+                MelonLogger.Warning("CloseQuickMenu function was not found!");
+            if (openQuickMenu == null)
+                MelonLogger.Warning("OpenQuickMenu function was not found!");
             try
             {
                 instance.Patch(openQuickMenu, null, new HarmonyMethod(typeof(Patches).GetMethod("QMOpen", BindingFlags.Public | BindingFlags.Static)));

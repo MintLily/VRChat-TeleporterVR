@@ -14,7 +14,7 @@ namespace TeleporterVR.Utils
     internal static class PlayerActions
     {
         internal static VRCPlayer GetLocalVRCPlayer() { return VRCPlayer.field_Internal_Static_VRCPlayer_0; }
-        internal static APIUser GetApiUser(Player player) { return player.field_Private_APIUser_0; }
+        internal static APIUser GetApiUser(Player player) { return player.prop_APIUser_0; }
 
         public static Player Target(string username)
         {
