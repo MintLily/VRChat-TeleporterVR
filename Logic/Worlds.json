@@ -4,7 +4,13 @@
         "WorldID": "wrld_1b3b3259-0a1f-4311-984e-826abab6f481",
 		"buttonNumber": 3,
 		"Reason": "VRTP / Disallowed other teleporting - personal request"
-    }/*,
+    },
+{
+	"WorldName": "Spirits of the Sea",
+        "WorldID": "wrld_9da1349e-470b-47fd-a9b5-bd57d49255e2",
+		"buttonNumber": 1,
+		"Reason": "Lily-Personal Request"
+	}/*,
 	{
 		"WorldName": "",
         "WorldID": "",
