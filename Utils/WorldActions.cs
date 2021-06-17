@@ -19,6 +19,7 @@ namespace TeleporterVR.Utils
         {
             if (Main.isDebug)
                 MelonLogger.Msg("Checking World");
+
             string worldId = RoomManager.field_Internal_Static_ApiWorld_0.id;
             WorldAllowed = false;
 

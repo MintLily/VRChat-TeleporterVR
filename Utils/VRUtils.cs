@@ -51,7 +51,8 @@ namespace TeleporterVR.Utils
         {
             if (!active) return;
             if (ControllerLeft == null || ControllerRight == null) AssignBindings();
-            if (Patches.IsQMOpen) return; // Temporarily Disables Teleporting if the QuickMenu is currently open
+            if (NewPatches.IsQMOpen) return; // Temporarily Disables Teleporting if the QuickMenu is currently open
+            if (NewPatches.IsActionMenuOpen) return; // Temporarily Disables Teleporting if the ActionMenu is currently open
             if (__ && InputDown) {
                 ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
                         new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
@@ -61,10 +62,7 @@ namespace TeleporterVR.Utils
             } else if (!__ && !InputDown) __ = true;
         }
 
-        public static Vector3 GetControllerPos()
-        {
-            return preferRightHand ? ControllerRight.transform.position : ControllerLeft.transform.position;
-        }
+        public static Vector3 GetControllerPos() { return preferRightHand ? ControllerRight.transform.position : ControllerLeft.transform.position; }
 
         public static RaycastHit RaycastVR()
         {

@@ -9,7 +9,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TeleporterVR</RootNamespace>
     <AssemblyName>TeleporterVR</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>8.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -122,6 +123,7 @@
     <Compile Include="Utils\UiUtils.cs" />
     <Compile Include="Utils\VRUtils.cs" />
     <Compile Include="Utils\WorldActions.cs" />
+    <Compile Include="Utils\XrefThings.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\teleportervr.tpvrbundle" />

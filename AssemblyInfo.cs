@@ -25,3 +25,4 @@ using MelonLoader;
 [assembly: MelonColor(ConsoleColor.Green)]
 [assembly: MelonOptionalDependencies("ActionMenuApi")]
 [assembly: MelonGame("VRChat", "VRChat")]
+[assembly: HarmonyDontPatchAll]

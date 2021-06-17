@@ -40,8 +40,10 @@ namespace TeleporterVR.Rendering
 
         private void Awake() => SetupLine();
 
+        [HideFromIl2Cpp]
         private void OnEnable() => Toggle(true);
 
+        [HideFromIl2Cpp]
         private void OnDisable() => Toggle(false);
 
         [HideFromIl2Cpp]
@@ -95,8 +97,8 @@ namespace TeleporterVR.Rendering
                 line.SetPosition(0, endPos);
                 line.SetPosition(1, VRUtils.GetControllerPos());
             }
-            if (Patches.IsQMOpen && VRUtils.active) previewObj.SetActive(false);
-            else if (!Patches.IsQMOpen && VRUtils.active) previewObj.SetActive(true);
+            if (NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(false);
+            else if (!NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(true);
             SetColors(GeneralUtils.HexToColor(Main.IndicatorHexColor.Value, true));
         }
 
