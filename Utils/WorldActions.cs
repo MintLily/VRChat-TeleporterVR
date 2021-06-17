@@ -20,7 +20,17 @@ namespace TeleporterVR.Utils
             if (Main.isDebug)
                 MelonLogger.Msg("Checking World");
 
-            string worldId = RoomManager.field_Internal_Static_ApiWorld_0.id;
+            string worldId;
+            if (RoomManager.field_Internal_Static_ApiWorld_0 != null)
+                worldId = RoomManager.field_Internal_Static_ApiWorld_0.id;
+            else if (RoomManager.field_Internal_Static_ApiWorldInstance_0 != null)
+                worldId = RoomManager.field_Internal_Static_ApiWorldInstance_0.id;
+            else
+            {
+                WorldAllowed = false;
+                yield break;
+            }
+
             WorldAllowed = false;
 
             // Check if black/whitelisted from EmmVRC - thanks Emilia and the rest of EmmVRC Staff
