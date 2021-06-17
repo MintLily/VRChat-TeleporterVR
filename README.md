@@ -6,12 +6,12 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
-MelonLoader: v0.3.0 (Alpha)<br>
-Game: VRChat (2021.2.2p1 [build 1097])<br>
+MelonLoader: v0.4.0 (Alpha)<br>
+Game: VRChat (2021.2.4 [build 1106])<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
-Mod: [ActionMenuAPI](https://github.com/gompocp/ActionMenuApi) v0.2.2+
+Mod: [ActionMenuAPI](https://github.com/gompocp/ActionMenuApi) v0.3.0+
 
 ### MelonPreferences (Default Values)
 ```ini
@@ -79,6 +79,10 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.2.3
+* Fixed compatibility for VRChat build 1106
+* Fixed various errors regarding the TPIndicator
+
 ### v4.2.0
 * Added a TeleportIndicator, so you know where you're going
 * Added Coloring to the Indicator

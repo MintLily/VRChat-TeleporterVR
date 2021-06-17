@@ -16,15 +16,14 @@ namespace TeleporterVR
 {
     public class ActionMenu
     {
-        private static readonly string[] AmApiOutdatedVersions = { "0.1.0" , "0.1.2", "0.2.0", "0.2.1"};
-        // Tested versions to be good => 0.2.2   
+        private static readonly string[] AmApiOutdatedVersions = { "0.1.0" , "0.1.2", "0.2.0", "0.2.1", "0.2.2", "0.2.3" };
+        // Tested versions to be good => 0.3.0
         public static bool hasAMApiInstalled, AMApiOutdated, hasStarted;
         private static PedalOption VRTP, TP2Name, TP2Coord, Save, Load;
 
         public static void InitUi()
         {
-            if (MelonHandler.Mods.Any(m => m.Info.Name.Equals("ActionMenuApi")))
-            {
+            if (MelonHandler.Mods.Any(m => m.Info.Name.Equals("ActionMenuApi"))) {
                 hasAMApiInstalled = true;
                 if (!Main.ActionMenuApiIntegration.Value) return;
                 if (MelonHandler.Mods.Single(m => m.Info.Name.Equals("ActionMenuApi")).Info.Version.Equals(AmApiOutdatedVersions))
