@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using TeleporterVR.Utils;
 using TeleporterVR.Logic;
+using TeleporterVR.Patches;
 using UIExpansionKit.API;
 using TeleporterVR.Rendering;
 using System.Reflection;
@@ -16,18 +17,18 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.2.3";
+        public const string Version = "4.3.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
 
     public class Main : MelonMod
     {
-        private static MelonMod Instance;
+        private MelonMod Instance;
         public static bool isDebug;
         private static TPLocationIndicator LR;
         public static MelonPreferences_Category melon;
-        public static MelonPreferences_Entry<bool> visible, preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator;
+        public static MelonPreferences_Entry<bool> visible, preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP;
         public static MelonPreferences_Entry<int> userSel_x, userSel_y;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
 
@@ -64,6 +65,7 @@ namespace TeleporterVR
             ActionMenuApiIntegration = melon.CreateEntry("ActionMenuApiIntegration", false, "Has ActionMenu Support\n(disable requires game restart)");
             EnableTeleportIndicator = melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
             IndicatorHexColor = melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
+            EnableDesktopTP = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
 
             ResourceManager.Init();
             NewPatches.SetupPatches();
@@ -140,7 +142,7 @@ namespace TeleporterVR
                 Menu.VRTeleport.Disabled(true);
                 Menu.userSel_TPto.Disabled(true);
             }
-            
+            DesktopUtils.OnUpdate();
         }
 
         private IEnumerator GetAssembly()
