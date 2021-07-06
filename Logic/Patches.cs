@@ -17,7 +17,7 @@ using VRC.Core;
 
 // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/ModPatches.cs
 //     &     https://github.com/ddakebono/BTKSANameplateFix/blob/master/BTKSANameplateMod.cs
-namespace TeleporterVR.Logic
+namespace TeleporterVR.Patches
 {
     internal static class NewPatches
     {
@@ -35,13 +35,9 @@ namespace TeleporterVR.Logic
             setMenuIndex = typeof(QuickMenu).GetMethods().First(mb => mb.Name.StartsWith("Method_Public_Void_Enum") && !mb.Name.Contains("_PDM_") &&
             mb.GetParameters().Length == 1 && mb.GetParameters()[0].ParameterType == quickMenuEnumProperty.PropertyType);
 
-            if (d) Log.Msg("Attempting QuickMenuOpen Patches...");
             applyPatches(typeof(QuickMenuOpen));
-            if (d) Log.Msg("Attempting QuickMenuClose Patches...");
             applyPatches(typeof(QuickMenuClose));
-            if (d) Log.Msg("Attempting ActionMenuOpen Patches...");
             applyPatches(typeof(ActionMenuPatches));
-            if (d) Log.Msg("Attempting FadeTo Patches...");
             applyPatches(typeof(FadePatches));
 
             if (d) Log.Msg(ConsoleColor.Green, "Finished with Patches");
@@ -50,6 +46,7 @@ namespace TeleporterVR.Logic
         private static void applyPatches(Type type)
         {
             try {
+                if (Main.isDebug) Log.Msg($"Attempting {type.Name} Patches...");
                 HarmonyLib.Harmony.CreateAndPatchAll(type, "TeleporterVR");
             } catch (Exception e) {
                 Log.Error($"Failed while patching {type.Name}!\n{e}");

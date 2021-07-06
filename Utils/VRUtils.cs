@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using MelonLoader;
 using TeleporterVR.Rendering;
-using TeleporterVR.Logic;
+using TeleporterVR.Patches;
 
 namespace TeleporterVR.Utils
 {

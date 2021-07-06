@@ -115,6 +115,7 @@
     <Compile Include="Rendering\TPLocationIndicator.cs" />
     <Compile Include="Rendering\SphereRendering.cs" />
     <Compile Include="Utils\ActionMenuUtils.cs" />
+    <Compile Include="Utils\DesktopUtils.cs" />
     <Compile Include="Utils\GeneralUtils.cs" />
     <Compile Include="Utils\PlayerActions.cs" />
     <Compile Include="Utils\PopupManager.cs" />

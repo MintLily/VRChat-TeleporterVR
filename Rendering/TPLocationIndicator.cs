@@ -11,7 +11,7 @@ using VRC;
 using UnhollowerBaseLib.Attributes;
 using TeleporterVR.Utils;
 using UnityEngine.XR;
-using TeleporterVR.Logic;
+using TeleporterVR.Patches;
 
 namespace TeleporterVR.Rendering
 {
@@ -37,6 +37,7 @@ namespace TeleporterVR.Rendering
         private static GameObject previewObj;
         private LineRenderer line;
         private LineRenderer Beam;
+        bool launchErrorOnce;
 
         private void Awake() => SetupLine();
 
@@ -88,7 +89,15 @@ namespace TeleporterVR.Rendering
                 OnDisable();
                 return;
             }
-            var endPos = CalculateEndPoint();
+            if ((VRUtils.preferRightHand ? VRUtils.ControllerRight == null : VRUtils.ControllerLeft == null) && !launchErrorOnce)
+            {
+                launchErrorOnce = true;
+                string temp = VRUtils.preferRightHand ? "ControllerRight" : "ControllerLeft";
+                Console.WriteLine($"Could not determine {temp} raycast.", ConsoleColor.Red);
+                return;
+            }
+            var endPos = Vector3.zero;
+            try { endPos = CalculateEndPoint(); } catch { return; }
             previewObj.transform.position = endPos;
             pos = endPos;
             if (line != null)
@@ -99,6 +108,8 @@ namespace TeleporterVR.Rendering
             }
             if (NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(false);
             else if (!NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(true);
+            if (NewPatches.IsActionMenuOpen && VRUtils.active) previewObj.SetActive(false);
+            else if (!NewPatches.IsActionMenuOpen && VRUtils.active) previewObj.SetActive(true);
             SetColors(GeneralUtils.HexToColor(Main.IndicatorHexColor.Value, true));
         }
 

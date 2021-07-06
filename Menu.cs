@@ -44,13 +44,13 @@ namespace TeleporterVR
             }, "Teleport to Selected Player");
             userSel_TPto.getGameObject().name = BuildInfo.Name + "_TPToPlayerButton";
 
-            VRTeleport = new QMToggleButton("ShortcutMenu", 3, -2, "VR", () =>
+            VRTeleport = new QMToggleButton("ShortcutMenu", 3, -2, Language.theWord_Teleport, () =>
             {
                 if (WorldActions.WorldAllowed) {
                     VRUtils.active = true;
                     TPLocationIndicator.Toggle();
                 }
-            }, Language.theWord_Teleport, () =>
+            }, "OFF", () =>
             {
                 if (WorldActions.WorldAllowed) {
                     VRUtils.active = false;
@@ -61,9 +61,9 @@ namespace TeleporterVR
             VRTeleport.getGameObject().GetComponentInChildren<Transform>().localScale = new Vector3(0.6f, 0.75f, 1.0f);
             VRTeleport.getGameObject().name = BuildInfo.Name + "_VRTPToggleButton";
 
-            TPtoName = new QMSingleButton(menu, 1, 0, Logic.Language.TPtoName_Text, () => OpenKeyboardForPlayerTP(), Logic.Language.TPtoName_Tooltip);
+            TPtoName = new QMSingleButton(menu, 1, 0, Language.TPtoName_Text, () => OpenKeyboardForPlayerTP(), Language.TPtoName_Tooltip);
 
-            TPtoCoords = new QMSingleButton(menu, 2, 0, Logic.Language.TPtoCoord_Text, () => OpenKeyboardForCoordTP(), Logic.Language.TPtoCoord_Tooltip);
+            TPtoCoords = new QMSingleButton(menu, 2, 0, Language.TPtoCoord_Text, () => OpenKeyboardForCoordTP(), Language.TPtoCoord_Tooltip);
 
             preferdHand = new QMToggleButton(menu, 4, 0, "Right Handed", () =>
             {
@@ -77,21 +77,21 @@ namespace TeleporterVR
                 preferdHand.setToolTip(Language.perferedHand_Tooltip);
             }, Logic.Language.perferedHand_Tooltip);
 
-            SavePos1 = new QMSingleButton(menu, 1, 1, Logic.Language.SavePos + "\n1", () => SaveAction(1), Logic.Language.SavePos_ToolTip);
+            SavePos1 = new QMSingleButton(menu, 1, 1, Language.SavePos + "\n1", () => SaveAction(1), Language.SavePos_ToolTip);
 
-            SavePos2 = new QMSingleButton(menu, 2, 1, Logic.Language.SavePos + "\n2", () => SaveAction(2), Logic.Language.SavePos_ToolTip);
+            SavePos2 = new QMSingleButton(menu, 2, 1, Language.SavePos + "\n2", () => SaveAction(2), Language.SavePos_ToolTip);
 
-            SavePos3 = new QMSingleButton(menu, 3, 1, Logic.Language.SavePos + "\n3", () => SaveAction(3), Logic.Language.SavePos_ToolTip);
+            SavePos3 = new QMSingleButton(menu, 3, 1, Language.SavePos + "\n3", () => SaveAction(3), Language.SavePos_ToolTip);
 
-            SavePos4 = new QMSingleButton(menu, 4, 1, Logic.Language.SavePos + "\n4", () => SaveAction(4), Logic.Language.SavePos_ToolTip);
+            SavePos4 = new QMSingleButton(menu, 4, 1, Language.SavePos + "\n4", () => SaveAction(4), Language.SavePos_ToolTip);
 
-            LoadPos1 = new QMSingleButton(menu, 1, 2, Logic.Language.LoadPos + "\n1", () => LoadAction(1), Logic.Language.LoadPos_Tooltip);
+            LoadPos1 = new QMSingleButton(menu, 1, 2, Language.LoadPos + "\n1", () => LoadAction(1), Language.LoadPos_Tooltip);
 
-            LoadPos2 = new QMSingleButton(menu, 2, 2, Logic.Language.LoadPos + "\n2", () => LoadAction(2), Logic.Language.LoadPos_Tooltip);
+            LoadPos2 = new QMSingleButton(menu, 2, 2, Language.LoadPos + "\n2", () => LoadAction(2), Language.LoadPos_Tooltip);
 
-            LoadPos3 = new QMSingleButton(menu, 3, 2, Logic.Language.LoadPos + "\n3", () => LoadAction(3), Logic.Language.LoadPos_Tooltip);
+            LoadPos3 = new QMSingleButton(menu, 3, 2, Language.LoadPos + "\n3", () => LoadAction(3), Language.LoadPos_Tooltip);
 
-            LoadPos4 = new QMSingleButton(menu, 4, 2, Logic.Language.LoadPos + "\n4", () => LoadAction(4), Logic.Language.LoadPos_Tooltip);
+            LoadPos4 = new QMSingleButton(menu, 4, 2, Language.LoadPos + "\n4", () => LoadAction(4), Language.LoadPos_Tooltip);
 
             DiscordBtn = new QMSingleButton(menu, 5, -1, string.Empty, () => OpenWebpage("https://discord.gg/qkycuAMUGS"), "Invite to Discord Server of Lily's Mods", Color.white);
             DiscordBtn.getGameObject().GetComponent<RectTransform>().sizeDelta /= new Vector2(2.0f, 2.0f);
@@ -176,7 +176,7 @@ namespace TeleporterVR
 
             userSel_TPto.setButtonText(Language.theWord_Teleport);
 
-            VRTeleport.setOffText(Language.theWord_Teleport);
+            VRTeleport.setOnText(Language.theWord_Teleport);
             VRTeleport.setToolTip(Language.perferedHand_Tooltip);
             preferdHand.setToolTip(Language.perferedHand_Tooltip);
             preferdHand.setOnText(Language.preferedHanded_Text_ON);
