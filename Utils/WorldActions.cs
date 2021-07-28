@@ -113,6 +113,7 @@ namespace TeleporterVR.Utils
         {
             WorldAllowed = false;
             Menu.VRTeleport.setToggleState(false, true);
+            VRUtils.active = false;
         }
     }
 }
