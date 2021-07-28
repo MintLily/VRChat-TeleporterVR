@@ -71,19 +71,5 @@ namespace TeleporterVR.Utils
             Physics.Raycast(ray, out RaycastHit hit, TPLocationIndicator.defaultLength);
             return hit;
         }
-
-        /*public static IEnumerator UpdateVRTP()
-        {
-            while (active) {
-                if (ControllerLeft == null || ControllerRight == null) AssignBindings();
-                if (InputDown) {
-                    Ray ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
-                        new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
-                    if (Physics.Raycast(ray, out RaycastHit raycastHit))
-                        VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
-                }
-                yield return new WaitForSeconds(0.15f);
-            }
-        }*/
     }
 }
