@@ -66,6 +66,7 @@ namespace TeleporterVR.Utils
                             ActionMenu.CheckForRiskyFunctions(true);
                             MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                         }
+                        VRUtils.active = false;
                         yield break;
                 }
 
@@ -93,6 +94,7 @@ namespace TeleporterVR.Utils
                                 ActionMenu.CheckForRiskyFunctions(true);
                                 MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                             }
+                            VRUtils.active = false;
                             return;
                         }
 
