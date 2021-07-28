@@ -26,7 +26,7 @@ namespace TeleporterVR.Logic
 
         private static IEnumerator SummomList()
         {
-            string url = "https://raw.githubusercontent.com/KortyBoi/VRChat-TeleporterVR/master/Logic/Worlds.json";
+            string url = "https://raw.githubusercontent.com/MintLily/VRChat-TeleporterVR/master/Logic/Worlds.json";
             WebClient WorldList = new WebClient();
             try { ParsedWorldList = WorldList.DownloadString(url); } catch { MelonLogger.Error("Could not get URL from Webhost (probable 404)"); }
 
@@ -85,9 +85,11 @@ namespace TeleporterVR.Logic
                         ActionMenu.CheckForRiskyFunctions(true);
                         MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                     }
+                    Utils.VRUtils.active = false;
                     break;
                 case 3: // only disable VRTP
                     Menu.VRTeleport.Disabled(true);
+                    Utils.VRUtils.active = false;
                     break;
                 default: break; // Do nothing extra
             }
