@@ -6,8 +6,8 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
-MelonLoader: v0.4.0 (Alpha)<br>
-Game: VRChat (2021.2.4 [build 1106])<br>
+MelonLoader: v0.4.3 (Alpha)<br>
+Game: VRChat (2021.3.1p1  [build 1114])<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
@@ -81,6 +81,9 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.3.1
+* Security Fixes - Fixed Teleporting not being disabled properly
+
 ### v4.3.0
 * Added Desktop Teleporting to cursor (Disabled by default) [KeyBinds = LeftShift + T or Mouse3]
 * Fixed null errors on Controller Raycasts
