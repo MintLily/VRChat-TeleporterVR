@@ -8,6 +8,7 @@ using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using VRC.Core;
 using ActionMenuApi.Api;
+using System.Threading.Tasks;
 
 // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/Utilities.cs
 namespace TeleporterVR.Utils
@@ -32,6 +33,14 @@ namespace TeleporterVR.Utils
             }
 
             WorldAllowed = false;
+
+            // Allow world creators more choice over Risky Functions without relying on our whitelist, we are looking for "eVRCRiskFuncDisable" or "eVRCRiskFuncEnable"
+            // If these are present, they will completely override our choice from tags and the online list, and manually disable or enable Risky Functions
+            GameObject[] allWorldGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+            if (allWorldGameObjects.Any(a => a.name == "eVRCRiskFuncDisable") || allWorldGameObjects.Any(a => a.name == "TPVRActionDisable"))
+            { WorldAllowed = false; yield break; }
+            else if (allWorldGameObjects.Any(a => a.name == "eVRCRiskFuncEnable") || allWorldGameObjects.Any(a => a.name == "TPVRActionEnable"))
+            { WorldAllowed = true; yield break; }
 
             // Check if black/whitelisted from EmmVRC - thanks Emilia and the rest of EmmVRC Staff
             WWW www = new WWW($"https://dl.emmvrc.com/riskyfuncs.php?worldid={worldId}", null, new Dictionary<string, string>());
@@ -106,9 +115,13 @@ namespace TeleporterVR.Utils
                         ActionMenu.CheckForRiskyFunctions(false);
                         MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                     }
+                    return;
                 }
                 else MelonLogger.Error("Failed to cast ApiModel to ApiWorld");
             }), disableCache: false);
+
+            // If all else fails, or is errored return false
+            WorldAllowed = false;
         }
 
         internal static void OnLeftWorld()

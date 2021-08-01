@@ -6,7 +6,7 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
-MelonLoader: v0.4.3 (Alpha)<br>
+MelonLoader: v0.4.2+ (Alpha)<br>
 Game: VRChat (2021.3.1p1  [build 1114])<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
@@ -81,6 +81,9 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.4.0
+* Added emmVRC GameObject detection to allow/disallow actions in worlds
+
 ### v4.3.1
 * Security Fixes - Fixed Teleporting not being disabled properly
 
