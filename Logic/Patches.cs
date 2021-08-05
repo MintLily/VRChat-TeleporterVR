@@ -86,7 +86,7 @@ namespace TeleporterVR.Patches
     {
         static IEnumerable<MethodBase> TargetMethods()
         {
-            return typeof(ActionMenuOpener).GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(x => x.Name.Contains("Method_Public_Void_Boolean")).Cast<MethodBase>();
+            return typeof(ActionMenuOpener).GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(x => x.Name.Contains("Method_Private_Void_Boolean")).Cast<MethodBase>();
         }
 
         static void Postfix(bool __0) => NewPatches.IsActionMenuOpen = __0;
