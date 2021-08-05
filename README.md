@@ -6,12 +6,12 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
-MelonLoader: v0.4.2+ (Alpha)<br>
-Game: VRChat (2021.3.1p1  [build 1114])<br>
+MelonLoader: v0.4.3 (Alpha)<br>
+Game: VRChat (2021.3.2  [build 1121])<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
-Mod: [ActionMenuAPI](https://github.com/gompocp/ActionMenuApi) v0.3.0+
+Mod: [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) v0.3.1+
 
 ### MelonPreferences (Default Values)
 ```ini
@@ -81,6 +81,11 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.4.1
+* Fixed Compatibility for VRChat Build 1121 (Unity 2019)
+* Updated MelonLoader to v0.4.3
+* Updated Dependency for [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) to v0.3.1
+
 ### v4.4.0
 * Added emmVRC GameObject detection to allow/disallow actions in worlds
 

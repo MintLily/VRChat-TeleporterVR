@@ -9,6 +9,7 @@ using UnityEngine;
 using VRC.Core;
 using ActionMenuApi.Api;
 using System.Threading.Tasks;
+using System.Net;
 
 // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/Utilities.cs
 namespace TeleporterVR.Utils
@@ -43,10 +44,11 @@ namespace TeleporterVR.Utils
             { WorldAllowed = true; yield break; }
 
             // Check if black/whitelisted from EmmVRC - thanks Emilia and the rest of EmmVRC Staff
-            WWW www = new WWW($"https://dl.emmvrc.com/riskyfuncs.php?worldid={worldId}", null, new Dictionary<string, string>());
-            while (!www.isDone)
-                yield return new WaitForEndOfFrame();
-            string result = www.text?.Trim().ToLower();
+            string url = $"https://dl.emmvrc.com/riskyfuncs.php?worldid={worldId}";
+            WebClient www = new WebClient();
+            //WWW www = new WWW(url, null, new Il2CppSystem.Collections.Generic.Dictionary<string, string>());
+            while (www.IsBusy) yield return new WaitForEndOfFrame();
+            string result = www.DownloadString(url)?.Trim().ToLower();
             www.Dispose();
             if (!string.IsNullOrWhiteSpace(result))
                 switch (result)
