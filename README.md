@@ -81,6 +81,9 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.4.2
+* Fixed issue where ActionMenu would not close
+
 ### v4.4.1
 * Fixed Compatibility for VRChat Build 1121 (Unity 2019)
 * Updated MelonLoader to v0.4.3
