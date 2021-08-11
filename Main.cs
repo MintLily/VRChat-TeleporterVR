@@ -17,7 +17,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.4.2";
+        public const string Version = "4.5.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -66,10 +66,11 @@ namespace TeleporterVR
             EnableTeleportIndicator = melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
             IndicatorHexColor = melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
             EnableDesktopTP = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
-            //      Line 69      N I C E                          Janni is cutie~
+            // Line 69    N I C E
             ResourceManager.Init();
             NewPatches.SetupPatches();
             Language.InitLanguageChange();
+            CreateListener.Init();
             ActionMenu.InitUi();
             RenderingIndicator.Init();
 
@@ -92,6 +93,7 @@ namespace TeleporterVR
                 if (LR != null) TPLocationIndicator.Toggle(false);
                 runOnce = true;
             }
+            CreateListener.UiInit();
         }
 
         public override void OnPreferencesSaved()
@@ -128,7 +130,7 @@ namespace TeleporterVR
             }
         }
 
-        public override void OnApplicationQuit() { preferRightHand.Value = VRUtils.preferRightHand; }
+        public override void OnApplicationQuit() => preferRightHand.Value = VRUtils.preferRightHand;
 
         public override void OnUpdate()
         {
@@ -169,3 +171,4 @@ namespace TeleporterVR
         }
     }
 }
+// Janni is a cutie~

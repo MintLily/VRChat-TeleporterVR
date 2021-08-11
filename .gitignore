@@ -3,3 +3,5 @@ Output/
 obj/
 .git/
 .idea/
+Utils/Libs/
+TinyJSON/

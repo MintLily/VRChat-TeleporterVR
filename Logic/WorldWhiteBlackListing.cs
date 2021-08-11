@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Net;
 using MelonLoader;
-using Newtonsoft.Json;
 using UnityEngine;
 using ActionMenuApi.Api;
-
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 namespace TeleporterVR.Logic
 {
     public class GetWorlds
@@ -22,7 +22,7 @@ namespace TeleporterVR.Logic
         public static GetWorlds[] Worlds { get; internal set; }
         private static bool faulted = false;
 
-        public static void Init() { MelonCoroutines.Start(SummomList()); }
+        public static void Init() => MelonCoroutines.Start(SummomList());
 
         private static IEnumerator SummomList()
         {
@@ -32,7 +32,13 @@ namespace TeleporterVR.Logic
 
             yield return new WaitForSeconds(0.5f);
 
-            try { Worlds = JsonConvert.DeserializeObject<GetWorlds[]>(ParsedWorldList); } catch { MelonLogger.Error("Could not parse JSON data"); faulted = true; }
+            try {
+                Worlds = JsonConvert.DeserializeObject<GetWorlds[]>(ParsedWorldList);
+            }
+            catch {
+                MelonLogger.Error("Could not parse JSON data");
+                faulted = true;
+            }
             yield break;
         }
 

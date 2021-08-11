@@ -49,13 +49,13 @@ Languages - This mod uses multiple languages to the mod, you can force a languag
 ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) mod, you can add the main buttons to your action menu in game
 
 ### Preview
-![Preview Main Menu](https://kortyboi.com/img/upload/VRChat_Sfa0ZuMDwQ.jpg)<br>
-![Preview Menu Content ENG](https://kortyboi.com/img/upload/VRChat_6oSV31AEjG.jpg)
-![ActionMenu Preview](https://kortyboi.com/img/upload/ActionMenuApi-Preview.png)
+![Preview Main Menu](https://mintlily.lgbt/img/upload/VRChat_Sfa0ZuMDwQ.jpg)<br>
+![Preview Menu Content ENG](https://mintlily.lgbt/img/upload/VRChat_6oSV31AEjG.jpg)<br>
+![ActionMenu Preview](https://mintlily.lgbt/img/upload/ActionMenuApi-Preview.png)
 
 # Credits
 * RubyButtonAPI
-* * DubyaDude, Emilia, Tritn
+* * DubyaDude, Emilia, Tritn, MintLily
 
 
 * Icons
@@ -76,11 +76,15 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 * Other Code in the Mod
 * * Patches - **Psychloor**
 * * emmVRC Risky world / game tag toggling - **Psychloor**
-* * Asset Bundle, Keyboard popup input - **knah**
+* * Asset Bundle, Keyboard popup input, Enable/Disable Listener - **knah**
 * * TeleportIndicator Scripts - **Davi (d-mageek)**
 
 
 # Change Log (since Lily's edits)
+### v4.5.0
+* Changed ActionMenu is Open Listener
+* Fixed odd behavior when toggling on teleportation
+
 ### v4.4.2
 * Fixed issue where ActionMenu would not close
 
@@ -126,6 +130,9 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 ### v4.0.0
 * Initial Release for MelonLoader
+
+# Partial Code Alert
+This Mod contains code from a project that is closed-source. This will remain private by choice of the Author of this mod (Lily)
 
 ## Stay Updated
 Stay update to date with all my mods by joining my [discord server](https://discord.gg/qkycuAMUGS) today.

@@ -22,7 +22,7 @@ namespace TeleporterVR.Utils
                 ALTTooltipText.GetComponentInChildren<Text>().supportRichText = true;
             } catch { MelonLoader.MelonLogger.Error("Failed to make ALTTooltipText supportRichText"); }
 
-            if (Main.isDebug) MelonLoader.MelonLogger.Msg("Finshed assigning UiToolTip to suuport rich text");
+            if (Main.isDebug) MelonLoader.MelonLogger.Msg("Finshed assigning UiToolTip to support rich text");
             yield break;
         }
     }
