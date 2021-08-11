@@ -31,7 +31,7 @@ namespace TeleporterVR.Utils
             if (InVR) return;
             if (__ && InputDown) {
                 if (NewPatches.IsQMOpen) return;
-                if (NewPatches.IsActionMenuOpen) return;
+                if (NewPatches.IsAMOpen) return;
                 Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
                 if (Physics.Raycast(ray, out RaycastHit raycastHit))
                     VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;

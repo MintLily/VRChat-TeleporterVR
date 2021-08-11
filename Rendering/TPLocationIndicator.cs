@@ -108,8 +108,8 @@ namespace TeleporterVR.Rendering
             }
             if (NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(false);
             else if (!NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(true);
-            if (NewPatches.IsActionMenuOpen && VRUtils.active) previewObj.SetActive(false);
-            else if (!NewPatches.IsActionMenuOpen && VRUtils.active) previewObj.SetActive(true);
+            if (NewPatches.IsAMOpen && VRUtils.active) previewObj.SetActive(false);
+            else if (!NewPatches.IsAMOpen && VRUtils.active) previewObj.SetActive(true);
             SetColors(GeneralUtils.HexToColor(Main.IndicatorHexColor.Value, true));
         }
 
