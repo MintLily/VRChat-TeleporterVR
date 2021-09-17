@@ -17,7 +17,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.5.0";
+        public const string Version = "4.5.1";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -168,6 +168,11 @@ namespace TeleporterVR
             PropertyInfo uiManagerSingleton = vrcUiManager.GetProperties().First(pi => pi.PropertyType == vrcUiManager);
             while (uiManagerSingleton.GetValue(null) == null) yield return null;
             OnUiManagerInit(); // Run UI
+        }
+
+        public static void Log(string s, bool isDebug = false, bool ErrorAlt = false) {
+            if (isDebug) MelonLogger.Msg(ErrorAlt ? ConsoleColor.Red : ConsoleColor.Green, s);
+            else MelonLogger.Msg(s);
         }
     }
 }
