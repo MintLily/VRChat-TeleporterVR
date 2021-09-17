@@ -7,7 +7,7 @@ Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
 MelonLoader: v0.4.3 (Alpha)<br>
-Game: VRChat (2021.3.2  [build 1121])<br>
+Game: VRChat build 1132+<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
@@ -81,6 +81,9 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.5.1
+* Added **UniversalRiskyFunc GameObject Toggle**
+
 ### v4.5.0
 * Changed ActionMenu is Open Listener
 * Fixed odd behavior when toggling on teleportation
