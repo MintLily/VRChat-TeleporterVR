@@ -22,8 +22,7 @@ namespace TeleporterVR
         private static QMSingleButton TPtoName, TPtoCoords;
         private static QMSingleButton SavePos1, SavePos2, SavePos3, SavePos4;
         private static QMSingleButton LoadPos1, LoadPos2, LoadPos3, LoadPos4;
-        public static QMToggleButton VRTeleport;
-        private static QMToggleButton preferdHand;
+        internal static QMToggleButton VRTeleport, preferdHand;
         private static QMSingleButton DiscordBtn, GitHubBtn;
 
         private static Vector3 Pos1, Pos2, Pos3, Pos4;
@@ -65,12 +64,12 @@ namespace TeleporterVR
 
             TPtoCoords = new QMSingleButton(menu, 2, 0, Language.TPtoCoord_Text, () => OpenKeyboardForCoordTP(), Language.TPtoCoord_Tooltip);
 
-            preferdHand = new QMToggleButton(menu, 4, 0, "Right Handed", () =>
+            preferdHand = new QMToggleButton(menu, 4, 0, Language.preferedHanded_Text_ON, () =>
             {
                 VRUtils.preferRightHand = true;
                 VRTeleport.setToolTip(Language.perferedHand_Tooltip);
                 preferdHand.setToolTip(Language.perferedHand_Tooltip);
-            }, "Left Handed", () =>
+            }, Language.preferedHanded_Text_OFF, () =>
             {
                 VRUtils.preferRightHand = false;
                 VRTeleport.setToolTip(Language.perferedHand_Tooltip);
@@ -122,18 +121,23 @@ namespace TeleporterVR
             UpdateLeftRightHandButton();
             preferdHand.setToggleState(Main.preferRightHand.Value);
 
-            if (Main.isDebug)
-                MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Finished creating Menus");
+            Main.Log("Finished creating Menus", Main.isDebug);
         }
 
-        public static void UpdateUserSelectTeleportButton() { userSel_TPto.setActive(Main.visible.Value); }
+        public static void UpdateUserSelectTeleportButton() {
+            if (userSel_TPto != null) userSel_TPto.setActive(Main.visible.Value);
+        }
 
-        public static void UpdateVRTeleportButton() { VRTeleport.setActive(Main.VRTeleportVisible.Value); }
+        public static void UpdateVRTeleportButton() {
+            if (VRTeleport != null)
+                VRTeleport.setActive(Main.VRTeleportVisible.Value);
+        }
 
-        public static void UpdateLeftRightHandButton()
-        {
-            preferdHand.setActive(Main.VRTeleportVisible.Value);
-            preferdHand.setToggleState(Main.preferRightHand.Value, true);
+        public static void UpdateLeftRightHandButton() {
+            if (preferdHand != null) {
+                preferdHand.setActive(Main.VRTeleportVisible.Value);
+                preferdHand.setToggleState(Main.preferRightHand.Value, true);
+            }
         }
 
         public static IEnumerator UpdateMenuIcon(bool ignoreWait = true)
@@ -182,8 +186,7 @@ namespace TeleporterVR
             preferdHand.setOnText(Language.preferedHanded_Text_ON);
             preferdHand.setOffText(Language.preferedHanded_Text_OFF);
 
-            if (Main.isDebug)
-                MelonLoader.MelonLogger.Msg("Updated button text and tooltip text");
+            Main.Log("Updated button text and tooltip text", Main.isDebug);
         }
 
         private static IEnumerator ApplySocialIconsToButtons()
@@ -195,9 +198,9 @@ namespace TeleporterVR
             yield break;
         }
 
-        private static void OpenWebpage(string site) { Process.Start(site); }
+        internal static void OpenWebpage(string site) => Process.Start(site);
 
-        public static void SaveAction(int slot)
+        internal static void SaveAction(int slot)
         {
             switch (slot)
             {
@@ -220,7 +223,7 @@ namespace TeleporterVR
             }
         }
 
-        public static void LoadAction(int slot)
+        internal static void LoadAction(int slot)
         {
             switch (slot)
             {
@@ -251,7 +254,7 @@ namespace TeleporterVR
             }
         }
 
-        public static void OpenKeyboardForPlayerTP()
+        internal static void OpenKeyboardForPlayerTP()
         {
             PopupManager.ShowInputPopup("Teleport to Player", "", InputField.InputType.Standard, false, "Teleport",
                     (s, __, ___) =>
@@ -264,7 +267,7 @@ namespace TeleporterVR
                     }, null, "Enter (partial) Player Name");
         }
 
-        public static void OpenKeyboardForCoordTP()
+        internal static void OpenKeyboardForCoordTP()
         {
             PopupManager.ShowInputPopup("Teleport to Postition", "", InputField.InputType.Standard, false, "Teleport",
                     (s, __, ___) =>
