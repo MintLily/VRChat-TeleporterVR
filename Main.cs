@@ -9,6 +9,8 @@ using UIExpansionKit.API;
 using TeleporterVR.Rendering;
 using System.Reflection;
 using System.Linq;
+using VRCApplicationSetup = MonoBehaviourPublicApStInStBoGaBoInObStUnique;
+using UnityEngine;
 
 namespace TeleporterVR
 {
@@ -17,7 +19,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.5.1";
+        public const string Version = "4.6.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -28,9 +30,10 @@ namespace TeleporterVR
         public static bool isDebug;
         private static TPLocationIndicator LR;
         public static MelonPreferences_Category melon;
-        public static MelonPreferences_Entry<bool> visible, preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP;
+        public static MelonPreferences_Entry<bool> visible, preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXMenu, UIXTPVR;
         public static MelonPreferences_Entry<int> userSel_x, userSel_y;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
+        internal static int VRCBuildNumber = 1134; // aka target game version
 
         public override void OnApplicationStart()
         {
@@ -66,13 +69,16 @@ namespace TeleporterVR
             EnableTeleportIndicator = melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
             IndicatorHexColor = melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
             EnableDesktopTP = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
-            // Line 69    N I C E
+            UIXMenu = melon.CreateEntry("ShowUIXMenuButton", false, "Use a Menu built by UIExpansionKit");
+            UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
+
             ResourceManager.Init();
             NewPatches.SetupPatches();
             Language.InitLanguageChange();
             CreateListener.Init();
             ActionMenu.InitUi();
             RenderingIndicator.Init();
+            UIXMenuReplacement.Init();
 
             MelonLogger.Msg("Initialized!");
 
@@ -81,10 +87,23 @@ namespace TeleporterVR
 
         private void OnUiManagerInit()
         {
-            Menu.InitUi();
+            try { VRCBuildNumber = Resources.FindObjectsOfTypeAll<VRCApplicationSetup>().First().field_Public_Int32_0; } catch {
+                MelonLogger.Error("VRCApplicationSetup = MonoBehaviourPublicApStInStBoGaBoInObStUnique is most likely null in this update");
+            }
+            try { Menu.InitUi(); } catch (Exception e) {
+                if (VRCBuildNumber > 1134) {
+                    MelonLogger.Warning("This Mod does not have a dedicated UI for the UI Update");
+                    Log($"{e}", isDebug, true);
+                } else MelonLogger.Error($"{e}");
+            }
             VRUtils.Init();
             GetSetWorld.Init();
-            MelonCoroutines.Start(UiUtils.AllowToolTipTextColor());
+            try { MelonCoroutines.Start(UiUtils.AllowToolTipTextColor()); } catch (Exception t) {
+                if (VRCBuildNumber > 1134) {
+                    MelonLogger.Warning("This Mod does not have a dedicated UI for the UI Update");
+                    MelonLogger.Error($"{t}");
+                } else MelonLogger.Error($"{t}");
+            }
             if (EnableTeleportIndicator.Value)
                 LR = GeneralUtils.GetPtrObj().GetOrAddComponent<TPLocationIndicator>();
 
@@ -98,10 +117,13 @@ namespace TeleporterVR
 
         public override void OnPreferencesSaved()
         {
-            Menu.UpdateUserSelectTeleportButton();
-            Menu.UpdateVRTeleportButton();
-            Menu.UpdateLeftRightHandButton();
-            Menu.UpdateButtonText();
+            if (VRCBuildNumber <= 1134) {
+                Menu.UpdateUserSelectTeleportButton();
+                Menu.UpdateVRTeleportButton();
+                Menu.UpdateLeftRightHandButton();
+                Menu.UpdateButtonText();
+            }
+            if (UIXMenuReplacement.menu != null && UIXMenu.Value) UIXMenuReplacement.UpdateText();
             preferRightHand.Value = VRUtils.preferRightHand;
             if (ActionMenuApiIntegration.Value // if true
                 && !ActionMenu.hasStarted // if has not started yet
@@ -111,6 +133,9 @@ namespace TeleporterVR
                 MelonLogger.Msg(ConsoleColor.Yellow, "You may have to change or reload your current world to allow the ActionMenu to show.");
                 ActionMenu.InitUi();
             }
+
+            try { UIXMenuReplacement.MainMenuBTN.SetActive(UIXMenu.Value); } catch { }
+            try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch { }
         }
 
         bool runOnce;

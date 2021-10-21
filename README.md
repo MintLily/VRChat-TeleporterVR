@@ -7,11 +7,11 @@ Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
 MelonLoader: v0.4.3 (Alpha)<br>
-Game: VRChat build 1132+<br>
+Game: VRChat build 1134+<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
-Mod: [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) v0.3.1+
+Mod: [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) v0.3.3+
 
 ### MelonPreferences (Default Values)
 ```ini
@@ -26,6 +26,8 @@ ActionMenuApiIntegration = false
 EnableTeleportIndicator = true
 IndicatorHexColor = "2dff2d"
 EnableDesktopTP = false
+UIXMenu = false
+UIXTPVR = false
 ```
 UserInteractTPButtonVisible - User Select Teleport to player is visible<br>
 UserInteractTPButtonPositionX - X-Coordinate (User Selected TPButton)<br>
@@ -36,7 +38,9 @@ overrideLanguage - force mod into a provided language<br>
 ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) to add options to your Action Menu<br>
 EnableTeleportIndicator - Shows a circle to where you will be teleported to when you press your trigger<br>
 IndicatorHexColor - Color the Indicator to your liking, in the Hex Color format #rrggbb<br>
-EnableDesktopTP - Allows you to teleport to your cursor (desktop only) [KeyBinds = LeftShift + T or Mouse3]
+EnableDesktopTP - Allows you to teleport to your cursor (desktop only) [KeyBinds = LeftShift + T or Mouse3]<br>
+UIXMenu - Puts a button on your main UIX Menu to use UIX's menu as an alternative for a menu<br>
+UIXTPVR - Puts a quick VR Teleport toggle on your main UIX Menu
 
 ### Special Features
 Dynamic Language Settings - The language of the mod will be determined by your system's local region, you can override this in the settings of the mod. Changing the language will update in real time (when you close the settings window)<br>
@@ -81,6 +85,10 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.6.0
+* Added UIX Menu
+* Added VRChat UI Open Beta Detection for less breakage
+
 ### v4.5.1
 * Added **UniversalRiskyFunc GameObject Toggle**
 
