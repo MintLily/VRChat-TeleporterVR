@@ -123,6 +123,7 @@
     <Compile Include="Menu.cs" />
     <Compile Include="Rendering\TPLocationIndicator.cs" />
     <Compile Include="Rendering\SphereRendering.cs" />
+    <Compile Include="UIXMenuReplacement.cs" />
     <Compile Include="Utils\ActionMenuUtils.cs" />
     <Compile Include="Utils\DesktopUtils.cs" />
     <Compile Include="Utils\GeneralUtils.cs" />
