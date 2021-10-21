@@ -26,6 +26,7 @@ namespace TeleporterVR.Utils
                 ActionMenu.CheckForRiskyFunctions(false);
                 MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
             }
+            //if (UIXMenuReplacement.menu != null && Main.UIXMenu.Value) UIXMenuReplacement.UpdateWorldStatusText();
         }
 
         internal static void No()
@@ -39,6 +40,7 @@ namespace TeleporterVR.Utils
                 MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
             }
             VRUtils.active = false;
+            //if (UIXMenuReplacement.menu != null && Main.UIXMenu.Value) UIXMenuReplacement.UpdateWorldStatusText();
         }
 
         // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/Utilities.cs
@@ -61,14 +63,14 @@ namespace TeleporterVR.Utils
             GameObject[] allWorldGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
             if (allWorldGameObjects.Any(a => a.name == "eVRCRiskFuncDisable") || allWorldGameObjects.Any(a => a.name == "TPVRActionDisable") ||
                 allWorldGameObjects.Any(a => a.name == "UniversalRiskyFuncDisable")) {
-                Main.Log("GameObject found: Disabling Fucntions", Main.isDebug);
+                Main.Log("GameObject found: Disabling Functions", Main.isDebug);
                 WorldAllowed = false;
                 No();
                 yield break;
             }
             else if (allWorldGameObjects.Any(a => a.name == "eVRCRiskFuncEnable") || allWorldGameObjects.Any(a => a.name == "TPVRActionEnable") ||
                 allWorldGameObjects.Any(a => a.name == "UniversalRiskyFuncEnable")) {
-                Main.Log("GameObject found: Enabling Fucntions", Main.isDebug);
+                Main.Log("GameObject found: Enabling Functions", Main.isDebug);
                 WorldAllowed = true;
                 Yes();
                 yield break;
