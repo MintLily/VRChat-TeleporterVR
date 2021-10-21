@@ -20,13 +20,6 @@ namespace TeleporterVR {
         internal static GameObject MainMenuBTN, TPVRButton;
         static bool runOnce_start;
 
-        static void UIXButton(int UIXExpandedMenuENUM, string UIXGetMethod, string buttonText, Action action, Action<GameObject> goAction) {
-            MelonHandler.Mods.First(i => i.Info.Name == "UI Expansion Kit").Assembly.GetType("UIExpansionKit.API.ExpansionKitApi").GetMethod(UIXGetMethod,
-                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Invoke(null, new object[] {
-                    UIXExpandedMenuENUM, buttonText, new Action(() => action()), new Action<GameObject>((GameObject obj) => goAction(obj))
-                });
-        }
-
         public static void Init() {
             ExpansionKitApi.GetExpandedMenu(ExpandedMenu.QuickMenu).AddSimpleButton(color("#13cf13", "TeleporterVR") + "\nMenu", () => {
                 if (!runOnce_start) {
