@@ -36,6 +36,13 @@ namespace TeleporterVR.Utils
             return Texture2;
         }
 
+        private static GameObject LoadPrefab(string go) {
+            GameObject go2 = Bundle.LoadAsset_Internal(go, Il2CppType.Of<GameObject>()).Cast<GameObject>();
+            go2.hideFlags |= HideFlags.DontUnloadUnusedAsset;
+            go2.hideFlags = HideFlags.HideAndDontSave;
+            return go2;
+        }
+
         public static void Init() { MelonCoroutines.Start(LoadResources()); }
 
 		private static IEnumerator LoadResources()
@@ -53,6 +60,8 @@ namespace TeleporterVR.Utils
                     try { badIcon = LoadSprite("invalid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid.png"); }
                     try { DiscordLogo = LoadSprite("DiscordLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: DiscordLogo.png"); }
                     try { GitHubLogo = LoadSprite("GitHubLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: GitHubLogo.png"); }
+
+                    try { Logic.CustomToggle.ToggleCanvas = LoadPrefab("TPVRToggleCanvas.prefab"); } catch { MelonLogger.Error("Failed to load image from asset bundle: TPVRToggleCanvas.prefab"); }
 
                     // Added with ActionMenuApi
                     try { AMMain = LoadTexture("people-solid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid-tex.png"); }

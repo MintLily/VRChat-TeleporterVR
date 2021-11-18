@@ -107,6 +107,10 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="VRC.UI.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="VRC.UI.Elements">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRC.UI.Elements.dll</HintPath>
+    </Reference>
     <Reference Include="VRCCore-Standalone">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRCCore-Standalone.dll</HintPath>
     </Reference>
@@ -114,6 +118,7 @@
   <ItemGroup>
     <Compile Include="ActionMenu.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Logic\CustomToggle.cs" />
     <Compile Include="Logic\EnableDisableListener.cs" />
     <Compile Include="Logic\Language.cs" />
     <Compile Include="Logic\ModCompatibility.cs" />
@@ -130,7 +135,6 @@
     <Compile Include="Utils\PlayerActions.cs" />
     <Compile Include="Utils\PopupManager.cs" />
     <Compile Include="Utils\ResourceManager.cs" />
-    <Compile Include="Utils\RubyButtonAPI.cs" />
     <Compile Include="Utils\UiUtils.cs" />
     <Compile Include="Utils\VRUtils.cs" />
     <Compile Include="Utils\WorldActions.cs" />

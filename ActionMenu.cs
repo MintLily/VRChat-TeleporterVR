@@ -16,8 +16,8 @@ namespace TeleporterVR
 {
     public class ActionMenu
     {
-        private static readonly string[] AmApiOutdatedVersions = { "0.1.0" , "0.1.2", "0.2.0", "0.2.1", "0.2.2", "0.2.3", "0.3.0", "0.3.1", "0.3.2" };
-        // Tested versions to be good => 0.3.3
+        private static readonly string[] AmApiOutdatedVersions = { "0.1.0" , "0.1.2", "0.2.0", "0.2.1", "0.2.2", "0.2.3", "0.3.0", "0.3.1", "0.3.2", "0.3.3", "0.3.4" };
+        // Tested versions to be good => 0.3.5
         public static bool hasAMApiInstalled, AMApiOutdated, hasStarted;
         private static PedalOption VRTP, TP2Name, TP2Coord, Save, Load;
 
@@ -38,12 +38,11 @@ namespace TeleporterVR
         {
             AMSubMenu.subMenu = VRCActionMenuPage.AddSubMenu(ActionMenuPage.Main, "<color=#13cf13>TeleporterVR</color>", () =>
                 {
-                    VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, false,
-                        (choice) => Menu.VRTeleport.setToggleState(choice, true), ResourceManager.AMVRTP);
+                    VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, false, UIXMenuReplacement.ToggleVRTeleport, ResourceManager.AMVRTP);
 
-                    TP2Name = CustomSubMenu.AddButton(Language.TPtoName_Text, () => Menu.OpenKeyboardForPlayerTP(), ResourceManager.AMMain);
+                    TP2Name = CustomSubMenu.AddButton(Language.TPtoName_Text, Menu.OpenKeyboardForPlayerTP, ResourceManager.AMMain);
 
-                    TP2Coord = CustomSubMenu.AddButton(Language.TPtoCoord_Text, () => Menu.OpenKeyboardForCoordTP(), ResourceManager.AMMain);
+                    TP2Coord = CustomSubMenu.AddButton(Language.TPtoCoord_Text, Menu.OpenKeyboardForCoordTP, ResourceManager.AMMain);
 
                     Save = CustomSubMenu.AddSubMenu(Language.SavePos, () =>
                     {

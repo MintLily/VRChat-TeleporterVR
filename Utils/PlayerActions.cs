@@ -7,7 +7,6 @@ using VRC.Core;
 using VRC;
 using UnityEngine;
 using UnityEngine.UI;
-using RubyButtonAPIVRT;
 
 namespace TeleporterVR.Utils
 {
@@ -36,7 +35,5 @@ namespace TeleporterVR.Utils
         public static PlayerManager GetPlayerManager() { return PlayerManager.field_Private_Static_PlayerManager_0; }
 
         public static void Teleport(VRCPlayer player) { GetLocalVRCPlayer().transform.position = player.transform.position; }
-
-        public static VRCPlayer GetSelectedPlayer() { return QMStuff.GetQuickMenuInstance().field_Private_Player_0._vrcplayer; }
     }
 }

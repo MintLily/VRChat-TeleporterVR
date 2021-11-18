@@ -106,10 +106,10 @@ namespace TeleporterVR.Rendering
                 line.SetPosition(0, endPos);
                 line.SetPosition(1, VRUtils.GetControllerPos());
             }
-            if (NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(false);
-            else if (!NewPatches.IsQMOpen && VRUtils.active) previewObj.SetActive(true);
-            if (NewPatches.IsAMOpen && VRUtils.active) previewObj.SetActive(false);
-            else if (!NewPatches.IsAMOpen && VRUtils.active) previewObj.SetActive(true);
+            if ((NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(false);
+            else if (!(NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(true);
+            if ((NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(false);
+            else if (!(NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(true);
             SetColors(GeneralUtils.HexToColor(Main.IndicatorHexColor.Value, true));
         }
 

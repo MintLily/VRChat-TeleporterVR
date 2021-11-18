@@ -70,9 +70,6 @@ namespace TeleporterVR.Logic
                     Utils.WorldActions.WorldAllowed = true;
                     if (Main.isDebug)
                         MelonLogger.Msg(System.ConsoleColor.Cyan, "Force Allowed");
-                    Menu.userSel_TPto.Disabled(false);
-                    Menu.VRTeleport.Disabled(false);
-                    MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
 
                     if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
                         ActionMenu.CheckForRiskyFunctions(false);
@@ -83,9 +80,6 @@ namespace TeleporterVR.Logic
                     Utils.WorldActions.WorldAllowed = false;
                     if (Main.isDebug)
                         MelonLogger.Msg(System.ConsoleColor.Red, "Force Disallowed");
-                    Menu.userSel_TPto.Disabled(true);
-                    Menu.VRTeleport.Disabled(true);
-                    MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
                     
                     if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
                         ActionMenu.CheckForRiskyFunctions(true);
@@ -94,7 +88,6 @@ namespace TeleporterVR.Logic
                     Utils.VRUtils.active = false;
                     break;
                 case 3: // only disable VRTP
-                    Menu.VRTeleport.Disabled(true);
                     Utils.VRUtils.active = false;
                     break;
                 default: break; // Do nothing extra

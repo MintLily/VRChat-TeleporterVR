@@ -18,7 +18,7 @@ namespace TeleporterVR {
         static Dictionary<string, Transform> buttons = new Dictionary<string, Transform>();
         static Dictionary<string, Transform> permbuttons = new Dictionary<string, Transform>();
         internal static GameObject MainMenuBTN, TPVRButton;
-        static bool runOnce_start;
+        internal static bool runOnce_start;
 
         public static void Init() {
             ExpansionKitApi.GetExpandedMenu(ExpandedMenu.QuickMenu).AddSimpleButton(color("#13cf13", "TeleporterVR") + "\nMenu", () => {
@@ -31,17 +31,11 @@ namespace TeleporterVR {
                     UpdateText();
                     UpdateWorldStatusText();
                 }
-            }, (obj) => {
-                MainMenuBTN = obj;
-                obj.SetActive(Main.UIXMenu.Value);
             });
 
             ExpansionKitApi.GetExpandedMenu(ExpandedMenu.QuickMenu).AddSimpleButton(VRUtils.active ? Language.theWord_Teleport + color("#00ff00", "\nON") : 
                 Language.theWord_Teleport + color("red", "\nOFF"), () => {
-                    if (WorldActions.WorldAllowed) {
-                        VRUtils.active = !VRUtils.active;
-                        TPLocationIndicator.Toggle();
-                    }
+                    ToggleVRTeleport(!VRUtils.active);
                     UpdateText();
                 }, (obj2) => {
                     permbuttons["TPActive_1"] = obj2.transform;
@@ -64,13 +58,11 @@ namespace TeleporterVR {
                 UpdateText();
             }, (button) => buttons["TPActive_2"] = button.transform);
 
-            menu.AddSimpleButton(Language.TPtoName_Text, () => OpenKeyboardForPlayerTP(), (button) => buttons["KeyboardTP"] = button.transform);
-            menu.AddSimpleButton(Language.TPtoCoord_Text, () => OpenKeyboardForCoordTP(), (button) => buttons["CoordTP"] = button.transform);
+            menu.AddSimpleButton(Language.TPtoName_Text, OpenKeyboardForPlayerTP, (button) => buttons["KeyboardTP"] = button.transform);
+            menu.AddSimpleButton(Language.TPtoCoord_Text, OpenKeyboardForCoordTP, (button) => buttons["CoordTP"] = button.transform);
             menu.AddSpacer();
             menu.AddSimpleButton(VRUtils.preferRightHand ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF, () => {
                 VRUtils.preferRightHand = !VRUtils.preferRightHand;
-                VRTeleport.setToolTip(Language.perferedHand_Tooltip);
-                preferdHand.setToolTip(Language.perferedHand_Tooltip);
                 UpdateText();
             }, (button) => buttons["preferRightHand"] = button.transform);
 
@@ -90,6 +82,14 @@ namespace TeleporterVR {
             menu.AddSpacer();
 
             Main.Log("Finished creating UIXMenus", Main.isDebug);
+        }
+
+        internal static void ToggleVRTeleport(bool state) {
+            if (WorldActions.WorldAllowed) {
+                VRUtils.active = state;
+                TPLocationIndicator.Toggle();
+                CustomToggle.UpdateToggleState();
+            }
         }
 
         static string text(string buttonName, string text) {
