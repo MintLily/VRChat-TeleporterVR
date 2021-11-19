@@ -143,10 +143,13 @@ namespace TeleporterVR
         public static IEnumerator UpdateMenuIcon(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(1f);
-            menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = WorldActions.WorldAllowed ? ResourceManager.goodIcon : ResourceManager.badIcon;
-            menu.getMainButton().Disabled(!WorldActions.WorldAllowed);
-            VRTeleport.Disabled(!WorldActions.WorldAllowed);
-            userSel_TPto.Disabled(!WorldActions.WorldAllowed);
+            if (menu != null && menu.getMainButton() != null)
+            {
+                menu.getMainButton().getGameObject().GetComponentInChildren<Image>().sprite = WorldActions.WorldAllowed ? ResourceManager.goodIcon : ResourceManager.badIcon;
+                menu.getMainButton().Disabled(!WorldActions.WorldAllowed);
+            }
+            VRTeleport?.Disabled(!WorldActions.WorldAllowed);
+            userSel_TPto?.Disabled(!WorldActions.WorldAllowed);
             yield break;
         }
 

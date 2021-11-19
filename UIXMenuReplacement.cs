@@ -105,8 +105,8 @@ namespace TeleporterVR {
         }
 
         static string text(string buttonName, string text) {
-            if (buttons[buttonName] != null)
-                return buttons[buttonName].GetComponentInChildren<Text>().text = text;
+            if (buttons.ContainsKey(buttonName))
+                return buttons[buttonName].GetComponentInChildren<Text>(true).text = text;
             else return null;
         }
 
