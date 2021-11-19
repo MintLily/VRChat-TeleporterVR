@@ -9,7 +9,6 @@ using UIExpansionKit.API;
 using TeleporterVR.Rendering;
 using System.Reflection;
 using System.Linq;
-using VRCApplicationSetup = MonoBehaviourPublicApStInStBoGaBoInObStUnique;
 using UnityEngine;
 
 namespace TeleporterVR
@@ -19,7 +18,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.6.0";
+        public const string Version = "4.7.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -30,7 +29,7 @@ namespace TeleporterVR
         public static bool isDebug;
         private static TPLocationIndicator LR;
         public static MelonPreferences_Category melon;
-        public static MelonPreferences_Entry<bool> visible, preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXMenu, UIXTPVR;
+        public static MelonPreferences_Entry<bool> visible, preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXMenu, UIXTPVR, UIXTPToPlayer;
         public static MelonPreferences_Entry<int> userSel_x, userSel_y;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
         internal static int VRCBuildNumber = 1134; // aka target game version
@@ -71,6 +70,7 @@ namespace TeleporterVR
             EnableDesktopTP = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
             UIXMenu = melon.CreateEntry("ShowUIXMenuButton", false, "Use a Menu built by UIExpansionKit");
             UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
+            UIXTPToPlayer = melon.CreateEntry("ShowUIXTPToPlayerButton", false, "Put TP button on UIX User Selected Menu");
 
             ResourceManager.Init();
             NewPatches.SetupPatches();
@@ -136,6 +136,7 @@ namespace TeleporterVR
 
             try { UIXMenuReplacement.MainMenuBTN.SetActive(UIXMenu.Value); } catch { }
             try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch { }
+            try { UIXMenuReplacement.TPToPlayerButton.SetActive(UIXTPToPlayer.Value); } catch { }
         }
 
         bool runOnce;

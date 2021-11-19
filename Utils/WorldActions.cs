@@ -19,28 +19,28 @@ namespace TeleporterVR.Utils
         internal static void Yes()
         {
             Main.Log("Action Allowed", Main.isDebug);
-            Menu.userSel_TPto.Disabled(false);
-            Menu.VRTeleport.Disabled(false);
+            Menu.userSel_TPto?.Disabled(false);
+            Menu.VRTeleport?.Disabled(false);
             MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
             if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
                 ActionMenu.CheckForRiskyFunctions(false);
                 MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
             }
-            //if (UIXMenuReplacement.menu != null && Main.UIXMenu.Value) UIXMenuReplacement.UpdateWorldStatusText();
+            if (UIXMenuReplacement.menu != null && Main.UIXMenu.Value) UIXMenuReplacement.UpdateWorldStatusText();
         }
 
         internal static void No()
         {
             Main.Log("Action Disallowed", Main.isDebug, true);
-            Menu.userSel_TPto.Disabled(true);
+            Menu.userSel_TPto?.Disabled(true);
             MelonCoroutines.Start(Menu.UpdateMenuIcon(false));
-            Menu.VRTeleport.setToggleState(false, true);
+            Menu.VRTeleport?.setToggleState(false, true);
             if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
                 ActionMenu.CheckForRiskyFunctions(true);
                 MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
             }
             VRUtils.active = false;
-            //if (UIXMenuReplacement.menu != null && Main.UIXMenu.Value) UIXMenuReplacement.UpdateWorldStatusText();
+            if (UIXMenuReplacement.menu != null && Main.UIXMenu.Value) UIXMenuReplacement.UpdateWorldStatusText();
         }
 
         // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/Utilities.cs
@@ -126,7 +126,7 @@ namespace TeleporterVR.Utils
         internal static void OnLeftWorld()
         {
             WorldAllowed = false;
-            Menu.VRTeleport.setToggleState(false, true);
+            Menu.VRTeleport?.setToggleState(false, true);
             VRUtils.active = false;
         }
     }

@@ -17,7 +17,7 @@ namespace TeleporterVR {
         static string color(string c, string s) { return $"<color={c}>{s}</color> "; }
         static Dictionary<string, Transform> buttons = new Dictionary<string, Transform>();
         static Dictionary<string, Transform> permbuttons = new Dictionary<string, Transform>();
-        internal static GameObject MainMenuBTN, TPVRButton;
+        internal static GameObject MainMenuBTN, TPVRButton, TPToPlayerButton;
         static bool runOnce_start;
 
         public static void Init() {
@@ -36,18 +36,30 @@ namespace TeleporterVR {
                 obj.SetActive(Main.UIXMenu.Value);
             });
 
-            ExpansionKitApi.GetExpandedMenu(ExpandedMenu.QuickMenu).AddSimpleButton(VRUtils.active ? Language.theWord_Teleport + color("#00ff00", "\nON") : 
+            ExpansionKitApi.GetExpandedMenu(ExpandedMenu.QuickMenu).AddSimpleButton(VRUtils.active ? Language.theWord_Teleport + color("#00ff00", "\nON") :
                 Language.theWord_Teleport + color("red", "\nOFF"), () => {
-                    if (WorldActions.WorldAllowed) {
-                        VRUtils.active = !VRUtils.active;
-                        TPLocationIndicator.Toggle();
-                    }
-                    UpdateText();
-                }, (obj2) => {
-                    permbuttons["TPActive_1"] = obj2.transform;
-                    TPVRButton = obj2;
-                    obj2.SetActive(Main.UIXTPVR.Value);
-                });
+                if (WorldActions.WorldAllowed)
+                {
+                    VRUtils.active = !VRUtils.active;
+                    TPLocationIndicator.Toggle();
+                }
+                UpdateText();
+            }, (obj2) => {
+                permbuttons["TPActive_1"] = obj2.transform;
+                TPVRButton = obj2;
+                obj2.SetActive(Main.UIXTPVR.Value);
+            });
+
+            ExpansionKitApi.GetExpandedMenu(ExpandedMenu.UserQuickMenu).AddSimpleButton(Language.theWord_Teleport, () => {
+                if (WorldActions.WorldAllowed)
+                {
+                    PlayerActions.Teleport(PlayerActions.GetSelectedPlayer());
+                }
+            }, (obj2) => {
+                permbuttons["TPToPlayer"] = obj2.transform;
+                TPToPlayerButton = obj2;
+                obj2.SetActive(Main.UIXTPToPlayer.Value);
+            });
             Main.Log("Finished creating UIXMenus", Main.isDebug);
         }
 

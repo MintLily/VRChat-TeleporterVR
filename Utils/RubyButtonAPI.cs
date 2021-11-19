@@ -549,7 +549,7 @@ namespace RubyButtonAPIVRT
             infoBar.SetActive(pagename == "ShortcutMenu");
 
             QuickMenuContextualDisplay quickmenuContextualDisplay = GetQuickMenuInstance().field_Private_QuickMenuContextualDisplay_0;
-            quickmenuContextualDisplay.Method_Public_Void_EnumNPublicSealedvaUnNoToUs7vUsNoUnique_0(QuickMenuContextualDisplay.EnumNPublicSealedvaUnNoToUs7vUsNoUnique.NoSelection);
+            quickmenuContextualDisplay.Method_Public_Void_QuickMenuContext_0(QuickMenuContextualDisplay.QuickMenuContext.NoSelection);
             //quickmenuContextualDisplay.Method_Public_Nested0_0(QuickMenuContextualDisplay.Nested0.NoSelection);
 
             pageTransform.gameObject.SetActive(true);

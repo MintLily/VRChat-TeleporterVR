@@ -13,7 +13,10 @@ namespace TeleporterVR.Utils
     {
         public static IEnumerator AllowToolTipTextColor()
         {
-            try {
+            // Tooltip is now using TextMeshPro. Appears to already have richText=true. At UserInterface/Canvas_QuickMenu(Clone)/Container/Window/ToolTipPanel/Panel/Text_H3
+            /*
+            try
+            {
                 GameObject TooltipText = GameObject.Find("UserInterface/QuickMenu/QuickMenu_NewElements/_CONTEXT/QM_Context_ToolTip/_ToolTipPanel/Text");
                 TooltipText.GetComponentInChildren<Text>().supportRichText = true;
             } catch { MelonLoader.MelonLogger.Error("Failed to make ToolipText supportRichText"); }
@@ -23,6 +26,7 @@ namespace TeleporterVR.Utils
             } catch { MelonLoader.MelonLogger.Error("Failed to make ALTTooltipText supportRichText"); }
 
             if (Main.isDebug) MelonLoader.MelonLogger.Msg("Finshed assigning UiToolTip to support rich text");
+            */
             yield break;
         }
     }
