@@ -29,7 +29,7 @@ namespace TeleporterVR
         public static bool isDebug;
         private static TPLocationIndicator LR;
         public static MelonPreferences_Category melon;
-        public static MelonPreferences_Entry<bool> visible, preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR;
+        public static MelonPreferences_Entry<bool> /*visible, */preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
 
         public override void OnApplicationStart()
@@ -43,7 +43,7 @@ namespace TeleporterVR
             MelonCoroutines.Start(GetAssembly());
 
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
-            visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
+            //visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
             preferRightHand = melon.CreateEntry("preferRightHand", true, "Right Handed");
             VRTeleportVisible = melon.CreateEntry("VRTeleportVisible", true, "Is VRTeleport Button Visible");
             OverrideLanguage = melon.CreateEntry("overrideLanguage", "off", "Override Language");
@@ -135,7 +135,7 @@ namespace TeleporterVR
         {
             VRUtils.OnUpdate();
             // This check is to keep the menu Disabled in Disallowed worlds, this was super easy to patch into or use UnityExplorer to re-enable the button
-            if (!WorldActions.WorldAllowed && (NewPatches.IsQMOpen || NewPatches.IsQMOpen))
+            if (!WorldActions.WorldAllowed && !(NewPatches.IsQMOpen || NewPatches.IsQMOpen))
                 VRUtils.active = false;
             DesktopUtils.OnUpdate();
         }

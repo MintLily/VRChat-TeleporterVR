@@ -26,6 +26,7 @@ namespace TeleporterVR {
                     TheMenu();
                     runOnce_start = true;
                     menu.Show();
+                    TPVRButton.SetActive(Main.UIXTPVR.Value);
                 } else if (runOnce_start) {
                     menu.Show();
                     UpdateText();
@@ -40,8 +41,8 @@ namespace TeleporterVR {
                 }, (obj2) => {
                     permbuttons["TPActive_1"] = obj2.transform;
                     TPVRButton = obj2;
-                    obj2.SetActive(Main.UIXTPVR.Value);
-                });
+                    obj2.SetActive(false);
+            });
             Main.Log("Finished creating UIXMenus", Main.isDebug);
         }
 

@@ -16,9 +16,6 @@ Mod: [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) v0.3.3+
 ### MelonPreferences (Default Values)
 ```ini
 [TeleporterVR]
-UserInteractTPButtonVisible = true
-UserInteractTPButtonPositionX = 1
-UserInteractTPButtonPositionY = 3
 preferRightHand = true
 VRTeleportVisible = false
 overrideLanguage = "off"
@@ -29,9 +26,6 @@ EnableDesktopTP = false
 UIXMenu = false
 UIXTPVR = false
 ```
-UserInteractTPButtonVisible - User Select Teleport to player is visible<br>
-UserInteractTPButtonPositionX - X-Coordinate (User Selected TPButton)<br>
-UserInteractTPButtonPositionY - Y-Coordinate (User Selected TPButton)<br>
 preferRightHand  - Prefer Right Handed (for VRTeleport)<br>
 VRTeleportVisible - VRTeleport Button is visible (next to mute button)<br>
 overrideLanguage - force mod into a provided language<br>
@@ -78,13 +72,17 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 * Other Code in the Mod
-* * Patches - **Psychloor**
+* * Patches - **DDAkabono**
 * * emmVRC Risky world / game tag toggling - **Psychloor**
 * * Asset Bundle, Keyboard popup input, Enable/Disable Listener - **knah**
 * * TeleportIndicator Scripts - **Davi (d-mageek)**
 
 
 # Change Log (since Lily's edits)
+### v4.7.0
+* Added VRChat build 1151 compatibility
+* Removed RubyButtonAPI
+
 ### v4.6.0
 * Added UIX Menu
 * Added VRChat UI Open Beta Detection for less breakage
