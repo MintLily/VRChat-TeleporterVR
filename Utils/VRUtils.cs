@@ -13,7 +13,7 @@ namespace TeleporterVR.Utils
         public const string LeftTrigger = "Oculus_CrossPlatform_PrimaryIndexTrigger";
     }
 
-    class VRUtils
+    public class VRUtils
     {
         private static bool _oculus, __ = true; // fear my variable naming scheme
         public static bool active, preferRightHand;
@@ -21,11 +21,9 @@ namespace TeleporterVR.Utils
         public static Ray ray;
 
         private static bool InputDown {
-            get {
-                return Input.GetButtonDown(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) ||
-                    Input.GetAxisRaw(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) != 0 ||
-                    Input.GetAxis(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) >= 0.75f;
-            }
+            get => Input.GetButtonDown(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) ||
+                   Input.GetAxisRaw(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) != 0 ||
+                   Input.GetAxis(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) >= 0.75f;
         }
 
         public static void Init()

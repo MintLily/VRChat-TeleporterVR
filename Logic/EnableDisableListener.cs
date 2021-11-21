@@ -1,10 +1,12 @@
 ﻿using MelonLoader;
 using System;
+using System.Collections;
 using TeleporterVR.Patches;
 using TeleporterVR.Utils;
 using UnhollowerBaseLib.Attributes;
 using UnhollowerRuntimeLib;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace TeleporterVR.Logic
 {
@@ -34,6 +36,14 @@ namespace TeleporterVR.Logic
 
             if (Main.isDebug)
                 MelonLogger.Msg(ConsoleColor.Green, "Finished creating ActionMenuListener");
+        }
+
+        public static GameObject? FindInactiveObjectInActiveRoot(string path) {
+            var split = path.Split(new char[] { '/' }, 2);
+            var rootObject = GameObject.Find($"/{split[0]}")?.transform;
+            if (rootObject == null)
+                return null;
+            return Transform.FindRelativeTransformWithPath(rootObject, split[1], false)?.gameObject;
         }
 
         static void AMOpenToggle()

@@ -24,7 +24,6 @@ namespace TeleporterVR.Utils
 		{
 			Sprite sprite2 = Bundle.LoadAsset_Internal(sprite, Il2CppType.Of<Sprite>()).Cast<Sprite>();
 			sprite2.hideFlags |= HideFlags.DontUnloadUnusedAsset;
-			sprite2.hideFlags = HideFlags.HideAndDontSave;
 			return sprite2;
 		}
 
@@ -32,8 +31,13 @@ namespace TeleporterVR.Utils
         {
             Texture2D Texture2 = Bundle.LoadAsset_Internal(Texture, Il2CppType.Of<Texture2D>()).Cast<Texture2D>();
             Texture2.hideFlags |= HideFlags.DontUnloadUnusedAsset;
-            Texture2.hideFlags = HideFlags.HideAndDontSave;
             return Texture2;
+        }
+
+        private static GameObject LoadPrefab(string go) {
+            GameObject go2 = Bundle.LoadAsset_Internal(go, Il2CppType.Of<GameObject>()).Cast<GameObject>();
+            go2.hideFlags |= HideFlags.DontUnloadUnusedAsset;
+            return go2;
         }
 
         public static void Init() { MelonCoroutines.Start(LoadResources()); }
@@ -53,6 +57,8 @@ namespace TeleporterVR.Utils
                     try { badIcon = LoadSprite("invalid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid.png"); }
                     try { DiscordLogo = LoadSprite("DiscordLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: DiscordLogo.png"); }
                     try { GitHubLogo = LoadSprite("GitHubLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: GitHubLogo.png"); }
+
+                    //try { Logic.CustomToggle.ToggleCanvas = LoadPrefab("TPVRToggleCanvas.prefab"); } catch { MelonLogger.Error("Failed to load image from asset bundle: TPVRToggleCanvas.prefab"); }
 
                     // Added with ActionMenuApi
                     try { AMMain = LoadTexture("people-solid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid-tex.png"); }

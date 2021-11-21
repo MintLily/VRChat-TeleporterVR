@@ -21,22 +21,13 @@ namespace TeleporterVR.Patches
     internal static class NewPatches
     {
         public static bool IsQMOpen, IsAMOpen;
-        public static MethodInfo setMenuIndex;
 
         public static void SetupPatches()
         {
             bool d = Main.isDebug;
             Log.Msg("Applying Patches . . .");
 
-            if (d) Log.Msg("Attempting setMenuIndex Patches...");
-            List<Type> quickMenuNestedEnums = typeof(QuickMenu).GetNestedTypes().Where(type => type.IsEnum).ToList();
-            PropertyInfo quickMenuEnumProperty = typeof(QuickMenu).GetProperties().First(pi => pi.PropertyType.IsEnum && quickMenuNestedEnums.Contains(pi.PropertyType));
-            setMenuIndex = typeof(QuickMenu).GetMethods().First(mb => mb.Name.StartsWith("Method_Public_Void_Enum") && !mb.Name.Contains("_PDM_") &&
-            mb.GetParameters().Length == 1 && mb.GetParameters()[0].ParameterType == quickMenuEnumProperty.PropertyType);
-
-            applyPatches(typeof(QuickMenuOpen));
-            applyPatches(typeof(QuickMenuClose));
-            //applyPatches(typeof(ActionMenuPatches));
+            applyPatches(typeof(QuickMenuPatches));
             applyPatches(typeof(FadePatches));
 
             if (d) Log.Msg(ConsoleColor.Green, "Finished with Patches");
@@ -56,40 +47,20 @@ namespace TeleporterVR.Patches
 
     // Patch Methods
 
-    [HarmonyPatch]
-    class QuickMenuOpen
-    {
-        static IEnumerable<MethodBase> TargetMethods()
-        {
-            return typeof(QuickMenu).GetMethods().Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 &&
-            XrefThings.CheckUsing(mb, NewPatches.setMenuIndex.Name, typeof(QuickMenu))).Cast<MethodBase>();
+    [HarmonyPatch(typeof(VRC.UI.Elements.QuickMenu))]
+    class QuickMenuPatches {
+        [HarmonyPostfix]
+        [HarmonyPatch("OnEnable")]
+        private static void OnQuickMenuEnable() {
+            NewPatches.IsQMOpen = true;
         }
 
-        static void Postfix() => NewPatches.IsQMOpen = true;
+        [HarmonyPostfix]
+        [HarmonyPatch("OnDisable")]
+        private static void OnQuickMenuDisable() {
+            NewPatches.IsQMOpen = false;
+        }
     }
-
-    [HarmonyPatch]
-    class QuickMenuClose
-    {
-        static IEnumerable<MethodBase> TargetMethods()
-        {
-            return typeof(QuickMenu).GetMethods().Where(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_") && mb.Name.Length <= 29 &&
-            XrefThings.CheckUsed(mb, NewPatches.setMenuIndex.Name)).Cast<MethodBase>();
-        }
-
-        static void Postfix() => NewPatches.IsQMOpen = false;
-    }
-
-    /*[HarmonyPatch]
-    class ActionMenuPatches
-    {
-        static IEnumerable<MethodBase> TargetMethods()
-        {
-            return typeof(ActionMenuOpener).GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(x => x.Name.Contains("Method_Private_Void_Boolean")).Cast<MethodBase>();
-        }
-
-        static void Postfix(bool __0) => NewPatches.IsActionMenuOpen = __0;
-    }*/
 
     [HarmonyPatch]
     class FadePatches
