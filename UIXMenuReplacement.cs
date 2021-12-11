@@ -17,7 +17,7 @@ namespace TeleporterVR {
         static string color(string c, string s) { return $"<color={c}>{s}</color> "; }
         static Dictionary<string, Transform> buttons = new Dictionary<string, Transform>();
         static Dictionary<string, Transform> permbuttons = new Dictionary<string, Transform>();
-        internal static GameObject MainMenuBTN, TPVRButton;
+        internal static GameObject MainMenuBTN, TPVRButton, UserTPButton;
         internal static bool runOnce_start;
 
         public static void Init() {
@@ -42,6 +42,15 @@ namespace TeleporterVR {
                     permbuttons["TPActive_1"] = obj2.transform;
                     TPVRButton = obj2;
                     obj2.SetActive(false);
+            });
+            
+            ExpansionKitApi.GetExpandedMenu(ExpandedMenu.UserQuickMenu).AddSimpleButton($"{Language.theWord_Teleport} to Player", () => {
+                if (!WorldActions.WorldAllowed) return;
+                    PlayerActions.Teleport(PlayerActions.SelVRCPlayer());
+                }, (ob) => {
+                permbuttons["UserTeleport"] = ob.transform;
+                UserTPButton = ob;
+                ob.SetActive(Main.VRTeleportVisible.Value);
             });
             Main.Log("Finished creating UIXMenus", Main.isDebug);
         }

@@ -18,7 +18,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.7.0";
+        public const string Version = "4.8.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -45,7 +45,7 @@ namespace TeleporterVR
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
             //visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
             preferRightHand = melon.CreateEntry("preferRightHand", true, "Right Handed");
-            VRTeleportVisible = melon.CreateEntry("VRTeleportVisible", true, "Is VRTeleport Button Visible");
+            VRTeleportVisible = melon.CreateEntry("VRTeleportVisible", true, "Is User Selected Teleport Button visible");
             OverrideLanguage = melon.CreateEntry("overrideLanguage", "off", "Override Language");
             ExpansionKitApi.RegisterSettingAsStringEnum(melon.Identifier, OverrideLanguage.Identifier, 
                 new[] {
@@ -99,7 +99,7 @@ namespace TeleporterVR
         public override void OnPreferencesSaved()
         {
             if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText();
-            preferRightHand.Value = VRUtils.preferRightHand;
+            MelonPreferences.GetEntry<bool>(melon.Identifier, preferRightHand.Identifier).Value = VRUtils.preferRightHand;
             if (ActionMenuApiIntegration.Value // if true
                 && !ActionMenu.hasStarted // if has not started yet
                 && ActionMenu.hasAMApiInstalled // if gompo's mod is installed
@@ -111,6 +111,8 @@ namespace TeleporterVR
             //CustomToggle.UpdateColorTheme();
 
             try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch { }
+            try { UIXMenuReplacement.UserTPButton.SetActive(VRTeleportVisible.Value); } catch { }
+            try { if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText(); } catch { }
         }
 
         bool runOnce;
