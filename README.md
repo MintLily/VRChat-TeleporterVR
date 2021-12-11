@@ -6,12 +6,12 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
-MelonLoader: v0.4.3 (Alpha)<br>
-Game: VRChat build 1134+<br>
+MelonLoader: v0.5.2 (Alpha)<br>
+Game: VRChat build 1160+<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
-Mod: [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) v0.3.3+
+Mod: [ActionMenuApi](https://github.com/gompocp/ActionMenuApi)
 
 ### MelonPreferences (Default Values)
 ```ini
@@ -52,10 +52,6 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 ![ActionMenu Preview](https://mintlily.lgbt/img/upload/ActionMenuApi-Preview.png)
 
 # Credits
-* RubyButtonAPI
-* * DubyaDude, Emilia, Tritn, MintLily
-
-
 * Icons
 * * [Font Awesome](https://fontawesome.com/)
 
@@ -79,6 +75,10 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.8.0
+* Added User Selected Teleport button (with UIX)
+* Fixed perfered hand option not being updated properly
+
 ### v4.7.0
 * Added VRChat build 1151 compatibility
 * Removed RubyButtonAPI
