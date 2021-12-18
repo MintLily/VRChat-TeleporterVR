@@ -75,6 +75,9 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.8.1
+* Fixed Popup keyboards not showing
+
 ### v4.8.0
 * Added User Selected Teleport button (with UIX)
 * Fixed perfered hand option not being updated properly
