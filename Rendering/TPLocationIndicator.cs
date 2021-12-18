@@ -89,10 +89,10 @@ namespace TeleporterVR.Rendering
                 OnDisable();
                 return;
             }
-            if ((VRUtils.preferRightHand ? VRUtils.ControllerRight == null : VRUtils.ControllerLeft == null) && !launchErrorOnce)
+            if ((Main.preferRightHand.Value ? VRUtils.ControllerRight == null : VRUtils.ControllerLeft == null) && !launchErrorOnce)
             {
                 launchErrorOnce = true;
-                string temp = VRUtils.preferRightHand ? "ControllerRight" : "ControllerLeft";
+                string temp = Main.preferRightHand.Value ? "ControllerRight" : "ControllerLeft";
                 Console.WriteLine($"Could not determine {temp} raycast.", ConsoleColor.Red);
                 return;
             }

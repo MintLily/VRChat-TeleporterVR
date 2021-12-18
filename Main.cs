@@ -18,7 +18,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.8.0";
+        public const string Version = "4.8.1";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -99,7 +99,7 @@ namespace TeleporterVR
         public override void OnPreferencesSaved()
         {
             if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText();
-            MelonPreferences.GetEntry<bool>(melon.Identifier, preferRightHand.Identifier).Value = VRUtils.preferRightHand;
+            //MelonPreferences.GetEntry<bool>(melon.Identifier, preferRightHand.Identifier).Value = VRUtils.preferRightHand;
             if (ActionMenuApiIntegration.Value // if true
                 && !ActionMenu.hasStarted // if has not started yet
                 && ActionMenu.hasAMApiInstalled // if gompo's mod is installed
@@ -131,7 +131,7 @@ namespace TeleporterVR
             }
         }
 
-        public override void OnApplicationQuit() => preferRightHand.Value = VRUtils.preferRightHand;
+        //public override void OnApplicationQuit() => preferRightHand.Value = VRUtils.preferRightHand;
 
         public override void OnUpdate()
         {

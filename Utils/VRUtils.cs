@@ -16,14 +16,14 @@ namespace TeleporterVR.Utils
     public class VRUtils
     {
         private static bool _oculus, __ = true; // fear my variable naming scheme
-        public static bool active, preferRightHand;
+        public static bool active;
         public static GameObject ControllerLeft, ControllerRight;
         public static Ray ray;
 
         private static bool InputDown {
-            get => Input.GetButtonDown(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) ||
-                   Input.GetAxisRaw(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) != 0 ||
-                   Input.GetAxis(preferRightHand ? InputInfo.RightTrigger : InputInfo.LeftTrigger) >= 0.75f;
+            get => Input.GetButtonDown(Main.preferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) ||
+                   Input.GetAxisRaw(Main.preferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) != 0 ||
+                   Input.GetAxis(Main.preferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) >= 0.75f;
         }
 
         public static void Init()
@@ -52,7 +52,7 @@ namespace TeleporterVR.Utils
             if (NewPatches.IsQMOpen) return; // Temporarily Disables Teleporting if the QuickMenu is currently open
             if (NewPatches.IsAMOpen) return; // Temporarily Disables Teleporting if the ActionMenu is currently open
             if (__ && InputDown) {
-                ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+                ray = Main.preferRightHand.Value ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
                         new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
                 if (Physics.Raycast(ray, out RaycastHit raycastHit))
                     VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
@@ -60,11 +60,11 @@ namespace TeleporterVR.Utils
             } else if (!__ && !InputDown) __ = true;
         }
 
-        public static Vector3 GetControllerPos() { return preferRightHand ? ControllerRight.transform.position : ControllerLeft.transform.position; }
+        public static Vector3 GetControllerPos() { return Main.preferRightHand.Value ? ControllerRight.transform.position : ControllerLeft.transform.position; }
 
         public static RaycastHit RaycastVR()
         {
-            ray = preferRightHand ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+            ray = Main.preferRightHand.Value ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
                 new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
             Physics.Raycast(ray, out RaycastHit hit, TPLocationIndicator.defaultLength);
             return hit;

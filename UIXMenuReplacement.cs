@@ -71,8 +71,8 @@ namespace TeleporterVR {
             menu.AddSimpleButton(Language.TPtoName_Text, OpenKeyboardForPlayerTP, (button) => buttons["KeyboardTP"] = button.transform);
             menu.AddSimpleButton(Language.TPtoCoord_Text, OpenKeyboardForCoordTP, (button) => buttons["CoordTP"] = button.transform);
             menu.AddSpacer();
-            menu.AddSimpleButton(VRUtils.preferRightHand ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF, () => {
-                VRUtils.preferRightHand = !VRUtils.preferRightHand;
+            menu.AddSimpleButton(Main.preferRightHand.Value ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF, () => {
+                Main.preferRightHand.Value = !Main.preferRightHand.Value;
                 UpdateText();
             }, (button) => buttons["preferRightHand"] = button.transform);
 
@@ -135,7 +135,7 @@ namespace TeleporterVR {
             } catch (Exception e) { MelonLogger.Error($"{e}"); }
 
             try {
-                text("preferRightHand", VRUtils.preferRightHand ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF);
+                text("preferRightHand", Main.preferRightHand.Value ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF);
             } catch (Exception e) { MelonLogger.Error($"{e}"); }
 
             try {
