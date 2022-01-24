@@ -21,25 +21,26 @@ namespace TeleporterVR.Patches
     internal static class NewPatches
     {
         public static bool IsQMOpen, IsAMOpen;
+        public static Action OnWorldJoin, OnWorldLeave;
 
         public static void SetupPatches()
         {
             bool d = Main.isDebug;
-            Log.Msg("Applying Patches . . .");
+            Main.Logger.Msg("Applying Patches . . .");
 
+            applyPatches(typeof(LeftRoomPatches));
             applyPatches(typeof(QuickMenuPatches));
-            applyPatches(typeof(FadePatches));
 
-            if (d) Log.Msg(ConsoleColor.Green, "Finished with Patches");
+            if (d) Main.Logger.Msg(ConsoleColor.Green, "Finished with Patches");
         }
 
         private static void applyPatches(Type type)
         {
             try {
-                if (Main.isDebug) Log.Msg($"Attempting {type.Name} Patches...");
+                if (Main.isDebug) Main.Logger.Msg($"Attempting {type.Name} Patches...");
                 HarmonyLib.Harmony.CreateAndPatchAll(type, "TeleporterVR");
             } catch (Exception e) {
-                Log.Error($"Failed while patching {type.Name}!\n{e}");
+                Main.Logger.Error($"Failed while patching {type.Name}!\n{e}");
             }
         }
     }
@@ -61,23 +62,21 @@ namespace TeleporterVR.Patches
             NewPatches.IsQMOpen = false;
         }
     }
-
-    [HarmonyPatch]
-    class FadePatches
-    {
-        static IEnumerable<MethodBase> TargetMethods()
-        {
-            return typeof(VRCUiBackgroundFade).GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(x => x.Name.Contains("Method_Public_Void_Single_Action") && 
-            !x.Name.Contains("PDM")).Cast<MethodBase>();
+    
+    [HarmonyPatch(typeof(NetworkManager))]
+    class LeftRoomPatches {
+        [HarmonyPostfix]
+        [HarmonyPatch("OnLeftRoom")]
+        static void Yeet() {
+            WorldActions.OnLeftWorld();
+            NewPatches.OnWorldLeave?.Invoke();
         }
 
-        static void Postfix()
-        {
-            try { MelonCoroutines.Start(WorldActions.CheckWorld()); }
-            catch (Exception e) {
-                Log.Error($"Error checking world for Risky Function checks, returning false\nError:\n{e}");
-                WorldActions.WorldAllowed = false;
-            }
+        [HarmonyPostfix]
+        [HarmonyPatch("OnJoinedRoom")]
+        static void JoinedRoom() {
+            MelonCoroutines.Start(WorldActions.CheckWorld());
+            NewPatches.OnWorldJoin?.Invoke();
         }
     }
 }
