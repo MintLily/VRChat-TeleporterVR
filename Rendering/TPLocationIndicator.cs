@@ -21,8 +21,8 @@ namespace TeleporterVR.Rendering
         {
             bool failed;
             try { ClassInjector.RegisterTypeInIl2Cpp<TPLocationIndicator>(); failed = false; }
-            catch (Exception e) { MelonLogger.Error("Unable to Inject Custom TPLocationIndicator Script!\n" + e.ToString()); failed = true; }
-            if (Main.isDebug && !failed) MelonLogger.Msg(ConsoleColor.Green, "Finished setting up TPLocationIndicator");
+            catch (Exception e) { Main.Logger.Error("Unable to Inject Custom TPLocationIndicator Script!\n" + e.ToString()); failed = true; }
+            if (Main.isDebug && !failed) Main.Logger.Msg(ConsoleColor.Green, "Finished setting up TPLocationIndicator");
         }
     }
 

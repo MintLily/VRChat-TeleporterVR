@@ -240,7 +240,7 @@ namespace TeleporterVR.Logic
             }
 
             if (Main.isDebug)
-                MelonLoader.MelonLogger.Msg(ConsoleColor.Green, "Finished with Languages");
+                Main.Logger.Msg(ConsoleColor.Green, "Finished with Languages");
         }
     }
 }

@@ -18,8 +18,8 @@ namespace TeleporterVR.Logic
         {
             bool failed;
             try { ClassInjector.RegisterTypeInIl2Cpp<EnableDisableListener>(); failed = false; }
-            catch (Exception e) { MelonLogger.Error("Unable to Inject Custom EnableDisableListener Script!\n" + e.ToString()); failed = true; }
-            if (Main.isDebug && !failed) MelonLogger.Msg(ConsoleColor.Green, "Finished setting up EnableDisableListener");
+            catch (Exception e) { Main.Logger.Error("Unable to Inject Custom EnableDisableListener Script!\n" + e.ToString()); failed = true; }
+            if (Main.isDebug && !failed) Main.Logger.Msg(ConsoleColor.Green, "Finished setting up EnableDisableListener");
         }
 
         public static void UiInit()
@@ -35,7 +35,7 @@ namespace TeleporterVR.Logic
             listener.OnDisabled += AMOpenToggle;
 
             if (Main.isDebug)
-                MelonLogger.Msg(ConsoleColor.Green, "Finished creating ActionMenuListener");
+                Main.Logger.Msg(ConsoleColor.Green, "Finished creating ActionMenuListener");
         }
 
         public static GameObject? FindInactiveObjectInActiveRoot(string path) {

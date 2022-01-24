@@ -18,7 +18,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.8.1";
+        public const string Version = "4.9.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -31,16 +31,16 @@ namespace TeleporterVR
         public static MelonPreferences_Category melon;
         public static MelonPreferences_Entry<bool> /*visible, */preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
+        internal static readonly MelonLogger.Instance Logger = new MelonLogger.Instance(BuildInfo.Name, ConsoleColor.Green);
+        private static int _scenesLoaded = 0;
 
         public override void OnApplicationStart()
         {
             Instance = this;
             if (MelonDebug.IsEnabled() || Environment.CommandLine.Contains("--vrt.debug")) {
                 isDebug = true;
-                MelonLogger.Msg(ConsoleColor.Green, "Debug mode is active");
+                Logger.Msg(ConsoleColor.Green, "Debug mode is active");
             }
-
-            MelonCoroutines.Start(GetAssembly());
 
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
             //visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
@@ -70,12 +70,11 @@ namespace TeleporterVR
             NewPatches.SetupPatches();
             Language.InitLanguageChange();
             CreateListener.Init();
-            //SetupCustomToggle.Init();
             ActionMenu.InitUi();
             RenderingIndicator.Init();
             UIXMenuReplacement.Init();
 
-            MelonLogger.Msg("Initialized!");
+            Logger.Msg("Initialized!");
 
             if (OverrideLanguage.Value == "no") OverrideLanguage.Value = "no_bm";
         }
@@ -105,25 +104,26 @@ namespace TeleporterVR
                 && ActionMenu.hasAMApiInstalled // if gompo's mod is installed
                 && !ActionMenu.AMApiOutdated) // if gompo's mod is not outdated
             {
-                MelonLogger.Msg(ConsoleColor.Yellow, "You may have to change or reload your current world to allow the ActionMenu to show.");
+                Logger.Msg(ConsoleColor.Yellow, "You may have to change or reload your current world to allow the ActionMenu to show.");
                 ActionMenu.InitUi();
             }
             //CustomToggle.UpdateColorTheme();
 
-            try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch { }
-            try { UIXMenuReplacement.UserTPButton.SetActive(VRTeleportVisible.Value); } catch { }
-            try { if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText(); } catch { }
+            try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch (Exception e) { Log(e, isDebug, true); }
+            try { UIXMenuReplacement.UserTPButton.SetActive(VRTeleportVisible.Value); } catch (Exception e) { Log(e, isDebug, true); }
+            try { if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText(); } catch (Exception e) { Log(e, isDebug, true); }
         }
 
         bool runOnce;
 
-        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
-        {
-            switch (buildIndex)
-            {
-                case 0:
-                case 1:
-                    break;
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName) {
+            if (_scenesLoaded <= 2) {
+                _scenesLoaded++;
+                if (_scenesLoaded == 2)
+                    OnUiManagerInit();
+            }
+            switch (buildIndex) {
+                case 0: case 1: break;
                 default:
                     MelonCoroutines.Start(GetSetWorld.DelayedLoad());
                     WorldActions.OnLeftWorld();
@@ -142,31 +142,14 @@ namespace TeleporterVR
             DesktopUtils.OnUpdate();
         }
 
-        private IEnumerator GetAssembly()
-        {
-            Assembly assemblyCSharp = null;
-            while (true) {
-                assemblyCSharp = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(assembly => assembly.GetName().Name == "Assembly-CSharp");
-                if (assemblyCSharp == null)
-                    yield return null;
-                else
-                    break;
-            }
-
-            MelonCoroutines.Start(WaitForUiManagerInit(assemblyCSharp));
-        }
-
-        private IEnumerator WaitForUiManagerInit(Assembly assemblyCSharp)
-        {
-            Type vrcUiManager = assemblyCSharp.GetType("VRCUiManager");
-            PropertyInfo uiManagerSingleton = vrcUiManager.GetProperties().First(pi => pi.PropertyType == vrcUiManager);
-            while (uiManagerSingleton.GetValue(null) == null) yield return null;
-            OnUiManagerInit(); // Run UI
-        }
-
         public static void Log(string s, bool isDebug = false, bool ErrorAlt = false) {
-            if (isDebug) MelonLogger.Msg(ErrorAlt ? ConsoleColor.Red : ConsoleColor.Green, s);
-            else MelonLogger.Msg(s);
+            if (isDebug) Logger.Msg(ErrorAlt ? ConsoleColor.Red : ConsoleColor.Green, s);
+            else Logger.Msg(s);
+        }
+        
+        public static void Log(object s, bool isDebug = false, bool ErrorAlt = false) {
+            if (isDebug) Logger.Msg(ErrorAlt ? ConsoleColor.Red : ConsoleColor.Green, s);
+            else Logger.Msg(s);
         }
     }
 }

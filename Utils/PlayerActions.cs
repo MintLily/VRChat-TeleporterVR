@@ -49,7 +49,7 @@ namespace TeleporterVR.Utils
                 return user.field_Protected_TYPE_0;
             }
 
-            MelonLoader.MelonLogger.Error("Unable to get SelectedUserMenuQM component!");
+            Main.Logger.Error("Unable to get SelectedUserMenuQM component!");
             return null;
         }
 

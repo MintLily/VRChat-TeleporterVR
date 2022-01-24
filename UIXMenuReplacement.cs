@@ -111,7 +111,7 @@ namespace TeleporterVR {
         internal static void UpdateWorldStatusText() {
             try {
                 text("WorldStatus", $"World\n{(WorldActions.WorldAllowed ? color("#00ff00", "Allowed") : color("red", "Disallowed"))}");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
         }
 
         public static void UpdateText() {
@@ -120,55 +120,55 @@ namespace TeleporterVR {
                 if (permbuttons["TPActive_1"] != null)
                     permbuttons["TPActive_1"].GetComponentInChildren<Text>().text = VRUtils.active ? Language.theWord_Teleport + color("#00ff00", "\nON") :
                         Language.theWord_Teleport + color("red", "\nOFF");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("TPActive_2", VRUtils.active ? Language.theWord_Teleport + color("#00ff00", "\nON") : Language.theWord_Teleport + color("red", "\nOFF"));
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("KeyboardTP", Language.TPtoName_Text);
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("CoordTP", Language.TPtoCoord_Text);
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("preferRightHand", Main.preferRightHand.Value ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF);
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Save_1", Language.SavePos + "\n1");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Save_2", Language.SavePos + "\n2");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Save_3", Language.SavePos + "\n3");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Save_4", Language.SavePos + "\n4");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Load_1", Language.LoadPos + "\n1");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Load_2", Language.LoadPos + "\n2");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Load_3", Language.LoadPos + "\n3");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
                 text("Load_4", Language.LoadPos + "\n4");
-            } catch (Exception e) { MelonLogger.Error($"{e}"); }
+            } catch (Exception e) { Main.Logger.Error($"{e}"); }
         }
     }
 }

@@ -45,7 +45,7 @@ namespace TeleporterVR.Utils
 		private static IEnumerator LoadResources()
         {
             // Came from UIExpansionKit (https://github.com/knah/VRCMods/blob/master/UIExpansionKit)
-            MelonLogger.Msg("Loading AssetBundle...");
+            Main.Logger.Msg("Loading AssetBundle...");
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("TeleporterVR.Resources.teleportervr.tpvrbundle"))
             {
                 using (var memoryStream = new MemoryStream((int)stream.Length))
@@ -53,29 +53,29 @@ namespace TeleporterVR.Utils
                     stream.CopyTo(memoryStream);
                     Bundle = AssetBundle.LoadFromMemory_Internal(memoryStream.ToArray(), 0);
                     Bundle.hideFlags |= HideFlags.DontUnloadUnusedAsset;
-                    try { goodIcon = LoadSprite("people-solid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid.png"); }
-                    try { badIcon = LoadSprite("invalid.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid.png"); }
-                    try { DiscordLogo = LoadSprite("DiscordLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: DiscordLogo.png"); }
-                    try { GitHubLogo = LoadSprite("GitHubLogo.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: GitHubLogo.png"); }
+                    try { goodIcon = LoadSprite("people-solid.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: people-solid.png"); }
+                    try { badIcon = LoadSprite("invalid.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: invalid.png"); }
+                    try { DiscordLogo = LoadSprite("DiscordLogo.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: DiscordLogo.png"); }
+                    try { GitHubLogo = LoadSprite("GitHubLogo.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: GitHubLogo.png"); }
 
                     //try { Logic.CustomToggle.ToggleCanvas = LoadPrefab("TPVRToggleCanvas.prefab"); } catch { MelonLogger.Error("Failed to load image from asset bundle: TPVRToggleCanvas.prefab"); }
 
                     // Added with ActionMenuApi
-                    try { AMMain = LoadTexture("people-solid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: people-solid-tex.png"); }
-                    try { AMBad = LoadTexture("invalid-tex.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: invalid-tex.png"); }
-                    try { AMVRTP = LoadTexture("vrtp-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: vrtp-icon.png"); }
-                    try { AMSave = LoadTexture("save-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: save-icon.png"); }
-                    try { AMLoad = LoadTexture("load-icon.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: load-icon.png"); }
-                    try { AMSL1 = LoadTexture("Option1.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option1.png"); }
-                    try { AMSL2 = LoadTexture("Option2.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option2.png"); }
-                    try { AMSL3 = LoadTexture("Option3.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option3.png"); }
-                    try { AMSL4 = LoadTexture("Option4.png"); } catch { MelonLogger.Error("Failed to load image from asset bundle: Option4.png"); }
+                    try { AMMain = LoadTexture("people-solid-tex.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: people-solid-tex.png"); }
+                    try { AMBad = LoadTexture("invalid-tex.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: invalid-tex.png"); }
+                    try { AMVRTP = LoadTexture("vrtp-icon.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: vrtp-icon.png"); }
+                    try { AMSave = LoadTexture("save-icon.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: save-icon.png"); }
+                    try { AMLoad = LoadTexture("load-icon.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: load-icon.png"); }
+                    try { AMSL1 = LoadTexture("Option1.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option1.png"); }
+                    try { AMSL2 = LoadTexture("Option2.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option2.png"); }
+                    try { AMSL3 = LoadTexture("Option3.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option3.png"); }
+                    try { AMSL4 = LoadTexture("Option4.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option4.png"); }
                     // - End -
                 }
             }
 
             if (Main.isDebug)
-                MelonLogger.Msg("Finihsed with Asset Bundle Resource Managment");
+                Main.Logger.Msg("Finished with Asset Bundle Resource Management");
             yield break;
         }
 	}

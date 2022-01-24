@@ -101,7 +101,7 @@ namespace TeleporterVR
                                 PlayerActions.GetLocalVRCPlayer().transform.position = new Vector3(float.Parse(coords[0]), float.Parse(coords[1]), float.Parse(coords[2]));
                         }
                         else
-                            MelonLoader.MelonLogger.Error("Please input the correct coords as => X[space]Y[space]Z");
+                            Main.Logger.Error("Please input the correct coords as => X[space]Y[space]Z");
                     }, null, "Enter coords as X[Space]Y[Space]Z");
         }
     }

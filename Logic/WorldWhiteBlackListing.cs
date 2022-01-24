@@ -28,7 +28,7 @@ namespace TeleporterVR.Logic
         {
             string url = "https://raw.githubusercontent.com/MintLily/VRChat-TeleporterVR/master/Logic/Worlds.json";
             WebClient WorldList = new WebClient();
-            try { ParsedWorldList = WorldList.DownloadString(url); } catch { MelonLogger.Error("Could not get URL from Webhost (probable 404)"); }
+            try { ParsedWorldList = WorldList.DownloadString(url); } catch { Main.Logger.Error("Could not get URL from Webhost (probable 404)"); }
 
             yield return new WaitForSeconds(0.5f);
 
@@ -36,7 +36,7 @@ namespace TeleporterVR.Logic
                 Worlds = JsonConvert.DeserializeObject<GetWorlds[]>(ParsedWorldList);
             }
             catch {
-                MelonLogger.Error("Could not parse JSON data");
+                Main.Logger.Error("Could not parse JSON data");
                 faulted = true;
             }
             yield break;
@@ -50,7 +50,7 @@ namespace TeleporterVR.Logic
             {
                 if (RoomManager.field_Internal_Static_ApiWorld_0 != null) {
                     if (Worlds.Any(x => x.WorldID.Equals(RoomManager.field_Internal_Static_ApiWorld_0.id))) {
-                        MelonLogger.Msg(System.ConsoleColor.Red, "You have entered a protected world. Some buttons will not be toggleable.");
+                        Main.Logger.Msg(System.ConsoleColor.Red, "You have entered a protected world. Some buttons will not be toggleable.");
                              if (Worlds.Any(x => x.buttonNumber.Equals(1))) DoAction(1);
                         else if (Worlds.Any(x => x.buttonNumber.Equals(2))) DoAction(2);
                         else if (Worlds.Any(x => x.buttonNumber.Equals(3))) DoAction(3);
@@ -58,7 +58,7 @@ namespace TeleporterVR.Logic
                     else DoAction(99);
                 }
             }
-            catch { MelonLogger.Error("Failed to Apply Actions or Read from list of worlds"); }
+            catch { Main.Logger.Error("Failed to Apply Actions or Read from list of worlds"); }
             yield break;
         }
 
@@ -69,7 +69,7 @@ namespace TeleporterVR.Logic
                 case 1: // allowed
                     Utils.WorldActions.WorldAllowed = true;
                     if (Main.isDebug)
-                        MelonLogger.Msg(System.ConsoleColor.Cyan, "Force Allowed");
+                        Main.Logger.Msg(System.ConsoleColor.Cyan, "Force Allowed");
 
                     if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
                         ActionMenu.CheckForRiskyFunctions(false);
@@ -79,7 +79,7 @@ namespace TeleporterVR.Logic
                 case 2: // disallowed
                     Utils.WorldActions.WorldAllowed = false;
                     if (Main.isDebug)
-                        MelonLogger.Msg(System.ConsoleColor.Red, "Force Disallowed");
+                        Main.Logger.Msg(System.ConsoleColor.Red, "Force Disallowed");
                     
                     if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
                         ActionMenu.CheckForRiskyFunctions(true);

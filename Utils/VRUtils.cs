@@ -16,7 +16,7 @@ namespace TeleporterVR.Utils
     public class VRUtils
     {
         private static bool _oculus, __ = true; // fear my variable naming scheme
-        public static bool active;
+        public static bool active { get; set; }
         public static GameObject ControllerLeft, ControllerRight;
         public static Ray ray;
 
@@ -37,11 +37,11 @@ namespace TeleporterVR.Utils
             if (_oculus) {
                 ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/RightHandAnchor/PointerOrigin (1)");
                 ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/LeftHandAnchor/PointerOrigin (1)");
-                if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Blue, "Binds set: Oculus");
+                if (Main.isDebug) Main.Logger.Msg(ConsoleColor.Blue, "Binds set: Oculus");
             } else {
                 ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (right)/PointerOrigin");
                 ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingSteam(Clone)/SteamCamera/[CameraRig]/Controller (left)/PointerOrigin");
-                if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Blue, "Binds set: SteamVR");
+                if (Main.isDebug) Main.Logger.Msg(ConsoleColor.Blue, "Binds set: SteamVR");
             }
         }
 
