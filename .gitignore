@@ -3,6 +3,5 @@ Output/
 obj/
 .git/
 .idea/
-Utils/Libs/
-TinyJSON/
+Logic/CustomToggle_WIP.cs
 TeleporterVR.json

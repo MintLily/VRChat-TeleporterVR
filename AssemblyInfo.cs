@@ -22,7 +22,6 @@ using MelonLoader;
     TeleporterVR.BuildInfo.Version,
     TeleporterVR.BuildInfo.Author,
     TeleporterVR.BuildInfo.DownloadLink)]
-[assembly: MelonColor(ConsoleColor.Green)]
 [assembly: MelonOptionalDependencies("ActionMenuApi")]
 [assembly: MelonGame("VRChat", "VRChat")]
 [assembly: HarmonyDontPatchAll]
