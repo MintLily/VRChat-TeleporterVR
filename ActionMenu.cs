@@ -29,7 +29,7 @@ namespace TeleporterVR
                 if (MelonHandler.Mods.Single(m => m.Info.Name.Equals("ActionMenuApi")).Info.Version.Equals(AmApiOutdatedVersions))
                 {
                     AMApiOutdated = true;
-                    MelonLogger.Warning("ActionMenuApi Outdated. older versions are not supported, please update the other mod.");
+                    Main.Logger.Warning("ActionMenuApi Outdated. older versions are not supported, please update the other mod.");
                 } else BuildActionMenu();
             }
         }
@@ -38,7 +38,7 @@ namespace TeleporterVR
         {
             AMSubMenu.subMenu = VRCActionMenuPage.AddSubMenu(ActionMenuPage.Main, "<color=#13cf13>TeleporterVR</color>", () =>
                 {
-                    VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, false, UIXMenuReplacement.ToggleVRTeleport, ResourceManager.AMVRTP);
+                    VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, VRUtils.active, UIXMenuReplacement.ToggleVRTeleport, ResourceManager.AMVRTP);
 
                     TP2Name = CustomSubMenu.AddButton(Language.TPtoName_Text, Menu.OpenKeyboardForPlayerTP, ResourceManager.AMMain);
 
@@ -62,22 +62,22 @@ namespace TeleporterVR
                 }, ResourceManager.AMMain);
                 AMSubMenu.subMenu.locked = true;
                 hasStarted = true;
-                if (Main.isDebug) MelonLogger.Msg(ConsoleColor.Green, "Finished creating ActionMenu");
+                if (Main.isDebug) Main.Logger.Msg(ConsoleColor.Green, "Finished creating ActionMenu");
         }
 
         public static IEnumerator UpdateIcon(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(1f);
             try { AMSubMenu.subMenu.icon = WorldActions.WorldAllowed ? ResourceManager.AMMain : ResourceManager.AMBad; }
-            catch { if (hasAMApiInstalled) MelonLogger.Error("Failed to change subMenu Icon"); }
-            try { AMUtils.RefreshActionMenu(); } catch { if (hasAMApiInstalled) MelonLogger.Error("Failed to Refresh ActionMenu"); }
+            catch { if (hasAMApiInstalled) Main.Logger.Error("Failed to change subMenu Icon"); }
+            try { AMUtils.RefreshActionMenu(); } catch { if (hasAMApiInstalled) Main.Logger.Error("Failed to Refresh ActionMenu"); }
             yield break;
         }
 
         public static void CheckForRiskyFunctions(bool locked)
         {
             try { AMSubMenu.subMenu.locked = locked; } 
-            catch { if (hasAMApiInstalled) MelonLogger.Error("ActionMenu subMenu could not be locked"); }
+            catch { if (hasAMApiInstalled) Main.Logger.Error("ActionMenu subMenu could not be locked"); }
         }
     }
 }
