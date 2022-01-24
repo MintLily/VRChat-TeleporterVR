@@ -11,7 +11,7 @@ Game: VRChat build 1160+<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
 ### Optional Prerequisites
-Mod: [ActionMenuApi](https://github.com/gompocp/ActionMenuApi)
+Mod: [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi)
 
 ### MelonPreferences (Default Values)
 ```ini
@@ -29,7 +29,7 @@ UIXTPVR = false
 preferRightHand  - Prefer Right Handed (for VRTeleport)<br>
 VRTeleportVisible - VRTeleport Button is visible (next to mute button)<br>
 overrideLanguage - force mod into a provided language<br>
-ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) to add options to your Action Menu<br>
+ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) to add options to your Action Menu<br>
 EnableTeleportIndicator - Shows a circle to where you will be teleported to when you press your trigger<br>
 IndicatorHexColor - Color the Indicator to your liking, in the Hex Color format #rrggbb<br>
 EnableDesktopTP - Allows you to teleport to your cursor (desktop only) [KeyBinds = LeftShift + T or Mouse3]<br>
@@ -44,7 +44,7 @@ Saved Positions - Save a Position in a world to later teleport to (Load Position
 VRTeleport - There is a Left/Right Hand toggle to then use your VR Laser Cursor to teleport to that location<br>
 Oculus Support - Don't use SteamVR, that's okay, this mod was build for both Native Oculus and SteamVR VRChat use<br>
 Languages - This mod uses multiple languages to the mod, you can force a language or let let the mod use your system's language<br>
-ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) mod, you can add the main buttons to your action menu in game
+ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) mod, you can add the main buttons to your action menu in game
 
 ### Preview
 ![Preview Main Menu](https://mintlily.lgbt/img/upload/VRChat_Sfa0ZuMDwQ.jpg)<br>
@@ -75,6 +75,11 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 
 # Change Log (since Lily's edits)
+### v4.9.0
+* Changed MelonLogger to MelonLogger.Instance
+* Changed World Check Patches to OnJoin/Leave instead of OnFade (Thanks Bono)
+* Fixed ActionMenu VRTP Toggle not being consistent to the acutal setting
+
 ### v4.8.1
 * Fixed Popup keyboards not showing
 
@@ -103,7 +108,7 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 ### v4.4.1
 * Fixed Compatibility for VRChat Build 1121 (Unity 2019)
 * Updated MelonLoader to v0.4.3
-* Updated Dependency for [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) to v0.3.1
+* Updated Dependency for [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) to v0.3.1
 
 ### v4.4.0
 * Added emmVRC GameObject detection to allow/disallow actions in worlds
@@ -131,7 +136,7 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 * preferRightHand is now visible in UIX's MelonPref Viewer
 
 ### v4.1.0
-* Added [ActionMenuApi](https://github.com/gompocp/ActionMenuApi) support
+* Added [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) support
 * Fixed VR Teleport
 
 ### v4.0.2
@@ -142,9 +147,3 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompocp/Act
 
 ### v4.0.0
 * Initial Release for MelonLoader
-
-# Partial Code Alert
-This Mod contains code from a project that is closed-source. This will remain private by choice of the Author of this mod (Lily)
-
-## Stay Updated
-Stay update to date with all my mods by joining my [discord server](https://discord.gg/qkycuAMUGS) today.
