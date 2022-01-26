@@ -19,7 +19,7 @@ namespace TeleporterVR
         private static Vector3 Pos1, Pos2, Pos3, Pos4;
         private static Quaternion Rot1, Rot2, Rot3, Rot4;
 
-        internal static void OpenWebpage(string site) => Process.Start(site);
+        internal static void OpenWebpage(string site) => Process.Start("cmd", $"/C start {site}");
 
         internal static void SaveAction(int slot)
         {
