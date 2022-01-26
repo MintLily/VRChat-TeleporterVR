@@ -22,6 +22,7 @@ namespace TeleporterVR.Utils
         internal static void CheckCompleted(bool state) {
             WorldAllowed = state;
             OnWorldAllowedUpdate?.Invoke(WorldAllowed);
+            AMSubMenu.subMenu.locked = !state;
             Main.Log($"World {(WorldAllowed ? "Allowed" : "Denied")}", Main.isDebug);
         }
 
@@ -58,14 +59,19 @@ namespace TeleporterVR.Utils
 
             // Check if black/whitelisted from EmmVRC - thanks Emilia and the rest of EmmVRC Staff
             string url = $"https://dl.emmvrc.com/riskyfuncs.php?worldid={worldId}";
+            WebClient www = new WebClient();
+            while (www.IsBusy) yield return new WaitForEndOfFrame();
+            string result = www.DownloadString(url)?.Trim().ToLower();
+            /*
             var www = new HttpClient();
             var result = www.GetStringAsync(url)?.GetAwaiter().GetResult()?.Trim().ToLower();
             bool temp = false;
             try { while (!www.GetAsync(url).GetAwaiter().IsCompleted) temp = true; }
             catch (Exception e) { Main.Log(e, Main.isDebug, true); }
             if (temp) yield return new WaitForEndOfFrame();
+            */
             www.Dispose();
-            if (!string.IsNullOrWhiteSpace(result))
+            if (!string.IsNullOrWhiteSpace(result)) {
                 switch (result) {
                     case "allowed":
                         CheckCompleted(true);
@@ -75,6 +81,7 @@ namespace TeleporterVR.Utils
                         CheckCompleted(false);
                         yield break;
                 }
+            }
 
             Main.Log("Checking World Tags, no response from EmmVRC", Main.isDebug);
 
