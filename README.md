@@ -75,10 +75,15 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRCh
 
 
 # Change Log (since Lily's edits)
+### v4.9.1
+* Revert HttpClient back to WebClient
+* Fixed Action Menu always being locked
+* Fixed open webpage
+
 ### v4.9.0
 * Changed MelonLogger to MelonLogger.Instance
 * Changed World Check Patches to OnJoin/Leave instead of OnFade (Thanks Bono)
-* Fixed ActionMenu VRTP Toggle not being consistent to the acutal setting
+* Fixed ActionMenu VRTP Toggle not being consistent to the actual setting
 
 ### v4.8.1
 * Fixed Popup keyboards not showing
