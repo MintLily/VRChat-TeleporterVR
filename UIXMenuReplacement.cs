@@ -87,7 +87,7 @@ namespace TeleporterVR {
             menu.AddSimpleButton(Language.LoadPos + "\n4", () => LoadAction(4), (button) => buttons["Load_4"] = button.transform);
 
             menu.AddSpacer();
-            menu.AddSimpleButton("Discord", () => OpenWebpage("https://discord.gg/qkycuAMUGS"));
+            menu.AddSimpleButton("Discord", () => OpenWebpage("https://discord.gg/7EQCmgrUnH"));
             menu.AddSimpleButton("GitHub", () => OpenWebpage(BuildInfo.DownloadLink));
             menu.AddSpacer();
 
@@ -105,7 +105,7 @@ namespace TeleporterVR {
         static string text(string buttonName, string text) {
             if (buttons[buttonName] != null)
                 return buttons[buttonName].GetComponentInChildren<Text>().text = text;
-            else return null;
+            return null;
         }
 
         internal static void UpdateWorldStatusText() {
