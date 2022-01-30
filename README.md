@@ -6,7 +6,7 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
-MelonLoader: v0.5.2 (Alpha)<br>
+MelonLoader: v0.5.2+ (Alpha)<br>
 Game: VRChat build 1160+<br>
 Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
 
@@ -75,6 +75,9 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRCh
 
 
 # Change Log (since Lily's edits)
+### v4.9.2
+* Fixed Errors showing when changing worlds if AMApi is disabled or null
+
 ### v4.9.1
 * Revert HttpClient back to WebClient
 * Fixed Action Menu always being locked

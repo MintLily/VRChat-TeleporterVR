@@ -22,7 +22,8 @@ namespace TeleporterVR.Utils
         internal static void CheckCompleted(bool state) {
             WorldAllowed = state;
             OnWorldAllowedUpdate?.Invoke(WorldAllowed);
-            AMSubMenu.subMenu.locked = !state;
+            if (AMSubMenu.subMenu != null && Main.ActionMenuApiIntegration.Value)
+                AMSubMenu.subMenu.locked = !state;
             Main.Log($"World {(WorldAllowed ? "Allowed" : "Denied")}", Main.isDebug);
         }
 
