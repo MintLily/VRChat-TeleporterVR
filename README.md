@@ -53,6 +53,7 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRCh
 # Credits
 * Icons
 * * [Font Awesome](https://fontawesome.com/)
+* * [The Noun Project](https://thenounproject.com/)
 
 
 * Language Translations
