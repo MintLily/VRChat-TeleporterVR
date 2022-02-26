@@ -46,9 +46,8 @@ Languages - This mod uses multiple languages to the mod, you can force a languag
 ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) mod, you can add the main buttons to your action menu in game
 
 ### Preview
-![Preview Main Menu](https://mintlily.lgbt/img/upload/VRChat_Sfa0ZuMDwQ.jpg)<br>
-![Preview Menu Content ENG](https://mintlily.lgbt/img/upload/VRChat_6oSV31AEjG.jpg)<br>
-![ActionMenu Preview](https://mintlily.lgbt/img/upload/ActionMenuApi-Preview.png)
+![Preview Menu Content ENG](https://i.mintlily.lgbt/6sQ1eU5xMyvL.jpg)<br>
+![ActionMenu Preview](https://i.mintlily.lgbt/AMApiPreview.jpg)
 
 # Credits
 * Icons
@@ -78,7 +77,7 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRCh
 # Change Log (since Lily's edits)
 ### v4.10.0
 * Added option for a menu made with [ReMod.Core](https://github.com/RequiDev/ReMod.Core)
-* Made [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) a Prerequisites Mod
+* Made [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) a Prerequisite Mod
 
 ### v4.9.2
 * Fixed Errors showing when changing worlds if AMApi is disabled or null
