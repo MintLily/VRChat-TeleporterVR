@@ -17,7 +17,8 @@ namespace TeleporterVR.Utils
     class ResourceManager
     {
 		private static AssetBundle Bundle;
-        public static Sprite goodIcon, badIcon, DiscordLogo, GitHubLogo;
+        public static Sprite goodIcon, badIcon, DiscordLogo, GitHubLogo,
+            Tab, keyboard, mapmarker, one, two, three, four, ver;
         public static Texture2D AMMain, AMBad, AMVRTP, AMSave, AMLoad, AMSL1, AMSL2, AMSL3, AMSL4;
 
 		private static Sprite LoadSprite(string sprite)
@@ -34,11 +35,13 @@ namespace TeleporterVR.Utils
             return Texture2;
         }
 
+        /*
         private static GameObject LoadPrefab(string go) {
             GameObject go2 = Bundle.LoadAsset_Internal(go, Il2CppType.Of<GameObject>()).Cast<GameObject>();
             go2.hideFlags |= HideFlags.DontUnloadUnusedAsset;
             return go2;
         }
+        */
 
         public static void Init() { MelonCoroutines.Start(LoadResources()); }
 
@@ -57,6 +60,14 @@ namespace TeleporterVR.Utils
                     try { badIcon = LoadSprite("invalid.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: invalid.png"); }
                     try { DiscordLogo = LoadSprite("DiscordLogo.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: DiscordLogo.png"); }
                     try { GitHubLogo = LoadSprite("GitHubLogo.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: GitHubLogo.png"); }
+                    try { Tab = LoadSprite("Tab.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Tab.png"); }
+                    try { keyboard = LoadSprite("keyboard.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: keyboard.png"); }
+                    try { mapmarker = LoadSprite("map-marker-alt-solid.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: map-marker-alt-solid.png"); }
+                    try { one = LoadSprite("Option1s.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option1s.png"); }
+                    try { two = LoadSprite("Option2s.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option2s.png"); }
+                    try { three = LoadSprite("Option3s.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option3s.png"); }
+                    try { four = LoadSprite("Option4s.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: Option4s.png"); }
+                    try { ver = LoadSprite("clipboard-list-solid.png"); } catch { Main.Logger.Error("Failed to load image from asset bundle: clipboard-list-solid.png"); }
 
                     //try { Logic.CustomToggle.ToggleCanvas = LoadPrefab("TPVRToggleCanvas.prefab"); } catch { MelonLogger.Error("Failed to load image from asset bundle: TPVRToggleCanvas.prefab"); }
 

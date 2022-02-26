@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TeleporterVR.Logic;
+using UnityEngine.UIElements;
 
 namespace TeleporterVR.Utils
 {
@@ -24,6 +25,13 @@ namespace TeleporterVR.Utils
             OnWorldAllowedUpdate?.Invoke(WorldAllowed);
             if (AMSubMenu.subMenu != null && Main.ActionMenuApiIntegration.Value)
                 AMSubMenu.subMenu.locked = !state;
+            if (!Main.UIXMenu.Value) {
+                NewUi.UpdateWorldActions(state);
+                if (NewUi.MainCat != null)
+                    NewUi.MainCat.Title = $"TPVR Actions - {(state ? "<color=#00ff00>World Allowed</color>" : "<color=red>World Denied</color>")}";
+                
+            }
+                
             Main.Log($"World {(WorldAllowed ? "Allowed" : "Denied")}", Main.isDebug);
         }
 

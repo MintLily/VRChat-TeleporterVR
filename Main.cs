@@ -18,7 +18,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.9.2";
+        public const string Version = "4.10.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -29,7 +29,7 @@ namespace TeleporterVR
         public static bool isDebug;
         private static TPLocationIndicator LR;
         public static MelonPreferences_Category melon;
-        public static MelonPreferences_Entry<bool> /*visible, */preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR;
+        public static MelonPreferences_Entry<bool> preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR, UIXMenu;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
         internal static readonly MelonLogger.Instance Logger = new MelonLogger.Instance(BuildInfo.Name, ConsoleColor.Green);
         private static int _scenesLoaded = 0;
@@ -41,6 +41,8 @@ namespace TeleporterVR
                 isDebug = true;
                 Logger.Msg(ConsoleColor.Green, "Debug mode is active");
             }
+            
+            ReMod_Core_Downloader.LoadReModCore(out _);
 
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
             //visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
@@ -65,6 +67,7 @@ namespace TeleporterVR
             IndicatorHexColor = melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
             EnableDesktopTP = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
             UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
+            UIXMenu = melon.CreateEntry("UseUIXMenu", false, "Use UIX Menu? (Requires Restart)");
 
             ResourceManager.Init();
             NewPatches.SetupPatches();
@@ -72,7 +75,10 @@ namespace TeleporterVR
             CreateListener.Init();
             ActionMenu.InitUi();
             RenderingIndicator.Init();
-            UIXMenuReplacement.Init();
+            if (UIXMenu.Value || ReMod_Core_Downloader.failed)
+                UIXMenuReplacement.Init();
+            else 
+                MelonCoroutines.Start(NewUi.OnQuickMenu());
 
             Logger.Msg("Initialized!");
 
@@ -97,21 +103,22 @@ namespace TeleporterVR
 
         public override void OnPreferencesSaved()
         {
-            if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText();
+            if (UIXMenuReplacement.runOnce_start && UIXMenu.Value) UIXMenuReplacement.UpdateText();
             //MelonPreferences.GetEntry<bool>(melon.Identifier, preferRightHand.Identifier).Value = VRUtils.preferRightHand;
-            if (ActionMenuApiIntegration.Value // if true
-                && !ActionMenu.hasStarted // if has not started yet
-                && ActionMenu.hasAMApiInstalled // if gompo's mod is installed
-                && !ActionMenu.AMApiOutdated) // if gompo's mod is not outdated
+            if (ActionMenuApiIntegration.Value     // if true
+                && !ActionMenu.hasStarted          // if has not started yet
+                && ActionMenu.hasAMApiInstalled    // if gompo's mod is installed
+                && !ActionMenu.AMApiOutdated)      // if gompo's mod is not outdated
             {
                 Logger.Msg(ConsoleColor.Yellow, "You may have to change or reload your current world to allow the ActionMenu to show.");
                 ActionMenu.InitUi();
             }
-            //CustomToggle.UpdateColorTheme();
 
-            try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch (Exception e) { Log(e, isDebug, true); }
-            try { UIXMenuReplacement.UserTPButton.SetActive(VRTeleportVisible.Value); } catch (Exception e) { Log(e, isDebug, true); }
-            try { if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText(); } catch (Exception e) { Log(e, isDebug, true); }
+            if (UIXMenu.Value) {
+                try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch (Exception e) { Log(e, isDebug, true); }
+                try { UIXMenuReplacement.UserTPButton.SetActive(VRTeleportVisible.Value); } catch (Exception e) { Log(e, isDebug, true); }
+                try { if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText(); } catch (Exception e) { Log(e, isDebug, true); }
+            } else NewUi.OnPrefSave();
         }
 
         bool runOnce;
