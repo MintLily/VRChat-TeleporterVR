@@ -129,6 +129,7 @@
     <Compile Include="Logic\WorldWhiteBlackListing.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="NewUi.cs" />
     <Compile Include="Rendering\TPLocationIndicator.cs" />
     <Compile Include="Rendering\SphereRendering.cs" />
     <Compile Include="UIXMenuReplacement.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Utils\GeneralUtils.cs" />
     <Compile Include="Utils\PlayerActions.cs" />
     <Compile Include="Utils\PopupManager.cs" />
+    <Compile Include="Utils\ReMod.Core.Downloader.cs" />
     <Compile Include="Utils\ResourceManager.cs" />
     <Compile Include="Utils\UiUtils.cs" />
     <Compile Include="Utils\VRUtils.cs" />
@@ -148,6 +150,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ReMod.Core\ReMod.Core.csproj">
+      <Project>{c87fe758-acb9-4fa2-af6f-10aa9aa0023c}</Project>
+      <Name>ReMod.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
