@@ -6,12 +6,11 @@ Need to install MelonLoader?<br>
 Click [this link](https://melonwiki.xyz/) to get started!
 
 ### Prerequisites
-MelonLoader: v0.5.2+ (Alpha)<br>
-Game: VRChat build 1160+<br>
-Mod: [UIExpansionKit](https://github.com/knah/VRCMods)
-
-### Optional Prerequisites
-Mod: [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi)
+MelonLoader: v0.5.3+ (Alpha)<br>
+Game: VRChat build 1169+<br>
+Mods:
+* [UIExpansionKit](https://github.com/knah/VRCMods)
+* [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi)
 
 ### MelonPreferences (Default Values)
 ```ini
@@ -23,18 +22,18 @@ ActionMenuApiIntegration = false
 EnableTeleportIndicator = true
 IndicatorHexColor = "2dff2d"
 EnableDesktopTP = false
-UIXMenu = false
 UIXTPVR = false
+UIXMenu = false
 ```
-preferRightHand  - Prefer Right Handed (for VRTeleport)<br>
+preferRightHand  - Prefer Right Handed (for VR Teleporting)<br>
 VRTeleportVisible - VRTeleport Button is visible (next to mute button)<br>
 overrideLanguage - force mod into a provided language<br>
 ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) to add options to your Action Menu<br>
 EnableTeleportIndicator - Shows a circle to where you will be teleported to when you press your trigger<br>
 IndicatorHexColor - Color the Indicator to your liking, in the Hex Color format #rrggbb<br>
 EnableDesktopTP - Allows you to teleport to your cursor (desktop only) [KeyBinds = LeftShift + T or Mouse3]<br>
-UIXMenu - Puts a button on your main UIX Menu to use UIX's menu as an alternative for a menu<br>
-UIXTPVR - Puts a quick VR Teleport toggle on your main UIX Menu
+UIXTPVR - Puts a quick VR Teleport toggle on your main UIX Menu<br>
+UIXMenu - Would you like to use a UIX Menu or a menu built with [ReMod.Core](https://github.com/RequiDev/ReMod.Core)
 
 ### Special Features
 Dynamic Language Settings - The language of the mod will be determined by your system's local region, you can override this in the settings of the mod. Changing the language will update in real time (when you close the settings window)<br>
@@ -58,11 +57,11 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRCh
 
 * Language Translations
 * * French - **Slaynash**
-* * German - **Requi**
+* * German - **RequiDev**
 * * Japanese - N/A (Google Translate)
 * * Norwegian (Bokmål) - **Frostbyte**
 * * Russian - **Miinc**
-* * Spanish - N/A (Google Translate)
+* * Spanish - Myself & Google Translate
 * * Portuguese - **nitro.** & **Davi**
 * * Swedish - **Psychloor**
 
@@ -72,9 +71,14 @@ ActionMenu Control - With gompo's [ActionMenuApi](https://github.com/gompoc/VRCh
 * * emmVRC Risky world / game tag toggling - **Psychloor**
 * * Asset Bundle, Keyboard popup input, Enable/Disable Listener - **knah**
 * * TeleportIndicator Scripts - **Davi (d-mageek)**
+* * NewUi - **RequiDev**
 
 
 # Change Log (since Lily's edits)
+### v4.10.0
+* Added option for a menu made with [ReMod.Core](https://github.com/RequiDev/ReMod.Core)
+* Made [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) a Prerequisites Mod
+
 ### v4.9.2
 * Fixed Errors showing when changing worlds if AMApi is disabled or null
 
