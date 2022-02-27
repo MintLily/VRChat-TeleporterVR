@@ -1,5 +1,5 @@
 <h1>TeleporterVR</h1>
-Easy Utility to allow you to teleport various different ways while being VR compliant. This mod was originally made by [Janni9009](https://github.com/Janni9009) for VRCModLoader, I have converted this to MelonLoader for all to enjoy.
+Easy Utility to allow you to teleport various different ways while being VR compliant. This mod was originally made by <a href="https://github.com/Janni9009">Janni9009</a> for VRCModLoader, I have converted this to MelonLoader for all to enjoy.
 
 <h3>MelonLoader</h3>
 Need to install MelonLoader?<br>
