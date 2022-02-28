@@ -1,8 +1,5 @@
 ﻿using System.Collections;
-using Il2CppSystem.Diagnostics.Tracing;
 using MelonLoader;
-using ReMod.Core;
-using ReMod.Core.UI;
 using ReMod.Core.UI.QuickMenu;
 using TeleporterVR.Logic;
 using TeleporterVR.Rendering;
@@ -15,7 +12,8 @@ namespace TeleporterVR {
     public class NewUi {
         internal static IEnumerator OnQuickMenu() {
             while (UIManager.prop_UIManager_0 == null) yield return null;
-            while (UnityEngine.Object.FindObjectOfType<VRC.UI.Elements.QuickMenu>() == null) yield return null;
+            while (Object.FindObjectOfType<VRC.UI.Elements.QuickMenu>() == null) yield return null;
+            ReMod.Core.Unity.EnableDisableListener.RegisterSafe();
             BuildUi();
         }
 

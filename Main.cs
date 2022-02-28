@@ -18,7 +18,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.10.0";
+        public const string Version = "4.10.1";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -77,8 +77,6 @@ namespace TeleporterVR
             RenderingIndicator.Init();
             if (UIXMenu.Value || ReMod_Core_Downloader.failed)
                 UIXMenuReplacement.Init();
-            else 
-                MelonCoroutines.Start(NewUi.OnQuickMenu());
 
             Logger.Msg("Initialized!");
 
@@ -99,6 +97,8 @@ namespace TeleporterVR
             }
             CreateListener.UiInit();
             //MelonCoroutines.Start(SetupCustomToggle.SetPrefabOnQM());
+            if (!ReMod_Core_Downloader.failed)
+                MelonCoroutines.Start(NewUi.OnQuickMenu());
         }
 
         public override void OnPreferencesSaved()
