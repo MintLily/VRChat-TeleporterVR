@@ -86,6 +86,11 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 </details>
 
 <h1>Change Log (since Lily's edits)</h1>
+<h3>v4.10.2</h3>
+<ul>
+	<li>Updated ReMod.Core dependency URL</li>
+</ul>
+
 <h3>v4.10.1</h3>
 <ul>
 	<li>Fixed issues where ReMod.Core was a missing dependency</li>

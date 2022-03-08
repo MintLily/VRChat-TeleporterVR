@@ -10,7 +10,7 @@ namespace TeleporterVR.Utils {
             byte[] bytes = null;
             var wc = new WebClient();
             try {
-                bytes = wc.DownloadData($"https://github.com/RequiDev/ReModCE/releases/latest/download/ReMod.Core.dll");
+                bytes = wc.DownloadData("https://github.com/RequiDev/ReMod.Core/releases/latest/download/ReMod.Core.dll");
                 loadedAssembly = Assembly.Load(bytes);
                 Main.Log("Successfully Loaded ReMod.Core", Main.isDebug);
             }
