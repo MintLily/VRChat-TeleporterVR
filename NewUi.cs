@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using MelonLoader;
 using ReMod.Core.UI.QuickMenu;
+using ReMod.Core.VRChat;
 using TeleporterVR.Logic;
 using TeleporterVR.Rendering;
 using TeleporterVR.Utils;
@@ -11,8 +12,8 @@ using static TeleporterVR.Menu;
 namespace TeleporterVR {
     public class NewUi {
         internal static IEnumerator OnQuickMenu() {
-            while (UIManager.prop_UIManager_0 == null) yield return null;
-            while (Object.FindObjectOfType<VRC.UI.Elements.QuickMenu>() == null) yield return null;
+            while (UIManager.field_Private_Static_UIManager_0 == null) yield return null;
+            while (GameObject.Find("UserInterface").GetComponentInChildren<VRC.UI.Elements.QuickMenu>(true) == null) yield return null;
             ReMod.Core.Unity.EnableDisableListener.RegisterSafe();
             BuildUi();
         }
@@ -73,8 +74,7 @@ namespace TeleporterVR {
 
         private static ReMenuCategory userSelectCategory;
         private static void BuildUserSelectMenu() {
-            userSelectCategory = new ReMenuCategory("TPVR", 
-                GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_SelectedUser_Local/ScrollRect/Viewport/VerticalLayoutGroup").transform);
+            userSelectCategory = new ReMenuCategory("TPVR", QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_SelectedUser_Local"));
 
             UserSelTP = userSelectCategory.AddButton(Language.theWord_Teleport, $"{Language.theWord_Teleport} to Selected User", () => {
                 if (WorldActions.WorldAllowed) 
