@@ -74,7 +74,9 @@ namespace TeleporterVR {
 
         private static ReMenuCategory userSelectCategory;
         private static void BuildUserSelectMenu() {
-            userSelectCategory = new ReMenuCategory("TPVR", QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_SelectedUser_Local"));
+            var _Menu_SelectedUser_Local = QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_SelectedUser_Local");
+            var TheSelectedUserMenu = _Menu_SelectedUser_Local.Find("ScrollRect/Viewport/VerticalLayoutGroup");
+            userSelectCategory = new ReMenuCategory("TPVR", TheSelectedUserMenu);
 
             UserSelTP = userSelectCategory.AddButton(Language.theWord_Teleport, $"{Language.theWord_Teleport} to Selected User", () => {
                 if (WorldActions.WorldAllowed) 
