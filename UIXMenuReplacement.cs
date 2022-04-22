@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MelonLoader;
@@ -45,23 +46,23 @@ namespace TeleporterVR {
             });
             
             ExpansionKitApi.GetExpandedMenu(ExpandedMenu.UserQuickMenu).AddSimpleButton($"{Language.theWord_Teleport} to Player", () => {
-                if (!WorldActions.WorldAllowed) return;
+                if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
                     PlayerActions.Teleport(PlayerActions.SelVRCPlayer());
                 }, (ob) => {
                 permbuttons["UserTeleport"] = ob.transform;
                 UserTPButton = ob;
                 ob.SetActive(Main.VRTeleportVisible.Value);
             });
-            Main.Log("Finished creating UIXMenus", Main.isDebug);
+            Main.Log("Finished creating UIXMenus", Main.IsDebug);
         }
 
         static void TheMenu() {
             buttons.Clear();
             menu.AddSimpleButton(color("red", "Close") + "Menu", () => menu.Hide());
-            menu.AddSimpleButton($"World\n{(WorldActions.WorldAllowed ? color("#00ff00", "Allowed") : color("red", "Disallowed"))}", null, (button) => buttons["WorldStatus"] = button.transform);
+            menu.AddSimpleButton($"World\n{(CheckWorldAllowed.RiskyFunctionAllowed ? color("#00ff00", "Allowed") : color("red", "Disallowed"))}", null, (button) => buttons["WorldStatus"] = button.transform);
             menu.AddSpacer();
             menu.AddSimpleButton(VRUtils.active ? Language.theWord_Teleport + color("#00ff00", "\nON") : Language.theWord_Teleport + color("red", "\nOFF"), () => {
-                if (WorldActions.WorldAllowed) {
+                if (CheckWorldAllowed.RiskyFunctionAllowed) {
                     VRUtils.active = !VRUtils.active;
                     TPLocationIndicator.Toggle();
                 }
@@ -71,8 +72,8 @@ namespace TeleporterVR {
             menu.AddSimpleButton(Language.TPtoName_Text, OpenKeyboardForPlayerTP, (button) => buttons["KeyboardTP"] = button.transform);
             menu.AddSimpleButton(Language.TPtoCoord_Text, OpenKeyboardForCoordTP, (button) => buttons["CoordTP"] = button.transform);
             menu.AddSpacer();
-            menu.AddSimpleButton(Main.preferRightHand.Value ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF, () => {
-                Main.preferRightHand.Value = !Main.preferRightHand.Value;
+            menu.AddSimpleButton(Main.PreferRightHand.Value ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF, () => {
+                Main.PreferRightHand.Value = !Main.PreferRightHand.Value;
                 UpdateText();
             }, (button) => buttons["preferRightHand"] = button.transform);
 
@@ -91,11 +92,11 @@ namespace TeleporterVR {
             menu.AddSimpleButton("GitHub", () => OpenWebpage(BuildInfo.DownloadLink));
             menu.AddSpacer();
 
-            Main.Log("Finished creating UIXMenus", Main.isDebug);
+            Main.Log("Finished creating UIXMenus", Main.IsDebug);
         }
 
         internal static void ToggleVRTeleport(bool state) {
-            if (WorldActions.WorldAllowed) {
+            if (CheckWorldAllowed.RiskyFunctionAllowed) {
                 VRUtils.active = state;
                 TPLocationIndicator.Toggle();
                 //CustomToggle.UpdateToggleState();
@@ -110,7 +111,7 @@ namespace TeleporterVR {
 
         internal static void UpdateWorldStatusText() {
             try {
-                text("WorldStatus", $"World\n{(WorldActions.WorldAllowed ? color("#00ff00", "Allowed") : color("red", "Disallowed"))}");
+                text("WorldStatus", $"World\n{(CheckWorldAllowed.RiskyFunctionAllowed ? color("#00ff00", "Allowed") : color("red", "Disallowed"))}");
             } catch (Exception e) { Main.Logger.Error($"{e}"); }
         }
 
@@ -135,7 +136,7 @@ namespace TeleporterVR {
             } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
-                text("preferRightHand", Main.preferRightHand.Value ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF);
+                text("preferRightHand", Main.PreferRightHand.Value ? Language.preferedHanded_Text_ON : Language.preferedHanded_Text_OFF);
             } catch (Exception e) { Main.Logger.Error($"{e}"); }
 
             try {
@@ -172,3 +173,4 @@ namespace TeleporterVR {
         }
     }
 }
+*/
