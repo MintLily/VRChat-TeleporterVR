@@ -12,13 +12,13 @@ namespace TeleporterVR.Utils {
             try {
                 bytes = wc.DownloadData("https://github.com/RequiDev/ReMod.Core/releases/latest/download/ReMod.Core.dll");
                 loadedAssembly = Assembly.Load(bytes);
-                Main.Log("Successfully Loaded ReMod.Core", Main.isDebug);
+                Main.Log("Successfully Loaded ReMod.Core", Main.IsDebug);
             }
             catch (WebException e) {
                 failed = true;
                 Main.Logger.Error($"Unable to Load Core Dep ReModCore: {e}");
             }
-            catch (BadImageFormatException e) {
+            catch (BadImageFormatException) {
                 failed = true;
                 loadedAssembly = null;
             }

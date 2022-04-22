@@ -85,7 +85,7 @@ namespace TeleporterVR.Utils
                 }
             }
 
-            if (Main.isDebug)
+            if (Main.IsDebug)
                 Main.Logger.Msg("Finished with Asset Bundle Resource Management");
             yield break;
         }

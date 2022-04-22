@@ -19,7 +19,7 @@ namespace TeleporterVR.Logic
             bool failed;
             try { ClassInjector.RegisterTypeInIl2Cpp<EnableDisableListener>(); failed = false; }
             catch (Exception e) { Main.Logger.Error("Unable to Inject Custom EnableDisableListener Script!\n" + e.ToString()); failed = true; }
-            if (Main.isDebug && !failed) Main.Logger.Msg(ConsoleColor.Green, "Finished setting up EnableDisableListener");
+            if (Main.IsDebug && !failed) Main.Logger.Msg(ConsoleColor.Green, "Finished setting up EnableDisableListener");
         }
 
         public static void UiInit()
@@ -34,25 +34,25 @@ namespace TeleporterVR.Logic
             listener.OnEnabled += AMOpenToggle;
             listener.OnDisabled += AMOpenToggle;
 
-            if (Main.isDebug)
+            if (Main.IsDebug)
                 Main.Logger.Msg(ConsoleColor.Green, "Finished creating ActionMenuListener");
         }
 
-        public static GameObject? FindInactiveObjectInActiveRoot(string path) {
+        /*public static GameObject? FindInactiveObjectInActiveRoot(string path) {
             var split = path.Split(new char[] { '/' }, 2);
             var rootObject = GameObject.Find($"/{split[0]}")?.transform;
             if (rootObject == null)
                 return null;
             return Transform.FindRelativeTransformWithPath(rootObject, split[1], false)?.gameObject;
-        }
+        }*/
 
         static void AMOpenToggle()
         {
             var leftOpen = AMLeft.activeSelf;
             var rightOpen = AMRight.activeSelf;
 
-            if (leftOpen || rightOpen) NewPatches.IsAMOpen = true;
-            else NewPatches.IsAMOpen = false;
+            if (leftOpen || rightOpen) NewPatches.IsAmOpen = true;
+            else NewPatches.IsAmOpen = false;
         }
     }
 

@@ -22,7 +22,7 @@ namespace TeleporterVR.Rendering
             bool failed;
             try { ClassInjector.RegisterTypeInIl2Cpp<TPLocationIndicator>(); failed = false; }
             catch (Exception e) { Main.Logger.Error("Unable to Inject Custom TPLocationIndicator Script!\n" + e.ToString()); failed = true; }
-            if (Main.isDebug && !failed) Main.Logger.Msg(ConsoleColor.Green, "Finished setting up TPLocationIndicator");
+            if (Main.IsDebug && !failed) Main.Logger.Msg(ConsoleColor.Green, "Finished setting up TPLocationIndicator");
         }
     }
 
@@ -89,10 +89,10 @@ namespace TeleporterVR.Rendering
                 OnDisable();
                 return;
             }
-            if ((Main.preferRightHand.Value ? VRUtils.ControllerRight == null : VRUtils.ControllerLeft == null) && !launchErrorOnce)
+            if ((Main.PreferRightHand.Value ? VRUtils.ControllerRight == null : VRUtils.ControllerLeft == null) && !launchErrorOnce)
             {
                 launchErrorOnce = true;
-                string temp = Main.preferRightHand.Value ? "ControllerRight" : "ControllerLeft";
+                string temp = Main.PreferRightHand.Value ? "ControllerRight" : "ControllerLeft";
                 Console.WriteLine($"Could not determine {temp} raycast.", ConsoleColor.Red);
                 return;
             }
@@ -106,10 +106,10 @@ namespace TeleporterVR.Rendering
                 line.SetPosition(0, endPos);
                 line.SetPosition(1, VRUtils.GetControllerPos());
             }
-            if ((NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(false);
-            else if (!(NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(true);
-            if ((NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(false);
-            else if (!(NewPatches.IsQMOpen || NewPatches.IsQMOpen) && VRUtils.active) previewObj.SetActive(true);
+            if ((NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(false);
+            else if (!(NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(true);
+            if ((NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(false);
+            else if (!(NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(true);
             SetColors(GeneralUtils.HexToColor(Main.IndicatorHexColor.Value, true));
         }
 

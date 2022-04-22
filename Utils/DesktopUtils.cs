@@ -30,8 +30,8 @@ namespace TeleporterVR.Utils
             if (!Main.EnableDesktopTP.Value) return;
             if (InVR) return;
             if (__ && InputDown) {
-                if (NewPatches.IsQMOpen) return;
-                if (NewPatches.IsAMOpen) return;
+                if (NewPatches.IsQmOpen) return;
+                if (NewPatches.IsAmOpen) return;
                 Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
                 if (Physics.Raycast(ray, out RaycastHit raycastHit))
                     VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;

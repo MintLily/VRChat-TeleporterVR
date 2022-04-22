@@ -45,7 +45,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Save your current position in the world.";
                 LoadPos_Tooltip = "Teleport to the saved position.";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "TOGGLE: Pressing Right Trigger, you will teleport to the end of your right controller pointer (same as VRChat laser cursor)" :
                     "TOGGLE: Pressing Left Trigger, you will teleport to the end of your left controller pointer (same as VRChat laser cursor)";
 
@@ -68,7 +68,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Sauvegarde votre position actuelle dans le monde.";
                 LoadPos_Tooltip = "Téléporte à la position sauvegardée.";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ? 
+                perferedHand_Tooltip = Main.PreferRightHand.Value ? 
                     "TOGGLE: En appuyant sur la gâchette droite, vous vous téléporterez à la fin du pointeur de votre contrôleur droit (identique au curseur laser VRChat)" :
                     "TOGGLE: En appuyant sur la gâchette gauche, vous vous téléporterez à la fin du pointeur de votre contrôleur gauche (identique au curseur laser VRChat)";
 
@@ -91,7 +91,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Speichert deine derzeitige Position.";
                 LoadPos_Tooltip = "Teleportiere zur gespeicherten Position.";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "TOGGLE: Durch Drücken des rechten Auslösers teleportieren Sie zum Ende Ihres rechten Controller-Zeigers (wie beim VRChat-Lasercursor)." :
                     "TOGGLE: Durch Drücken des linken Auslösers teleportieren Sie zum Ende Ihres linken Controller-Zeigers (wie beim VRChat-Lasercursor).";
 
@@ -114,7 +114,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "\u4e16\u754c\u3067\u3042\u306a\u305f\u306e\u73fe\u5728\u306e\u4f4d\u7f6e\u3092\u4fdd\u5b58\u3057\u307e\u3059\u3002";
                 LoadPos_Tooltip = "\u4fdd\u5b58\u3057\u305f\u4f4d\u7f6e\u306b\u30c6\u30ec\u30dd\u30fc\u30c8\u3057\u307e\u3059\u3002";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "トグル：右トリガーを押すと、右コントローラーポインターの端にテレポートします（VRChatレーザーカーソルと同じ）" :
                     "トグル：左トリガーを押すと、左コントローラーポインターの端にテレポートします（VRChatレーザーカーソルと同じ）";
 
@@ -137,7 +137,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Lagre din plassering i verdenen";
                 LoadPos_Tooltip = "Teleporter til den lagra plasseringen";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "TOGGLE: Ved å trykke på høyre utløser vil du teleportere til slutten av høyre kontrollpeker (samme som VRChat-laserpekeren)" :
                     "TOGGLE: Ved å trykke på venstre utløser vil du teleportere til slutten av venstre kontrollerpeker (samme som VRChat-laserpekeren)";
 
@@ -160,7 +160,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Сохранить вашу текущую позицию в мире.";
                 LoadPos_Tooltip = "Телепортироваться на сохранённую позицию.";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "ПЕРЕКЛЮЧЕНИЕ: Нажав правый триггер, вы телепортируетесь к концу указателя правого контроллера (так же, как лазерный курсор VRChat)." :
                     "ПЕРЕКЛЮЧЕНИЕ: Нажав левый триггер, вы телепортируетесь к концу указателя левого контроллера (так же, как лазерный курсор VRChat).";
 
@@ -183,7 +183,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Guarde su posici\u00F3n actual en el mundo.";
                 LoadPos_Tooltip = "Teletransportarse a la posici\u00F3n guardada.";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "TOGGLE: Al presionar el gatillo derecho, se teletransportará al final del puntero del controlador derecho (igual que el cursor láser VRChat)" :
                     "TOGGLE: Al presionar el gatillo izquierdo, se teletransportará al final del puntero del controlador izquierdo (igual que el cursor láser VRChat)";
 
@@ -206,7 +206,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Salva sua posição atual no mundo.";
                 LoadPos_Tooltip = "Teleporta para a posição salva.";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "Alternar: Pressionando o gatilho direito, você se teleportará para o final do ponteiro de seu controle direito (o mesmo do laser do cursor do VRChat)" :
                     "Alternar: Pressionando o gatilho esquerdo, você se teleportará para o final do ponteiro de seu controle esquerdo (o mesmo do laser do cursor do VRChat)";
                 
@@ -229,7 +229,7 @@ namespace TeleporterVR.Logic
                 SavePos_ToolTip = "Sparar din nuvarande position.";
                 LoadPos_Tooltip = "Teleporterar dig till din sparade position.";
 
-                perferedHand_Tooltip = Main.preferRightHand.Value ?
+                perferedHand_Tooltip = Main.PreferRightHand.Value ?
                     "TOGGLE: Genom att trycka på höger avtryckare teleporterar du till slutet av din högra styrpekare (samma som VRChat-lasermarkören)" :
                     "TOGGLE: Genom att trycka på vänster utlösare teleporterar du till slutet av din vänstra kontrollpekare (samma som VRChat-lasermarkören)";
 
@@ -239,7 +239,7 @@ namespace TeleporterVR.Logic
                 preferedHanded_Text_OFF = "Vänsterhänt";
             }
 
-            if (Main.isDebug)
+            if (Main.IsDebug)
                 Main.Logger.Msg(ConsoleColor.Green, "Finished with Languages");
         }
     }
