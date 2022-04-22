@@ -38,7 +38,7 @@ namespace TeleporterVR
         {
             AMSubMenu.subMenu = VRCActionMenuPage.AddSubMenu(ActionMenuPage.Main, "<color=#13cf13>TeleporterVR</color>", () =>
                 {
-                    VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, VRUtils.active, UIXMenuReplacement.ToggleVRTeleport, ResourceManager.AMVRTP);
+                    VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, VRUtils.active, VRUtils.ToggleVRTeleport, ResourceManager.AMVRTP);
 
                     TP2Name = CustomSubMenu.AddButton(Language.TPtoName_Text, Menu.OpenKeyboardForPlayerTP, ResourceManager.AMMain);
 
@@ -62,13 +62,13 @@ namespace TeleporterVR
                 }, ResourceManager.AMMain);
                 AMSubMenu.subMenu.locked = true;
                 hasStarted = true;
-                if (Main.isDebug) Main.Logger.Msg(ConsoleColor.Green, "Finished creating ActionMenu");
+                if (Main.IsDebug) Main.Logger.Msg(ConsoleColor.Green, "Finished creating ActionMenu");
         }
 
         public static IEnumerator UpdateIcon(bool ignoreWait = true)
         {
             if (!ignoreWait) yield return new WaitForSeconds(1f);
-            try { AMSubMenu.subMenu.icon = WorldActions.WorldAllowed ? ResourceManager.AMMain : ResourceManager.AMBad; }
+            try { AMSubMenu.subMenu.icon = CheckWorldAllowed.RiskyFunctionAllowed ? ResourceManager.AMMain : ResourceManager.AMBad; }
             catch { if (hasAMApiInstalled) Main.Logger.Error("Failed to change subMenu Icon"); }
             try { AMUtils.RefreshActionMenu(); } catch { if (hasAMApiInstalled) Main.Logger.Error("Failed to Refresh ActionMenu"); }
             yield break;

@@ -18,7 +18,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.10.3";
+        public const string Version = "4.11.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -26,10 +26,10 @@ namespace TeleporterVR
     public class Main : MelonMod
     {
         private MelonMod Instance;
-        public static bool isDebug;
-        private static TPLocationIndicator LR;
+        public static bool IsDebug;
+        private static TPLocationIndicator _lr;
         public static MelonPreferences_Category melon;
-        public static MelonPreferences_Entry<bool> preferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR, UIXMenu;
+        public static MelonPreferences_Entry<bool> PreferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR;//, UIXMenu;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
         internal static readonly MelonLogger.Instance Logger = new MelonLogger.Instance(BuildInfo.Name, ConsoleColor.Green);
         private static int _scenesLoaded = 0;
@@ -38,7 +38,7 @@ namespace TeleporterVR
         {
             Instance = this;
             if (MelonDebug.IsEnabled() || Environment.CommandLine.Contains("--vrt.debug")) {
-                isDebug = true;
+                IsDebug = true;
                 Logger.Msg(ConsoleColor.Green, "Debug mode is active");
             }
             
@@ -46,7 +46,7 @@ namespace TeleporterVR
 
             melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
             //visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
-            preferRightHand = melon.CreateEntry("preferRightHand", true, "Right Handed");
+            PreferRightHand = melon.CreateEntry("preferRightHand", true, "Right Handed");
             VRTeleportVisible = melon.CreateEntry("VRTeleportVisible", true, "Is User Selected Teleport Button visible");
             OverrideLanguage = melon.CreateEntry("overrideLanguage", "off", "Override Language");
             ExpansionKitApi.RegisterSettingAsStringEnum(melon.Identifier, OverrideLanguage.Identifier, 
@@ -67,7 +67,7 @@ namespace TeleporterVR
             IndicatorHexColor = melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
             EnableDesktopTP = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
             UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
-            UIXMenu = melon.CreateEntry("UseUIXMenu", false, "Use UIX Menu? (Requires Restart)");
+            //UIXMenu = melon.CreateEntry("UseUIXMenu", false, "Use UIX Menu? (Requires Restart)");
 
             ResourceManager.Init();
             NewPatches.SetupPatches();
@@ -75,8 +75,8 @@ namespace TeleporterVR
             CreateListener.Init();
             ActionMenu.InitUi();
             RenderingIndicator.Init();
-            if (UIXMenu.Value || ReMod_Core_Downloader.failed)
-                UIXMenuReplacement.Init();
+            //if (UIXMenu.Value || ReMod_Core_Downloader.failed)
+            //    UIXMenuReplacement.Init();
 
             Logger.Msg("Initialized!");
 
@@ -88,12 +88,12 @@ namespace TeleporterVR
             VRUtils.Init();
             GetSetWorld.Init();
             if (EnableTeleportIndicator.Value)
-                LR = GeneralUtils.GetPtrObj().GetOrAddComponent<TPLocationIndicator>();
+                _lr = GeneralUtils.GetPtrObj().GetOrAddComponent<TPLocationIndicator>();
 
-            if (EnableTeleportIndicator.Value && !runOnce) { // null checks for less errors and breakage
-                if (LR == null) LR = GeneralUtils.GetPtrObj().GetOrAddComponent<TPLocationIndicator>();
-                if (LR != null) TPLocationIndicator.Toggle(false);
-                runOnce = true;
+            if (EnableTeleportIndicator.Value && !_ranOnce) { // null checks for less errors and breakage
+                if (_lr == null) _lr = GeneralUtils.GetPtrObj().GetOrAddComponent<TPLocationIndicator>();
+                if (_lr != null) TPLocationIndicator.Toggle(false);
+                _ranOnce = true;
             }
             CreateListener.UiInit();
             //MelonCoroutines.Start(SetupCustomToggle.SetPrefabOnQM());
@@ -103,7 +103,7 @@ namespace TeleporterVR
 
         public override void OnPreferencesSaved()
         {
-            if (UIXMenuReplacement.runOnce_start && UIXMenu.Value) UIXMenuReplacement.UpdateText();
+            //if (UIXMenuReplacement.runOnce_start && UIXMenu.Value) UIXMenuReplacement.UpdateText();
             //MelonPreferences.GetEntry<bool>(melon.Identifier, preferRightHand.Identifier).Value = VRUtils.preferRightHand;
             if (ActionMenuApiIntegration.Value     // if true
                 && !ActionMenu.hasStarted          // if has not started yet
@@ -114,14 +114,15 @@ namespace TeleporterVR
                 ActionMenu.InitUi();
             }
 
-            if (UIXMenu.Value) {
-                try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch (Exception e) { Log(e, isDebug, true); }
-                try { UIXMenuReplacement.UserTPButton.SetActive(VRTeleportVisible.Value); } catch (Exception e) { Log(e, isDebug, true); }
-                try { if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText(); } catch (Exception e) { Log(e, isDebug, true); }
-            } else NewUi.OnPrefSave();
+            //if (UIXMenu.Value) {
+            //    try { UIXMenuReplacement.TPVRButton.SetActive(UIXTPVR.Value); } catch (Exception e) { Error(e, IsDebug); }
+            //    try { UIXMenuReplacement.UserTPButton.SetActive(VRTeleportVisible.Value); } catch (Exception e) { Error(e, IsDebug); }
+            //    try { if (UIXMenuReplacement.runOnce_start) UIXMenuReplacement.UpdateText(); } catch (Exception e) { Error(e, IsDebug); }
+            //} else
+            NewUi.OnPrefSave();
         }
 
-        bool runOnce;
+        private bool _ranOnce;
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName) {
             if (_scenesLoaded <= 2) {
@@ -133,9 +134,9 @@ namespace TeleporterVR
                 case 0: case 1: break;
                 default:
                     MelonCoroutines.Start(GetSetWorld.DelayedLoad());
-                    WorldActions.OnLeftWorld();
                     break;
             }
+            CheckWorldAllowed.WorldChange(-1);
         }
 
         //public override void OnApplicationQuit() => preferRightHand.Value = VRUtils.preferRightHand;
@@ -144,19 +145,24 @@ namespace TeleporterVR
         {
             VRUtils.OnUpdate();
             // This check is to keep the menu Disabled in Disallowed worlds, this was super easy to patch into or use UnityExplorer to re-enable the button
-            if (!WorldActions.WorldAllowed && !(NewPatches.IsQMOpen || NewPatches.IsQMOpen))
+            if (!CheckWorldAllowed.RiskyFunctionAllowed && !(NewPatches.IsQmOpen || NewPatches.IsQmOpen))
                 VRUtils.active = false;
             DesktopUtils.OnUpdate();
         }
-
-        public static void Log(string s, bool isDebug = false, bool ErrorAlt = false) {
-            if (isDebug) Logger.Msg(ErrorAlt ? ConsoleColor.Red : ConsoleColor.Green, s);
-            else Logger.Msg(s);
+        
+        public static void Log(string s, bool isDebug = false) {
+            var c = Console.ForegroundColor;
+            Logger.Msg(isDebug ? ConsoleColor.DarkMagenta : c, s);
         }
         
-        public static void Log(object s, bool isDebug = false, bool ErrorAlt = false) {
-            if (isDebug) Logger.Msg(ErrorAlt ? ConsoleColor.Red : ConsoleColor.Green, s);
-            else Logger.Msg(s);
+        public static void Error(string s, bool isDebug = false) {
+            var c = Console.ForegroundColor;
+            Logger.Msg(isDebug ? ConsoleColor.DarkMagenta : c, s);
+        }
+        
+        public static void Error(object s, bool isDebug = false) {
+            var c = Console.ForegroundColor;
+            Logger.Msg(isDebug ? ConsoleColor.DarkMagenta : c, s);
         }
     }
 }

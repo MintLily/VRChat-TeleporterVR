@@ -67,8 +67,8 @@ namespace TeleporterVR.Logic
             switch (identifier)
             {
                 case 1: // allowed
-                    Utils.WorldActions.WorldAllowed = true;
-                    if (Main.isDebug)
+                    Utils.CheckWorldAllowed.RiskyFunctionAllowed = true;
+                    if (Main.IsDebug)
                         Main.Logger.Msg(System.ConsoleColor.Cyan, "Force Allowed");
 
                     if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {
@@ -77,8 +77,8 @@ namespace TeleporterVR.Logic
                     }
                     break;
                 case 2: // disallowed
-                    Utils.WorldActions.WorldAllowed = false;
-                    if (Main.isDebug)
+                    Utils.CheckWorldAllowed.RiskyFunctionAllowed = false;
+                    if (Main.IsDebug)
                         Main.Logger.Msg(System.ConsoleColor.Red, "Force Disallowed");
                     
                     if (Main.ActionMenuApiIntegration.Value && ActionMenu.hasAMApiInstalled) {

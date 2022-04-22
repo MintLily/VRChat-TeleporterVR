@@ -50,25 +50,25 @@ namespace TeleporterVR
             {
                 case 1:
                     if (Pos1 == null || Rot1 == null) return;
-                    if (!WorldActions.WorldAllowed) return;
+                    if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
                     PlayerActions.GetLocalVRCPlayer().transform.position = Pos1;
                     PlayerActions.GetLocalVRCPlayer().transform.rotation = Rot1;
                     break;
                 case 2:
                     if (Pos2 == null || Rot2 == null) return;
-                    if (!WorldActions.WorldAllowed) return;
+                    if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
                     PlayerActions.GetLocalVRCPlayer().transform.position = Pos2;
                     PlayerActions.GetLocalVRCPlayer().transform.rotation = Rot2;
                     break;
                 case 3:
                     if (Pos3 == null || Rot3 == null) return;
-                    if (!WorldActions.WorldAllowed) return;
+                    if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
                     PlayerActions.GetLocalVRCPlayer().transform.position = Pos3;
                     PlayerActions.GetLocalVRCPlayer().transform.rotation = Rot3;
                     break;
                 case 4:
                     if (Pos4 == null || Rot4 == null) return;
-                    if (!WorldActions.WorldAllowed) return;
+                    if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
                     PlayerActions.GetLocalVRCPlayer().transform.position = Pos4;
                     PlayerActions.GetLocalVRCPlayer().transform.rotation = Rot4;
                     break;
@@ -83,7 +83,7 @@ namespace TeleporterVR
                         Player tptgt = PlayerActions.Target(s);
                         PopupManager.HideCurrentPopup(VRCUiPopupManager.prop_VRCUiPopupManager_0);
                         if (tptgt != null)
-                            if (WorldActions.WorldAllowed)
+                            if (CheckWorldAllowed.RiskyFunctionAllowed)
                                 PlayerActions.GetLocalVRCPlayer().transform.position = tptgt.transform.position;
                     }, null, "Enter (partial) Player Name");
         }
@@ -97,7 +97,7 @@ namespace TeleporterVR
                         if (coords.Length == 3)
                         {
                             PopupManager.HideCurrentPopup(VRCUiPopupManager.prop_VRCUiPopupManager_0);
-                            if (WorldActions.WorldAllowed)
+                            if (CheckWorldAllowed.RiskyFunctionAllowed)
                                 PlayerActions.GetLocalVRCPlayer().transform.position = new Vector3(float.Parse(coords[0]), float.Parse(coords[1]), float.Parse(coords[2]));
                         }
                         else

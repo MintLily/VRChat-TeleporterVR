@@ -1,123 +1,63 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Il2CppSystem.Collections.Generic;
 using MelonLoader;
-using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using VRC.Core;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using TeleporterVR.Logic;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
-namespace TeleporterVR.Utils
-{
-    internal static class WorldActions
-    {
-        internal static bool WorldAllowed;
-        internal static Action<bool> OnWorldAllowedUpdate;
+namespace TeleporterVR.Utils {
+    // Came from https://github.com/RequiDev/ReModCE/blob/master/ReModCE/Managers/RiskyFunctionsManager.cs
+    internal class CheckWorldAllowed {
+        //public static CheckWorldAllowed Instance;
 
-        internal static void CheckCompleted(bool state) {
-            WorldAllowed = state;
-            OnWorldAllowedUpdate?.Invoke(WorldAllowed);
-            if (AMSubMenu.subMenu != null && Main.ActionMenuApiIntegration.Value)
-                AMSubMenu.subMenu.locked = !state;
-            if (!Main.UIXMenu.Value) {
-                NewUi.UpdateWorldActions(state);
-                if (NewUi.MainCat != null)
-                    NewUi.MainCat.Title = $"TPVR Actions - {(state ? "<color=#00ff00>World Allowed</color>" : "<color=red>World Denied</color>")}";
-                
-            }
-                
-            Main.Log($"World {(WorldAllowed ? "Allowed" : "Denied")}", Main.isDebug);
+        public static event Action<bool> OnRiskyFunctionsChanged;
+
+        private static readonly List<string> BlacklistedTags = new() {
+            "author_tag_game",
+            "author_tag_games",
+            "author_tag_club",
+            "admin_game"
+        };
+
+        public static bool RiskyFunctionAllowed { get; internal set; }
+
+        //public CheckWorldAllowed() { Instance = this; }
+
+        public static void WorldChange(int buildIndex) {
+            if (buildIndex == -1) MelonCoroutines.Start(CheckWorld());
         }
 
-        // Came from https://github.com/Psychloor/PlayerRotater/blob/master/PlayerRotater/Utilities.cs
-        internal static IEnumerator CheckWorld()
-        {
-            Main.Log("Checking World", Main.isDebug);
+        private static IEnumerator CheckWorld() {
+            while (RoomManager.field_Internal_Static_ApiWorld_0 == null)
+                yield return new WaitForEndOfFrame();
+            var apiWorld = RoomManager.field_Internal_Static_ApiWorld_0;
 
-            string worldId;
-            if (RoomManager.field_Internal_Static_ApiWorld_0 == null) {
-                Main.Log("Checking World => Halted", Main.isDebug);
-                yield break;
-            }
-            worldId = RoomManager.field_Internal_Static_ApiWorld_0.id;
-            Main.Log($"Got WorldID: {worldId}", Main.isDebug);
+            var worldName = apiWorld.name.ToLower();
+            var tags = new List<string>();
+            foreach (var tag in apiWorld.tags)
+                tags.Add(tag.ToLower());
 
-            WorldAllowed = false;
+            var hasBlacklistedTag = BlacklistedTags.Any(tag => tags.Contains(tag));
+            var riskyFunctionAllowed = !worldName.Contains("club") && !worldName.Contains("game") && !hasBlacklistedTag;
 
-            // Allow world creators more choice over Risky Functions without relying on our whitelist, we are looking for "eVRCRiskFuncDisable" or "eVRCRiskFuncEnable"
-            // If these are present, they will completely override our choice from tags and the online list, and manually disable or enable Risky Functions
-            GameObject[] allWorldGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
-            if (allWorldGameObjects.Any(a => a.name == "eVRCRiskFuncDisable") || allWorldGameObjects.Any(a => a.name == "TPVRActionDisable") ||
-                allWorldGameObjects.Any(a => a.name == "UniversalRiskyFuncDisable")) {
-                Main.Log("GameObject found: Disabling Functions", Main.isDebug);
-                CheckCompleted(false);
-                yield break;
-            }
-            else if (allWorldGameObjects.Any(a => a.name == "eVRCRiskFuncEnable") || allWorldGameObjects.Any(a => a.name == "TPVRActionEnable") ||
-                allWorldGameObjects.Any(a => a.name == "UniversalRiskyFuncEnable")) {
-                Main.Log("GameObject found: Enabling Functions", Main.isDebug);
-                CheckCompleted(true);
-                yield break;
-            }
+            var instanceAccessType = RoomManager.field_Internal_Static_ApiWorldInstance_0.type;
+            riskyFunctionAllowed = !(instanceAccessType == InstanceAccessType.Public || instanceAccessType == InstanceAccessType.FriendsOfGuests);
 
-            // Check if black/whitelisted from EmmVRC - thanks Emilia and the rest of EmmVRC Staff
-            string url = $"https://dl.emmvrc.com/riskyfuncs.php?worldid={worldId}";
-            WebClient www = new WebClient();
-            while (www.IsBusy) yield return new WaitForEndOfFrame();
-            string result = www.DownloadString(url)?.Trim().ToLower();
-            /*
-            var www = new HttpClient();
-            var result = www.GetStringAsync(url)?.GetAwaiter().GetResult()?.Trim().ToLower();
-            bool temp = false;
-            try { while (!www.GetAsync(url).GetAwaiter().IsCompleted) temp = true; }
-            catch (Exception e) { Main.Log(e, Main.isDebug, true); }
-            if (temp) yield return new WaitForEndOfFrame();
-            */
-            www.Dispose();
-            if (!string.IsNullOrWhiteSpace(result)) {
-                switch (result) {
-                    case "allowed":
-                        CheckCompleted(true);
-                        yield break;
+            var rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+            if (rootGameObjects.Any(go => go.name is "eVRCRiskFuncDisable" or "UniversalRiskyFuncDisable"))
+                riskyFunctionAllowed = false;
+            else if (rootGameObjects.Any(go => go.name is "eVRCRiskFuncEnable" or "UniversalRiskyFuncEnable"))
+                riskyFunctionAllowed = true;
 
-                    case "denied":
-                        CheckCompleted(false);
-                        yield break;
-                }
-            }
+            RiskyFunctionAllowed = riskyFunctionAllowed;
+            OnRiskyFunctionsChanged?.Invoke(RiskyFunctionAllowed);
 
-            Main.Log("Checking World Tags, no response from EmmVRC", Main.isDebug);
-
-            // no result from server or they're currently down
-            // Check tags then. should also be in cache as it just got downloaded
-            API.Fetch<ApiWorld>( worldId, new Action<ApiContainer>(container => {
-                ApiWorld apiWorld;
-                if ((apiWorld = container.Model.TryCast<ApiWorld>()) != null) {
-                    foreach (string worldTag in apiWorld.tags) {
-                        if (worldTag.IndexOf("game", StringComparison.OrdinalIgnoreCase) >= 0) {
-                            CheckCompleted(false);
-                            return;
-                        }
-                    }
-
-                    CheckCompleted(true);
-                }
-                else Main.Logger.Error("Failed to cast ApiModel to ApiWorld");
-            }), disableCache: false);
-
-            // If all else fails, or is errored return false
-            CheckCompleted(WorldAllowed);
+            Main.Log($"RiskyFunctions: {RiskyFunctionAllowed}", Main.IsDebug);
+            NewUi.UpdateWorldActions(RiskyFunctionAllowed);
         }
 
-        internal static void OnLeftWorld() {
-            CheckCompleted(false);
-            VRUtils.active = false;
-        }
+        public static void OnWorldLeave() => RiskyFunctionAllowed = false;
     }
 }
