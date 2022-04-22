@@ -6,11 +6,10 @@ Need to install MelonLoader?<br>
 Click <a href="https://melonwiki.xyz/">this link</a> to get started!
 
 <h3>Prerequisites</h3>
-MelonLoader: v0.5.3+<br>
-Game: VRChat build 1169+<br>
+MelonLoader: v0.5.4+<br>
+Game: VRChat build 1190+<br>
 Mods:
 <ul>
-	<li><a href="https://github.com/knah/VRCMods">UIExpansionKit</a></li>
 	<li><a href="https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi">ActionMenuApi</a></li>
 </ul>
 
@@ -25,7 +24,6 @@ EnableTeleportIndicator = true
 IndicatorHexColor = "2dff2d"
 EnableDesktopTP = false
 UIXTPVR = false
-UIXMenu = false
 ```
 preferRightHand  - Prefer Right Handed (for VR Teleporting)<br>
 VRTeleportVisible - VRTeleport Button is visible (next to mute button)<br>
@@ -34,8 +32,7 @@ ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompo
 EnableTeleportIndicator - Shows a circle to where you will be teleported to when you press your trigger<br>
 IndicatorHexColor - Color the Indicator to your liking, in the Hex Color format #rrggbb<br>
 EnableDesktopTP - Allows you to teleport to your cursor (desktop only) [KeyBinds = LeftShift + T or Mouse3]<br>
-UIXTPVR - Puts a quick VR Teleport toggle on your main UIX Menu<br>
-UIXMenu - Would you like to use a UIX Menu or a menu built with [ReMod.Core](https://github.com/RequiDev/ReMod.Core)
+UIXTPVR - Puts a quick VR Teleport toggle on your main UIX Menu
 
 <h3>Special Features</h3>
 Dynamic Language Settings - The language of the mod will be determined by your system's local region, you can override this in the settings of the mod. Changing the language will update in real time (when you close the settings window)<br>
@@ -81,11 +78,24 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 		<li>emmVRC Risky world / game tag toggling - <b>Psychloor</b></li>
 		<li>Asset Bundle, Keyboard popup input, Enable/Disable Listener - <b>knah</b></li>
 		<li>TeleportIndicator Scripts - <b>Davi (d-mageek)</b></li>
-		<li>NewUi - <b>RequiDev</b></li>
+		<li><a href="https://github.com/RequiDev/ReMod.Core" target="_blank">ReMod.Core</a> & World Checks - <b>RequiDev</b></li>
 	</ul>
 </details>
 
 <h1>Change Log (since Lily's edits)</h1>
+<h3>v4.11.0</h3>
+<ul>
+	<li>Update Risky Functions
+        <ul>
+            <li>Removed emmVRC Network URL checks</li>
+            <li>Worlds that are FriendsOnly, InviteOnly, or InvitePlus will allow risky functions</li>
+        </ul>
+    </li>
+    <li>Updated ML & Mod references</li>
+    <li>Removed UI Expansion Kit menus and integration</li>
+    <li>Internal code edits</li>
+</ul>
+
 <h3>v4.10.2</h3>
 <ul>
 	<li>Updated ReMod.Core dependency URL</li>
@@ -102,6 +112,9 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 	<li>Made <a href="https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi">ActionMenuApi</a> a Prerequisite Mod</li>
 </ul>
 
+<details>
+	<summary>Past Versions</summary>
+
 ### v4.9.2
 * Fixed Errors showing when changing worlds if AMApi is disabled or null
 
@@ -114,9 +127,6 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 * Changed MelonLogger to MelonLogger.Instance
 * Changed World Check Patches to OnJoin/Leave instead of OnFade (Thanks Bono)
 * Fixed ActionMenu VRTP Toggle not being consistent to the actual setting
-
-<details>
-	<summary>Past Versions</summary>
 
 ### v4.8.1
 * Fixed Popup keyboards not showing
