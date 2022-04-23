@@ -6,7 +6,6 @@ using UnityEngine.XR;
 using System.Runtime.InteropServices;
 using TeleporterVR.Logic;
 using MelonLoader;
-using UIExpansionKit.API;
 using TeleporterVR.Patches;
 using System.Linq;
 

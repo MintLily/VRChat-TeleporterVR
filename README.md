@@ -83,6 +83,11 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 </details>
 
 <h1>Change Log (since Lily's edits)</h1>
+<h3>v4.11.0.1</h3>
+<ul>
+	<li>Fix ActionMenu menu not updating with RiskyFuncChecks</li>
+</ul>
+
 <h3>v4.11.0</h3>
 <ul>
 	<li>Update Risky Functions

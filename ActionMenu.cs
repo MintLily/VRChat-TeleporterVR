@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ActionMenuApi;
 using ActionMenuApi.Api;
+using ActionMenuApi.Pedals;
 using TeleporterVR.Logic;
 using TeleporterVR.Utils;
 using MelonLoader;
@@ -20,9 +21,9 @@ namespace TeleporterVR
         // Tested versions to be good => 0.3.5
         public static bool hasAMApiInstalled, AMApiOutdated, hasStarted;
         private static PedalOption VRTP, TP2Name, TP2Coord, Save, Load;
+        private static PedalSubMenu subMenu;
 
-        public static void InitUi()
-        {
+        public static void InitUi() {
             if (MelonHandler.Mods.Any(m => m.Info.Name.Equals("ActionMenuApi"))) {
                 hasAMApiInstalled = true;
                 if (!Main.ActionMenuApiIntegration.Value) return;
@@ -34,9 +35,8 @@ namespace TeleporterVR
             }
         }
 
-        private static void BuildActionMenu()
-        {
-            AMSubMenu.subMenu = VRCActionMenuPage.AddSubMenu(ActionMenuPage.Main, "<color=#13cf13>TeleporterVR</color>", () =>
+        private static void BuildActionMenu() {
+            subMenu = VRCActionMenuPage.AddSubMenu(ActionMenuPage.Main, "<color=#13cf13>TeleporterVR</color>", () =>
                 {
                     VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, VRUtils.active, VRUtils.ToggleVRTeleport, ResourceManager.AMVRTP);
 
@@ -60,23 +60,20 @@ namespace TeleporterVR
                         CustomSubMenu.AddButton(Language.LoadPos, () => Menu.LoadAction(4), ResourceManager.AMSL4);
                     }, ResourceManager.AMSave);
                 }, ResourceManager.AMMain);
-                AMSubMenu.subMenu.locked = true;
+                subMenu.locked = true;
                 hasStarted = true;
                 if (Main.IsDebug) Main.Logger.Msg(ConsoleColor.Green, "Finished creating ActionMenu");
         }
 
-        public static IEnumerator UpdateIcon(bool ignoreWait = true)
-        {
+        internal static IEnumerator UpdateIcon(bool ignoreWait = true) {
             if (!ignoreWait) yield return new WaitForSeconds(1f);
-            try { AMSubMenu.subMenu.icon = CheckWorldAllowed.RiskyFunctionAllowed ? ResourceManager.AMMain : ResourceManager.AMBad; }
+            try { subMenu.icon = CheckWorldAllowed.RiskyFunctionAllowed ? ResourceManager.AMMain : ResourceManager.AMBad; }
             catch { if (hasAMApiInstalled) Main.Logger.Error("Failed to change subMenu Icon"); }
             try { AMUtils.RefreshActionMenu(); } catch { if (hasAMApiInstalled) Main.Logger.Error("Failed to Refresh ActionMenu"); }
-            yield break;
         }
 
-        public static void CheckForRiskyFunctions(bool locked)
-        {
-            try { AMSubMenu.subMenu.locked = locked; } 
+        internal static void CheckForRiskyFunctions(bool locked) {
+            try { subMenu.locked = locked; } 
             catch { if (hasAMApiInstalled) Main.Logger.Error("ActionMenu subMenu could not be locked"); }
         }
     }

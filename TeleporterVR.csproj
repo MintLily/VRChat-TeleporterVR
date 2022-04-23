@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="UIExpansionKit">
+    <Reference Include="UIExpansionKit, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Mods\UIExpansionKit.dll</HintPath>
     </Reference>
     <Reference Include="UnhollowerBaseLib">
@@ -136,7 +136,6 @@
     <Compile Include="Rendering\TPLocationIndicator.cs" />
     <Compile Include="Rendering\SphereRendering.cs" />
     <Compile Include="UIXMenuReplacement.cs" />
-    <Compile Include="Utils\ActionMenuUtils.cs" />
     <Compile Include="Utils\DesktopUtils.cs" />
     <Compile Include="Utils\GeneralUtils.cs" />
     <Compile Include="Utils\PlayerActions.cs" />

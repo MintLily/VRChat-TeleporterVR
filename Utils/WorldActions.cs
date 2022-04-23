@@ -56,6 +56,7 @@ namespace TeleporterVR.Utils {
 
             Main.Log($"RiskyFunctions: {RiskyFunctionAllowed}", Main.IsDebug);
             NewUi.UpdateWorldActions(RiskyFunctionAllowed);
+            ActionMenu.CheckForRiskyFunctions(!RiskyFunctionAllowed);
         }
 
         public static void OnWorldLeave() => RiskyFunctionAllowed = false;
