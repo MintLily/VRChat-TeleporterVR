@@ -18,25 +18,21 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.11.0.1";
+        public const string Version = "4.11.1";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
 
-    public class Main : MelonMod
-    {
-        private MelonMod Instance;
+    public class Main : MelonMod {
         public static bool IsDebug;
         private static TPLocationIndicator _lr;
         public static MelonPreferences_Category melon;
-        public static MelonPreferences_Entry<bool> PreferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTP, UIXTPVR;//, UIXMenu;
+        public static MelonPreferences_Entry<bool> PreferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTp;//, UIXTPVR, UIXMenu;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
-        internal static readonly MelonLogger.Instance Logger = new MelonLogger.Instance(BuildInfo.Name, ConsoleColor.Green);
+        internal static readonly MelonLogger.Instance Logger = new (BuildInfo.Name, ConsoleColor.Green);
         private static int _scenesLoaded = 0;
 
-        public override void OnApplicationStart()
-        {
-            Instance = this;
+        public override void OnApplicationStart() {
             if (MelonDebug.IsEnabled() || Environment.CommandLine.Contains("--vrt.debug")) {
                 IsDebug = true;
                 Logger.Msg(ConsoleColor.Green, "Debug mode is active");
@@ -65,9 +61,8 @@ namespace TeleporterVR
             ActionMenuApiIntegration = melon.CreateEntry("ActionMenuApiIntegration", false, "Has ActionMenu Support\n(disable requires game restart)");
             EnableTeleportIndicator = melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
             IndicatorHexColor = melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
-            EnableDesktopTP = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
-            UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
-            //UIXMenu = melon.CreateEntry("UseUIXMenu", false, "Use UIX Menu? (Requires Restart)");
+            EnableDesktopTp = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
+            //UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
 
             ResourceManager.Init();
             NewPatches.SetupPatches();

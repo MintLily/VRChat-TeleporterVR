@@ -7,7 +7,7 @@ Click <a href="https://melonwiki.xyz/">this link</a> to get started!
 
 <h3>Prerequisites</h3>
 MelonLoader: v0.5.4+<br>
-Game: VRChat build 1190+<br>
+Game: VRChat build 1192+<br>
 Mods:
 <ul>
 	<li><a href="https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi">ActionMenuApi</a></li>
@@ -23,7 +23,6 @@ ActionMenuApiIntegration = false
 EnableTeleportIndicator = true
 IndicatorHexColor = "2dff2d"
 EnableDesktopTP = false
-UIXTPVR = false
 ```
 preferRightHand  - Prefer Right Handed (for VR Teleporting)<br>
 VRTeleportVisible - VRTeleport Button is visible (next to mute button)<br>
@@ -31,8 +30,7 @@ overrideLanguage - force mod into a provided language<br>
 ActionMenuApiIntegration - Uses gompo's [ActionMenuApi](https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi) to add options to your Action Menu<br>
 EnableTeleportIndicator - Shows a circle to where you will be teleported to when you press your trigger<br>
 IndicatorHexColor - Color the Indicator to your liking, in the Hex Color format #rrggbb<br>
-EnableDesktopTP - Allows you to teleport to your cursor (desktop only) [KeyBinds = LeftShift + T or Mouse3]<br>
-UIXTPVR - Puts a quick VR Teleport toggle on your main UIX Menu
+EnableDesktopTP - Allows you to teleport to your cursor (desktop only) [KeyBinds = LeftShift + T or Mouse3]
 
 <h3>Special Features</h3>
 Dynamic Language Settings - The language of the mod will be determined by your system's local region, you can override this in the settings of the mod. Changing the language will update in real time (when you close the settings window)<br>
@@ -83,6 +81,11 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 </details>
 
 <h1>Change Log (since Lily's edits)</h1>
+<h3>v4.11.1</h3>
+<ul>
+	<li>Fix an issue where an error would always show, although it was harmless</li>
+</ul>
+
 <h3>v4.11.0.1</h3>
 <ul>
 	<li>Fix ActionMenu menu not updating with RiskyFuncChecks</li>

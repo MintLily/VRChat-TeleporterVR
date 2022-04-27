@@ -15,8 +15,7 @@ using MelonLoader;
 
 namespace TeleporterVR
 {
-    public class ActionMenu
-    {
+    public static class ActionMenu {
         private static readonly string[] AmApiOutdatedVersions = { "0.1.0" , "0.1.2", "0.2.0", "0.2.1", "0.2.2", "0.2.3", "0.3.0", "0.3.1", "0.3.2", "0.3.3", "0.3.4" };
         // Tested versions to be good => 0.3.5
         public static bool hasAMApiInstalled, AMApiOutdated, hasStarted;
@@ -24,15 +23,14 @@ namespace TeleporterVR
         private static PedalSubMenu subMenu;
 
         public static void InitUi() {
-            if (MelonHandler.Mods.Any(m => m.Info.Name.Equals("ActionMenuApi"))) {
-                hasAMApiInstalled = true;
-                if (!Main.ActionMenuApiIntegration.Value) return;
-                if (MelonHandler.Mods.Single(m => m.Info.Name.Equals("ActionMenuApi")).Info.Version.Equals(AmApiOutdatedVersions))
-                {
-                    AMApiOutdated = true;
-                    Main.Logger.Warning("ActionMenuApi Outdated. older versions are not supported, please update the other mod.");
-                } else BuildActionMenu();
-            }
+            if (!MelonHandler.Mods.Any(m => m.Info.Name.Equals("ActionMenuApi"))) return;
+            
+            hasAMApiInstalled = true;
+            if (!Main.ActionMenuApiIntegration.Value) return;
+            if (MelonHandler.Mods.Single(m => m.Info.Name.Equals("ActionMenuApi")).Info.Version.Equals(AmApiOutdatedVersions)) {
+                AMApiOutdated = true;
+                Main.Logger.Warning("ActionMenuApi Outdated. older versions are not supported, please update the other mod.");
+            } else BuildActionMenu();
         }
 
         private static void BuildActionMenu() {
@@ -66,6 +64,7 @@ namespace TeleporterVR
         }
 
         internal static IEnumerator UpdateIcon(bool ignoreWait = true) {
+            if (!Main.ActionMenuApiIntegration.Value) yield break;
             if (!ignoreWait) yield return new WaitForSeconds(1f);
             try { subMenu.icon = CheckWorldAllowed.RiskyFunctionAllowed ? ResourceManager.AMMain : ResourceManager.AMBad; }
             catch { if (hasAMApiInstalled) Main.Logger.Error("Failed to change subMenu Icon"); }
@@ -73,6 +72,7 @@ namespace TeleporterVR
         }
 
         internal static void CheckForRiskyFunctions(bool locked) {
+            if (!Main.ActionMenuApiIntegration.Value) return;
             try { subMenu.locked = locked; } 
             catch { if (hasAMApiInstalled) Main.Logger.Error("ActionMenu subMenu could not be locked"); }
         }

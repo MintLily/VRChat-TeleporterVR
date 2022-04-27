@@ -26,7 +26,7 @@ namespace TeleporterVR.Utils
 
         public static void OnUpdate()
         {
-            if (!Main.EnableDesktopTP.Value) return;
+            if (!Main.EnableDesktopTp.Value) return;
             if (InVR) return;
             if (__ && InputDown) {
                 if (NewPatches.IsQmOpen) return;
