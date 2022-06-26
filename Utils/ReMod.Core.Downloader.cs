@@ -1,28 +1,30 @@
-﻿using System;
-using System.Net;
-using System.Reflection;
-using MelonLoader;
+﻿// using System;
+// using System.Net;
+// using System.Reflection;
+// using MelonLoader;
+//
+// namespace TeleporterVR.Utils {
+//     public class ReMod_Core_Downloader {
+//         internal static bool failed;
+//         public static void LoadReModCore(out Assembly loadedAssembly) {
+//             byte[] bytes = null;
+//             var wc = new WebClient();
+//             try {
+//                 bytes = wc.DownloadData("https://github.com/RequiDev/ReMod.Core/releases/latest/download/ReMod.Core.dll");
+//                 loadedAssembly = Assembly.Load(bytes);
+//                 Main.Log("Successfully Loaded ReMod.Core", Main.IsDebug);
+//             }
+//             catch (WebException e) {
+//                 failed = true;
+//                 Main.Logger.Error($"Unable to Load Core Dep ReModCore: {e}");
+//             }
+//             catch (BadImageFormatException) {
+//                 failed = true;
+//                 loadedAssembly = null;
+//             }
+//             loadedAssembly = null;
+//         }
+//     }
+// }
 
-namespace TeleporterVR.Utils {
-    public class ReMod_Core_Downloader {
-        internal static bool failed;
-        public static void LoadReModCore(out Assembly loadedAssembly) {
-            byte[] bytes = null;
-            var wc = new WebClient();
-            try {
-                bytes = wc.DownloadData("https://github.com/RequiDev/ReMod.Core/releases/latest/download/ReMod.Core.dll");
-                loadedAssembly = Assembly.Load(bytes);
-                Main.Log("Successfully Loaded ReMod.Core", Main.IsDebug);
-            }
-            catch (WebException e) {
-                failed = true;
-                Main.Logger.Error($"Unable to Load Core Dep ReModCore: {e}");
-            }
-            catch (BadImageFormatException) {
-                failed = true;
-                loadedAssembly = null;
-            }
-            loadedAssembly = null;
-        }
-    }
-}
+// Use Penny's ReMod.Core.Updater Plugin to download the latest version of ReMod.Core.dll
