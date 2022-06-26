@@ -7,10 +7,12 @@ Click <a href="https://melonwiki.xyz/">this link</a> to get started!
 
 <h3>Prerequisites</h3>
 MelonLoader: v0.5.4+<br>
-Game: VRChat build 1192+<br>
+Game: VRChat build 1207+<br>
 Mods:
 <ul>
+    <li><a href="https://github.com/knah/VRCMods">UI Expansion Kit</a></li>
 	<li><a href="https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi">ActionMenuApi</a></li>
+    <li><a href="https://github.com/PennyBunny/ReMod.Core.Updater">ReMod.Core.Updater</a></li>
 </ul>
 
 ### MelonPreferences (Default Values)
@@ -81,6 +83,26 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 </details>
 
 <h1>Change Log (since Lily's edits)</h1>
+<h3>v4.12.0</h3>
+<ul>
+	<li>Fix various things in the User Interface (QMBtns)
+        <ul>
+            <li>Fixed Language not updating the button's text/tooltip properly</li>
+            <li>Fixed to update RiskyFunc status on ReMenuCategory Title Header</li>
+        </ul>
+    </li>
+	<li>Updated ReMod.Core references</li>
+	<li>Logger method changes</li>
+	<li>Major changes to the Language files</li>
+	<li>Update general methods</li>
+	<li>Removed internal ReMod.Core loading, switched to use Penny's <a href="https://github.com/PennyBunny/ReMod.Core.Updater">ReMod.Core.Updater</a></li>
+</ul>
+
+<h3>v4.11.2</h3>
+<ul>
+	<li>Rebuild for fixes</li>
+</ul>
+
 <h3>v4.11.1</h3>
 <ul>
 	<li>Fix an issue where an error would always show, although it was harmless</li>
@@ -104,6 +126,9 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
     <li>Internal code edits</li>
 </ul>
 
+<details>
+	<summary>Past Versions</summary>
+
 <h3>v4.10.2</h3>
 <ul>
 	<li>Updated ReMod.Core dependency URL</li>
@@ -119,9 +144,6 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 	<li>Added option for a menu made with <a href="https://github.com/RequiDev/ReMod.Core">ReMod.Core</a></li>
 	<li>Made <a href="https://github.com/gompoc/VRChatMods/tree/master/ActionMenuApi">ActionMenuApi</a> a Prerequisite Mod</li>
 </ul>
-
-<details>
-	<summary>Past Versions</summary>
 
 ### v4.9.2
 * Fixed Errors showing when changing worlds if AMApi is disabled or null
