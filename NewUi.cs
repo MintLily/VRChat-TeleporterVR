@@ -31,13 +31,16 @@ namespace TeleporterVR {
             ReTabButton.Create("TPVRTab", "Open the TeleporterVR Menu", "TeleporterVR", ResourceManager.Tab);
 
             _mainCat = _teleportVr.AddCategory("TPVR Actions", false);
-            _tpKeyboard = _mainCat.AddButton(Language.TPtoName_Text, $"Open keyboard to {Language.TPtoName_Text}", OpenKeyboardForPlayerTP, ResourceManager.keyboard);
-            _tpCoord = _mainCat.AddButton(Language.TPtoCoord_Text, $"Open keyboard to {Language.TPtoCoord_Text}", OpenKeyboardForCoordTP, ResourceManager.mapmarker);
-            _handChange = _mainCat.AddToggle(Language.preferedHanded_Text_ON, $"Toggle {Language.preferedHanded_Text_ON} or {Language.preferedHanded_Text_OFF}", b => {
-                MelonPreferences.GetEntry<bool>(Main.melon.Identifier, Main.PreferRightHand.Identifier).Value = b;
-            });
+            
+            _tpKeyboard = _mainCat.AddButton(Language.TpToNameText, Language.TpToNameTooltip, OpenKeyboardForPlayerTP, ResourceManager.keyboard);
+            
+            _tpCoord = _mainCat.AddButton(Language.TpToCoordText, Language.TpToCoordTooltip, OpenKeyboardForCoordTP, ResourceManager.mapmarker);
+            
+            _handChange = _mainCat.AddToggle(Language.PreferedHandedTextOn, Language.PerferedHandTooltip, b =>
+                MelonPreferences.GetEntry<bool>(Main.Melon.Identifier, Main.PreferRightHand.Identifier).Value = b); 
             _handChange.Toggle(Main.PreferRightHand.Value);
-            _tpAction = _mainCat.AddToggle(Language.theWord_Teleport, $"Activate {Language.theWord_Teleport}", b => {
+            
+            _tpAction = _mainCat.AddToggle(Language.TheWordTeleport, $"Activate {Language.TheWordTeleport}", b => {
                 if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
                 VRUtils.active = !VRUtils.active;
                 TPLocationIndicator.Toggle();
@@ -45,22 +48,22 @@ namespace TeleporterVR {
             //TPAction.Toggle(VRUtils.active);
 
             _waypointsCat = _teleportVr.AddCategory("Waypoints");
-            _wp1 = _waypointsCat.AddButton(Language.SavePos, $"{Language.SavePos} 1", () => { SaveAction(1); },
+            _wp1 = _waypointsCat.AddButton(Language.SavePos, Language.SavePosToolTip, () => SaveAction(1),
                 ResourceManager.one);
-            _wp2 = _waypointsCat.AddButton(Language.SavePos, $"{Language.SavePos} 2", () => { SaveAction(2); },
+            _wp2 = _waypointsCat.AddButton(Language.SavePos, Language.SavePosToolTip, () => SaveAction(2),
                 ResourceManager.two);
-            _wp3 = _waypointsCat.AddButton(Language.SavePos, $"{Language.SavePos} 3", () => { SaveAction(3); },
+            _wp3 = _waypointsCat.AddButton(Language.SavePos, Language.SavePosToolTip, () => SaveAction(3),
                 ResourceManager.three);
-            _wp4 = _waypointsCat.AddButton(Language.SavePos, $"{Language.SavePos} 4", () => { SaveAction(4); },
+            _wp4 = _waypointsCat.AddButton(Language.SavePos, Language.SavePosToolTip, () => SaveAction(4),
                 ResourceManager.four);
             
-            _wpl1 = _waypointsCat.AddButton(Language.LoadPos, $"{Language.LoadPos} 1", () => { LoadAction(1); },
+            _wpl1 = _waypointsCat.AddButton(Language.LoadPos, Language.LoadPosTooltip, () => LoadAction(1),
                 ResourceManager.one);
-            _wpl2 = _waypointsCat.AddButton(Language.LoadPos, $"{Language.LoadPos} 2", () => { LoadAction(2); },
+            _wpl2 = _waypointsCat.AddButton(Language.LoadPos, Language.LoadPosTooltip, () => LoadAction(2),
                 ResourceManager.two);
-            _wpl3 = _waypointsCat.AddButton(Language.LoadPos, $"{Language.LoadPos} 3", () => { LoadAction(3); },
+            _wpl3 = _waypointsCat.AddButton(Language.LoadPos, Language.LoadPosTooltip, () => LoadAction(3),
                 ResourceManager.three);
-            _wpl4 = _waypointsCat.AddButton(Language.LoadPos, $"{Language.LoadPos} 4", () => { LoadAction(4); },
+            _wpl4 = _waypointsCat.AddButton(Language.LoadPos, Language.LoadPosTooltip, () => LoadAction(4),
                 ResourceManager.four);
 
             var t = _teleportVr.AddCategory("Information");
@@ -77,7 +80,7 @@ namespace TeleporterVR {
             var theSelectedUserMenu = menuSelectedUserLocal.Find("ScrollRect/Viewport/VerticalLayoutGroup");
             _userSelectCategory = new ReMenuCategory("TPVR", theSelectedUserMenu);
 
-            _userSelTp = _userSelectCategory.AddButton(Language.theWord_Teleport, $"{Language.theWord_Teleport} to Selected User", () => {
+            _userSelTp = _userSelectCategory.AddButton(Language.TheWordTeleport, $"{Language.TheWordTeleport} to Selected User", () => {
                 if (CheckWorldAllowed.RiskyFunctionAllowed) 
                     PlayerActions.Teleport(PlayerActions.SelVRCPlayer());
             }, ResourceManager.mapmarker);
@@ -88,14 +91,17 @@ namespace TeleporterVR {
             if (!_built) return;
             if (_teleportVr != null && _handChange != null)
                 _handChange.Toggle(Main.PreferRightHand.Value);
-            
-            if (_userSelectCategory != null && _userSelTp != null) {
-                _userSelectCategory.Active = Main.VRTeleportVisible.Value;
-                _userSelTp.Active = Main.VRTeleportVisible.Value;
-            }
+
+            if (_userSelectCategory == null || _userSelTp == null) return;
+            _userSelectCategory.Active = Main.VRTeleportVisible.Value;
+            _userSelTp.Active = Main.VRTeleportVisible.Value;
+            UpdateButtonLanguage();
         }
 
         internal static void UpdateWorldActions(bool status) {
+            if (_mainCat != null)
+                _mainCat.Title = $"TPVR Actions ({(status ? "<color=#00ff00>Allowed</color>" : "<color=#ff0000>Disallowed</color>")})";
+            
             if (_tpAction != null)
                 _tpAction.Interactable = status;
             if (_tpKeyboard != null)
@@ -120,6 +126,68 @@ namespace TeleporterVR {
                 _wpl3.Interactable = status;
             if (_wpl4 != null)
                 _wpl4.Interactable = status;
+        }
+
+        private static void UpdateButtonLanguage() {
+            if (_tpKeyboard != null) {
+                _tpKeyboard.Text = Language.TpToNameText;
+                _tpKeyboard.Tooltip = Language.TpToNameTooltip;
+            }
+
+            if (_tpCoord != null) {
+                _tpCoord.Text = Language.TpToCoordText;
+                _tpCoord.Tooltip = Language.TpToCoordTooltip;
+            }
+
+            if (_tpAction != null) {
+                _tpAction.Text = Language.TheWordTeleport;
+                _tpAction.Tooltip = $"Activate {Language.TheWordTeleport}";
+            }
+
+            if (_handChange != null) {
+                _handChange.Text = Language.PreferedHandedTextOn;
+                _handChange.Tooltip = Language.PerferedHandTooltip;
+            }
+
+            if (_wp1 != null) {
+                _wp1.Text = Language.SavePos;
+                _wp1.Tooltip = Language.SavePosToolTip;
+            }
+
+            if (_wp2 != null) {
+                _wp2.Text = Language.SavePos;
+                _wp2.Tooltip = Language.SavePosToolTip;
+            }
+
+            if (_wp3 != null) {
+                _wp3.Text = Language.SavePos;
+                _wp3.Tooltip = Language.SavePosToolTip;
+            }
+
+            if (_wp4 != null) {
+                _wp4.Text = Language.SavePos;
+                _wp4.Tooltip = Language.SavePosToolTip;
+            }
+
+            if (_wpl1 != null) {
+                _wpl1.Text = Language.LoadPos;
+                _wpl1.Tooltip = Language.LoadPosTooltip;
+            }
+
+            if (_wpl2 != null) {
+                _wpl2.Text = Language.LoadPos;
+                _wpl2.Tooltip = Language.LoadPosTooltip;
+            }
+
+            if (_wpl3 != null) {
+                _wpl3.Text = Language.LoadPos;
+               _wpl3.Tooltip = Language.LoadPosTooltip;
+            }
+
+            if (_wpl4 != null) {
+                _wpl4.Text = Language.LoadPos;
+                _wpl4.Tooltip = Language.LoadPosTooltip;
+            }
         }
     }
 }
