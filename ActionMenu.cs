@@ -36,11 +36,11 @@ namespace TeleporterVR
         private static void BuildActionMenu() {
             subMenu = VRCActionMenuPage.AddSubMenu(ActionMenuPage.Main, "<color=#13cf13>TeleporterVR</color>", () =>
                 {
-                    VRTP = CustomSubMenu.AddToggle("VR " + Language.theWord_Teleport, VRUtils.active, VRUtils.ToggleVRTeleport, ResourceManager.AMVRTP);
+                    VRTP = CustomSubMenu.AddToggle("VR " + Language.TheWordTeleport, VRUtils.active, VRUtils.ToggleVRTeleport, ResourceManager.AMVRTP);
 
-                    TP2Name = CustomSubMenu.AddButton(Language.TPtoName_Text, Menu.OpenKeyboardForPlayerTP, ResourceManager.AMMain);
+                    TP2Name = CustomSubMenu.AddButton(Language.TpToNameText, Menu.OpenKeyboardForPlayerTP, ResourceManager.AMMain);
 
-                    TP2Coord = CustomSubMenu.AddButton(Language.TPtoCoord_Text, Menu.OpenKeyboardForCoordTP, ResourceManager.AMMain);
+                    TP2Coord = CustomSubMenu.AddButton(Language.TpToCoordText, Menu.OpenKeyboardForCoordTP, ResourceManager.AMMain);
 
                     Save = CustomSubMenu.AddSubMenu(Language.SavePos, () =>
                     {
