@@ -13,15 +13,15 @@ internal static class NewPatches {
     public static void SetupPatches() {
         Main.Log("Applying Patches . . .");
 
-        applyPatches(typeof(LeftRoomPatches));
-        applyPatches(typeof(QuickMenuPatches));
+        ApplyPatches(typeof(LeftRoomPatches));
+        ApplyPatches(typeof(QuickMenuPatches));
 
-        Main.Log("Finished with Patches", Main.IsDebug);
+        Main.Debug("Finished with Patches");
     }
 
-    private static void applyPatches(Type type) {
+    private static void ApplyPatches(Type type) {
         try {
-            Main.Log($"Attempting {type.Name} Patches...", Main.IsDebug);
+            Main.Debug($"Attempting {type.Name} Patches...");
             HarmonyLib.Harmony.CreateAndPatchAll(type, "TeleporterVR");
         } catch (Exception e) {
             Main.Error($"Failed while patching {type.Name}!\n{e}");

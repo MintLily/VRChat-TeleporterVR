@@ -54,7 +54,7 @@ namespace TeleporterVR.Utils {
             RiskyFunctionAllowed = riskyFunctionAllowed;
             OnRiskyFunctionsChanged?.Invoke(RiskyFunctionAllowed);
 
-            Main.Log($"RiskyFunctions: {RiskyFunctionAllowed}", Main.IsDebug);
+            Main.Debug($"RiskyFunctions: {RiskyFunctionAllowed}");
             NewUi.UpdateWorldActions(RiskyFunctionAllowed);
             ActionMenu.CheckForRiskyFunctions(!RiskyFunctionAllowed);
         }
