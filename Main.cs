@@ -1,15 +1,10 @@
 ﻿using MelonLoader;
 using System;
-using System.Collections;
-using UnityEngine.UI;
 using TeleporterVR.Utils;
 using TeleporterVR.Logic;
 using TeleporterVR.Patches;
 using UIExpansionKit.API;
 using TeleporterVR.Rendering;
-using System.Reflection;
-using System.Linq;
-using UnityEngine;
 
 namespace TeleporterVR
 {
@@ -18,7 +13,7 @@ namespace TeleporterVR
         public const string Name = "TeleporterVR";
         public const string Author = "Janni, Lily";
         public const string Company = null;
-        public const string Version = "4.11.2";
+        public const string Version = "4.12.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
     }
@@ -26,7 +21,7 @@ namespace TeleporterVR
     public class Main : MelonMod {
         public static bool IsDebug;
         private static TPLocationIndicator _lr;
-        public static MelonPreferences_Category melon;
+        public static MelonPreferences_Category Melon;
         public static MelonPreferences_Entry<bool> PreferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTp;//, UIXTPVR, UIXMenu;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
         internal static readonly MelonLogger.Instance Logger = new (BuildInfo.Name, ConsoleColor.Green);
@@ -37,15 +32,13 @@ namespace TeleporterVR
                 IsDebug = true;
                 Logger.Msg(ConsoleColor.Green, "Debug mode is active");
             }
-            
-            ReMod_Core_Downloader.LoadReModCore(out _);
 
-            melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
+            Melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
             //visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
-            PreferRightHand = melon.CreateEntry("preferRightHand", true, "Right Handed");
-            VRTeleportVisible = melon.CreateEntry("VRTeleportVisible", true, "Is User Selected Teleport Button visible");
-            OverrideLanguage = melon.CreateEntry("overrideLanguage", "off", "Override Language");
-            ExpansionKitApi.RegisterSettingAsStringEnum(melon.Identifier, OverrideLanguage.Identifier, 
+            PreferRightHand = Melon.CreateEntry("preferRightHand", true, "Right Handed");
+            VRTeleportVisible = Melon.CreateEntry("VRTeleportVisible", true, "Is User Selected Teleport Button visible");
+            OverrideLanguage = Melon.CreateEntry("overrideLanguage", "off", "Override Language");
+            ExpansionKitApi.RegisterSettingAsStringEnum(Melon.Identifier, OverrideLanguage.Identifier, 
                 new[] {
                 ("off", "Disable Override"),
                 ("en", "English"),
@@ -58,10 +51,10 @@ namespace TeleporterVR
                 ("po", "Português"),
                 ("sw", "Svensk")
             });
-            ActionMenuApiIntegration = melon.CreateEntry("ActionMenuApiIntegration", false, "Has ActionMenu Support\n(disable requires game restart)");
-            EnableTeleportIndicator = melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
-            IndicatorHexColor = melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
-            EnableDesktopTp = melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
+            ActionMenuApiIntegration = Melon.CreateEntry("ActionMenuApiIntegration", false, "Has ActionMenu Support\n(disable requires game restart)");
+            EnableTeleportIndicator = Melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
+            IndicatorHexColor = Melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
+            EnableDesktopTp = Melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
             //UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
 
             ResourceManager.Init();
@@ -92,8 +85,12 @@ namespace TeleporterVR
             }
             CreateListener.UiInit();
             //MelonCoroutines.Start(SetupCustomToggle.SetPrefabOnQM());
-            if (!ReMod_Core_Downloader.failed)
+            try {
                 MelonCoroutines.Start(NewUi.OnQuickMenu());
+            }
+            catch (Exception e) {
+                Error($"Something on the UI (QuickMenu building) method failed! Did ReMod.Core fully load properly?\n{e}");
+            }
         }
 
         public override void OnPreferencesSaved()
@@ -144,20 +141,17 @@ namespace TeleporterVR
                 VRUtils.active = false;
             DesktopUtils.OnUpdate();
         }
-        
-        public static void Log(string s, bool isDebug = false) {
-            var c = Console.ForegroundColor;
-            Logger.Msg(isDebug ? ConsoleColor.DarkMagenta : c, s);
-        }
-        
-        public static void Error(string s, bool isDebug = false) {
-            var c = Console.ForegroundColor;
-            Logger.Msg(isDebug ? ConsoleColor.DarkMagenta : c, s);
-        }
+
+        public static void Log(string s) => Logger.Msg(s);
         
         public static void Error(object s, bool isDebug = false) {
             var c = Console.ForegroundColor;
             Logger.Msg(isDebug ? ConsoleColor.DarkMagenta : c, s);
+        }
+
+        public static void Debug(string s) {
+            if (!IsDebug) return;
+            Logger.Msg(ConsoleColor.DarkMagenta, s);
         }
     }
 }
