@@ -129,6 +129,7 @@ namespace TeleporterVR {
         }
 
         private static void UpdateButtonLanguage() {
+            Language.InitLanguageChange();
             if (_tpKeyboard != null) {
                 _tpKeyboard.Text = Language.TpToNameText;
                 _tpKeyboard.Tooltip = Language.TpToNameTooltip;
