@@ -8,8 +8,7 @@ public static class Language {
         TheWordTeleport, PreferedHandedTextOn, PreferedHandedTextOff;
     
     public static void InitLanguageChange() {
-        CultureInfo currentUiCulture;
-        currentUiCulture = CultureInfo.CurrentUICulture;
+        var currentUiCulture = CultureInfo.CurrentUICulture;
         var loc = currentUiCulture.Name;
 
         var @override = MelonLoader.MelonPreferences.GetEntryValue<string>(Main.Melon.Identifier, Main.OverrideLanguage.Identifier);

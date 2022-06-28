@@ -11,8 +11,8 @@ namespace TeleporterVR
     public static class BuildInfo
     {
         public const string Name = "TeleporterVR";
-        public const string Author = "Janni, Lily";
-        public const string Company = null;
+        public const string Author = "Lily";
+        public const string Company = "Minty Labs";
         public const string Version = "4.12.0";
         public const string DownloadLink = "https://github.com/MintLily/VRChat-TeleporterVR";
         public const string Description = "Easy Utility that allows you to teleport in various different ways while being VR compliant.";
@@ -22,7 +22,7 @@ namespace TeleporterVR
         public static bool IsDebug;
         private static TPLocationIndicator _lr;
         public static MelonPreferences_Category Melon;
-        public static MelonPreferences_Entry<bool> PreferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTp;//, UIXTPVR, UIXMenu;
+        public static MelonPreferences_Entry<bool> PreferRightHand, VRTeleportVisible, ActionMenuApiIntegration, EnableTeleportIndicator, EnableDesktopTp;
         public static MelonPreferences_Entry<string> OverrideLanguage, IndicatorHexColor;
         internal static readonly MelonLogger.Instance Logger = new (BuildInfo.Name, ConsoleColor.Green);
         private static int _scenesLoaded = 0;
@@ -34,7 +34,6 @@ namespace TeleporterVR
             }
 
             Melon = MelonPreferences.CreateCategory(BuildInfo.Name, BuildInfo.Name);
-            //visible = melon.CreateEntry("UserInteractTPButtonVisible", true, "Is Teleport Button Visible (on User Select)");
             PreferRightHand = Melon.CreateEntry("preferRightHand", true, "Right Handed");
             VRTeleportVisible = Melon.CreateEntry("VRTeleportVisible", true, "Is User Selected Teleport Button visible");
             OverrideLanguage = Melon.CreateEntry("overrideLanguage", "off", "Override Language");
@@ -55,7 +54,6 @@ namespace TeleporterVR
             EnableTeleportIndicator = Melon.CreateEntry("EnableTeleportIndicator", true, "Shows a circle to where you will teleport to");
             IndicatorHexColor = Melon.CreateEntry("IndicatorHEXColor", "2dff2d", "Indicator Color (HEX Value [\"RRGGBB\"])");
             EnableDesktopTp = Melon.CreateEntry("EnableDesktopTP", false, "Allows you to teleport to your cursor (desktop only)\n[LeftShift + T]");
-            //UIXTPVR = melon.CreateEntry("ShowUIXTPVRButton", false, "Put TPVR button on UIX Menu");
 
             ResourceManager.Init();
             NewPatches.SetupPatches();
@@ -63,14 +61,12 @@ namespace TeleporterVR
             CreateListener.Init();
             ActionMenu.InitUi();
             RenderingIndicator.Init();
-            //if (UIXMenu.Value || ReMod_Core_Downloader.failed)
-            //    UIXMenuReplacement.Init();
 
             Logger.Msg("Initialized!");
 
             if (OverrideLanguage.Value == "no") OverrideLanguage.Value = "no_bm";
         }
-
+// Elly is ultra cute~
         private void OnUiManagerInit()
         {
             VRUtils.Init();
@@ -137,7 +133,7 @@ namespace TeleporterVR
         {
             VRUtils.OnUpdate();
             // This check is to keep the menu Disabled in Disallowed worlds, this was super easy to patch into or use UnityExplorer to re-enable the button
-            if (!CheckWorldAllowed.RiskyFunctionAllowed && !(NewPatches.IsQmOpen || NewPatches.IsQmOpen))
+            if (!CheckWorldAllowed.RiskyFunctionAllowed && !NewPatches.IsQmOpen)
                 VRUtils.active = false;
             DesktopUtils.OnUpdate();
         }
