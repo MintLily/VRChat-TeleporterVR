@@ -32,6 +32,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Right Handed";
             PreferedHandedTextOff = "Left Handed";
+            
+            Main.Log("English Language Selected");
         }
         if ((loc.Contains("fr") && @override.Equals("off")) || @override.Equals("fr")) {
             TpToNameText = "Se téléporter à\n(Nom Saisi)";
@@ -52,6 +54,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Droitier";
             PreferedHandedTextOff = "Gaucher";
+            
+            Main.Log("French Language Selected");
         }
         if ((loc.Contains("de") && @override.Equals("off")) || @override.Equals("de")) {
             TpToNameText = "Teleportiere zu\n(Name eingeben)";
@@ -72,6 +76,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Rechtshändig";
             PreferedHandedTextOff = "Linkshändig";
+            
+            Main.Log("German Language Selected");
         }
         if ((loc.Contains("ja") && @override.Equals("off")) || @override.Equals("ja")) {
             TpToNameText = "\u30c6\u30ec\u30dd\u30fc\u30c8\u5148\n\uff08\u5165\u529b\u540d\uff09";
@@ -94,6 +100,8 @@ public static class Language {
 
             PreferedHandedTextOn = "右利き";
             PreferedHandedTextOff = "左利き";
+            
+            Main.Log("Japanese Language Selected");
         }
         if ((loc.Contains("no") && @override.Equals("off")) || @override.Equals("no")) {
             TpToNameText = "Teleporter Til\n(Spiller navn)";
@@ -114,6 +122,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Høyrehendt";
             PreferedHandedTextOff = "Venstrehendt";
+            
+            Main.Log("Norwegian Language Selected");
         }
         if ((loc.Contains("ru") && @override.Equals("off")) || @override.Equals("ru")) {
             TpToNameText = "Телепортироваться к\n(по нику)";
@@ -134,6 +144,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Правша";
             PreferedHandedTextOff = "Левша";
+            
+            Main.Log("Russian Language Selected");
         }
         if ((loc.Contains("es") && @override.Equals("off")) || @override.Equals("es")) {
             TpToNameText = "Teletransportarse a\n(Nombre de entrada)";
@@ -154,6 +166,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Diestro";
             PreferedHandedTextOff = "Zurdo";
+            
+            Main.Log("Spanish Language Selected");
         }
         if ((loc.Contains("po") && @override.Equals("off")) || @override.Equals("po")) {
             TpToNameText = "Teleportar Para\n(Digitar Nome)";
@@ -174,6 +188,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Destro";
             PreferedHandedTextOff = "Canhoto";
+            
+            Main.Log("Portuguese Language Selected");
         }
         if ((loc.Contains("sw") && @override.Equals("off")) || @override.Equals("sw")) {
             TpToNameText = "Teleportera Till\n(Inskrivet Namn)";
@@ -194,6 +210,8 @@ public static class Language {
 
             PreferedHandedTextOn = "Högerhänt";
             PreferedHandedTextOff = "Vänsterhänt";
+            
+            Main.Log("Swedish Language Selected");
         }
         
         if (Main.IsDebug)
