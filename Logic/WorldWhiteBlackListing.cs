@@ -85,10 +85,10 @@ namespace TeleporterVR.Logic
                         ActionMenu.CheckForRiskyFunctions(true);
                         MelonCoroutines.Start(ActionMenu.UpdateIcon(false));
                     }
-                    Utils.VRUtils.active = false;
+                    Utils.VRUtils.Active = false;
                     break;
                 case 3: // only disable VRTP
-                    Utils.VRUtils.active = false;
+                    Utils.VRUtils.Active = false;
                     break;
                 default: break; // Do nothing extra
             }

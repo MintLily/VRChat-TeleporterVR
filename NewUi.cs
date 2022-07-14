@@ -42,9 +42,9 @@ namespace TeleporterVR {
             
             _tpAction = _mainCat.AddToggle(Language.TheWordTeleport, $"Activate {Language.TheWordTeleport}", b => {
                 if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
-                VRUtils.active = !VRUtils.active;
+                VRUtils.Active = !VRUtils.Active;
                 TPLocationIndicator.Toggle();
-            });
+            }, false, ResourceManager.mapmarker, null);
             //TPAction.Toggle(VRUtils.active);
 
             _waypointsCat = _teleportVr.AddCategory("Waypoints");
@@ -182,7 +182,7 @@ namespace TeleporterVR {
 
             if (_wpl3 != null) {
                 _wpl3.Text = Language.LoadPos;
-               _wpl3.Tooltip = Language.LoadPosTooltip;
+                _wpl3.Tooltip = Language.LoadPosTooltip;
             }
 
             if (_wpl4 != null) {

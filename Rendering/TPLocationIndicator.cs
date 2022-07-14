@@ -57,7 +57,7 @@ namespace TeleporterVR.Rendering
         [HideFromIl2Cpp]
         public static void Toggle()
         {
-            if (Main.EnableTeleportIndicator.Value) previewObj.SetActive(VRUtils.active);
+            if (Main.EnableTeleportIndicator.Value) previewObj.SetActive(VRUtils.Active);
         }
 
         [HideFromIl2Cpp]
@@ -106,10 +106,10 @@ namespace TeleporterVR.Rendering
                 line.SetPosition(0, endPos);
                 line.SetPosition(1, VRUtils.GetControllerPos());
             }
-            if ((NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(false);
-            else if (!(NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(true);
-            if ((NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(false);
-            else if (!(NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.active) previewObj.SetActive(true);
+            if ((NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.Active) previewObj.SetActive(false);
+            else if (!(NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.Active) previewObj.SetActive(true);
+            if ((NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.Active) previewObj.SetActive(false);
+            else if (!(NewPatches.IsQmOpen || NewPatches.IsQmOpen) && VRUtils.Active) previewObj.SetActive(true);
             SetColors(GeneralUtils.HexToColor(Main.IndicatorHexColor.Value, true));
         }
 
@@ -131,7 +131,7 @@ namespace TeleporterVR.Rendering
         private Vector3 DefaultPos()
         {
             return XRDevice.isPresent ?
-            VRUtils.ray.origin + VRUtils.ray.direction * defaultLength : transform.position + transform.forward * defaultLength;
+            VRUtils.Ray.origin + VRUtils.Ray.direction * defaultLength : transform.position + transform.forward * defaultLength;
         }
 
         [HideFromIl2Cpp]

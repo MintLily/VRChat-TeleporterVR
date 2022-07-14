@@ -7,33 +7,27 @@ using TeleporterVR.Patches;
 
 namespace TeleporterVR.Utils
 {
-    public static class InputInfo
-    {
+    public static class InputInfo {
         public const string RightTrigger = "Oculus_CrossPlatform_SecondaryIndexTrigger";
         public const string LeftTrigger = "Oculus_CrossPlatform_PrimaryIndexTrigger";
     }
 
-    public class VRUtils
-    {
+    public static class VRUtils {
         private static bool _oculus, __ = true; // fear my variable naming scheme
-        public static bool active { get; set; }
+        public static bool Active { get; set; }
         public static GameObject ControllerLeft, ControllerRight;
-        public static Ray ray;
+        public static Ray Ray;
 
-        private static bool InputDown {
-            get => Input.GetButtonDown(Main.PreferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) ||
-                   Input.GetAxisRaw(Main.PreferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) != 0 ||
-                   Input.GetAxis(Main.PreferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) >= 0.75f;
-        }
+        private static bool InputDown => Input.GetButtonDown(Main.PreferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) ||
+                                         Input.GetAxisRaw(Main.PreferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) != 0 ||
+                                         Input.GetAxis(Main.PreferRightHand.Value ? InputInfo.RightTrigger : InputInfo.LeftTrigger) >= 0.75f;
 
-        public static void Init()
-        {
+        public static void Init() {
             if (Environment.CurrentDirectory.Contains("vrchat-vrchat")) _oculus = true; // Oculus Check came from emmVRC (Thanks Emmy)
             AssignBindings();
         }
 
-        private static void AssignBindings()
-        {
+        private static void AssignBindings() {
             if (_oculus) {
                 ControllerRight = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/RightHandAnchor/PointerOrigin (1)");
                 ControllerLeft = GameObject.Find("/_Application/TrackingVolume/TrackingOculus(Clone)/OVRCameraRig/TrackingSpace/LeftHandAnchor/PointerOrigin (1)");
@@ -45,34 +39,33 @@ namespace TeleporterVR.Utils
             }
         }
 
-        public static void OnUpdate() // Suggestion from Davi > Only click once at a time to not spam teleport OnUpdate
-        {
-            if (!active) return;
+        public static void OnUpdate() { // Suggestion from Davi > Only click once at a time to not spam teleport OnUpdate
+            if (!Active) return;
             if (ControllerLeft == null || ControllerRight == null) AssignBindings();
             if (NewPatches.IsQmOpen) return; // Temporarily Disables Teleporting if the QuickMenu is currently open
             if (NewPatches.IsAmOpen) return; // Temporarily Disables Teleporting if the ActionMenu is currently open
+            if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
             if (__ && InputDown) {
-                ray = Main.PreferRightHand.Value ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+                Ray = Main.PreferRightHand.Value ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
                         new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
-                if (Physics.Raycast(ray, out RaycastHit raycastHit))
+                if (Physics.Raycast(Ray, out RaycastHit raycastHit))
                     VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
                 __ = false;
             } else if (!__ && !InputDown) __ = true;
         }
 
-        public static Vector3 GetControllerPos() { return Main.PreferRightHand.Value ? ControllerRight.transform.position : ControllerLeft.transform.position; }
+        public static Vector3 GetControllerPos() => Main.PreferRightHand.Value ? ControllerRight.transform.position : ControllerLeft.transform.position;
 
-        public static RaycastHit RaycastVR()
-        {
-            ray = Main.PreferRightHand.Value ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
+        public static RaycastHit RaycastVR() {
+            Ray = Main.PreferRightHand.Value ? new Ray(ControllerRight.transform.position, ControllerRight.transform.forward) :
                 new Ray(ControllerLeft.transform.position, ControllerLeft.transform.forward);
-            Physics.Raycast(ray, out RaycastHit hit, TPLocationIndicator.defaultLength);
+            Physics.Raycast(Ray, out RaycastHit hit, TPLocationIndicator.defaultLength);
             return hit;
         }
         
         internal static void ToggleVRTeleport(bool state) {
             if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
-            active = state;
+            Active = state;
             TPLocationIndicator.Toggle();
         }
     }
