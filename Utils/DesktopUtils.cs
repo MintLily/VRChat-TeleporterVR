@@ -1,41 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.XR;
-using System.Runtime.InteropServices;
-using TeleporterVR.Logic;
-using MelonLoader;
 using TeleporterVR.Patches;
-using System.Linq;
 
-namespace TeleporterVR.Utils
-{
-    class DesktopUtils
-    {
-        private static readonly bool InVR = XRDevice.isPresent;
-        private static bool __ = true;
+namespace TeleporterVR.Utils;
 
-        private static bool InputDown { 
-            get {
-                if ((Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.T)) || Input.GetKeyDown(KeyCode.Mouse3))
-                    return true;
-                return false;
-            }
-        }
+public static class DesktopUtils {
+    private static readonly bool InVR = XRDevice.isPresent;
+    private static bool __ = true;
 
-        public static void OnUpdate()
-        {
-            if (!Main.EnableDesktopTp.Value) return;
-            if (InVR) return;
-            if (__ && InputDown) {
-                if (NewPatches.IsQmOpen) return;
-                if (NewPatches.IsAmOpen) return;
-                Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-                if (Physics.Raycast(ray, out RaycastHit raycastHit))
-                    VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
-                __ = false;
-            } else if (!__ && !InputDown) __ = true;
-        }
+    private static bool InputDown => (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.T)) || Input.GetKeyDown(KeyCode.Mouse3);
+
+    public static void OnUpdate() {
+        if (!Main.EnableDesktopTp.Value) return;
+        if (InVR) return;
+        if (!CheckWorldAllowed.RiskyFunctionAllowed) return;
+        if (__ && InputDown) {
+            if (NewPatches.IsQmOpen) return;
+            if (NewPatches.IsAmOpen) return;
+            var ray = new Ray(Camera.main!.transform.position, Camera.main!.transform.forward);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit))
+                VRCPlayer.field_Internal_Static_VRCPlayer_0.transform.position = raycastHit.point;
+            __ = false;
+        } else if (!__ && !InputDown) __ = true;
     }
 }
