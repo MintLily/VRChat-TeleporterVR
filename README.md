@@ -83,6 +83,11 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 </details>
 
 <h1>Change Log (since Lily's edits)</h1>
+<h2>v4.12.1</h2>
+<ul>
+	<li>Desktop Teleport (to cursor) is now properly blocked by RiskyFuncChecks</li>
+</ul>
+
 <h3>v4.12.0</h3>
 <ul>
 	<li>Fix various things in the User Interface (QMBtns)
@@ -97,6 +102,9 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
 	<li>Update general methods</li>
 	<li>Removed internal ReMod.Core loading, switched to use Penny's <a href="https://github.com/PennyBunny/ReMod.Core.Updater">ReMod.Core.Updater</a></li>
 </ul>
+
+<details>
+	<summary>Past Versions</summary>
 
 <h3>v4.11.2</h3>
 <ul>
@@ -125,9 +133,6 @@ ActionMenu Control - With gompo's <a href="https://github.com/gompoc/VRChatMods/
     <li>Removed UI Expansion Kit menus and integration</li>
     <li>Internal code edits</li>
 </ul>
-
-<details>
-	<summary>Past Versions</summary>
 
 <h3>v4.10.2</h3>
 <ul>
